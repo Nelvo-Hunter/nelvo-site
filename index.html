@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nelvo — AI Consulting for Canadian SMEs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1a2e;
+    --navy-light: #162039;
+    --cream: #f5f0e8;
+    --cream-muted: #d4cfc6;
+    --copper: #c67f4e;
+    --copper-light: #d4956a;
+    --copper-glow: rgba(198, 127, 78, 0.12);
+    --charcoal: #2d2d2d;
+    --warm-white: #faf8f4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes dotExpand {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-up {
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+  .delay-5 { animation-delay: 0.75s; }
+  .delay-6 { animation-delay: 0.9s; }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    background: rgba(15, 26, 46, 0.7);
+    border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1.35rem;
+    letter-spacing: 0.18em;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--copper);
+    border-radius: 50%;
+    margin-left: 2px;
+    animation: dotExpand 0.6s ease-out 0.3s both;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--cream-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    font-weight: 300;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--copper-light); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Ambient glow */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--copper-glow) 0%, transparent 70%);
+    animation: glowPulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--copper);
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    line-height: 1.12;
+    color: var(--cream);
+    max-width: 780px;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--copper-light);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--cream-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--copper);
+    color: var(--navy);
+    padding: 1rem 2.25rem;
+    border-radius: 2px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .hero-cta:hover {
+    background: var(--copper-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(198, 127, 78, 0.25);
+  }
+
+  .hero-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .hero-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* ── Divider ── */
+  .divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(245, 240, 232, 0.08), transparent);
+  }
+
+  /* ── The Problem Section ── */
+  .problem {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 3rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--copper);
+    font-weight: 400;
+    margin-bottom: 3rem;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .problem-statement {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.35;
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .problem-detail {
+    font-weight: 300;
+    color: var(--cream-muted);
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .problem-detail p + p {
+    margin-top: 1.25rem;
+  }
+
+  /* ── Approach Section ── */
+  .approach {
+    background: var(--navy-light);
+    border-top: 1px solid rgba(245, 240, 232, 0.04);
+    border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+  }
+
+  .approach-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 3rem;
+  }
+
+  .approach-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .approach-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    max-width: 500px;
+  }
+
+  .approach-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .approach-card {
+    background: rgba(245, 240, 232, 0.02);
+    border: 1px solid rgba(245, 240, 232, 0.05);
+    border-radius: 3px;
+    padding: 2.5rem 2rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .approach-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .approach-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .approach-card:hover {
+    background: rgba(245, 240, 232, 0.04);
+    border-color: rgba(198, 127, 78, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .card-number {
+    font-size: 0.7rem;
+    color: var(--copper);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    color: var(--cream-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── CTA Section ── */
+  .cta-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 3rem;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-section h2 em {
+    font-style: italic;
+    color: var(--copper-light);
+  }
+
+  .cta-sub {
+    color: var(--cream-muted);
+    font-weight: 300;
+    font-size: 1.05rem;
+    margin-bottom: 3rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid rgba(245, 240, 232, 0.04);
+    padding: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    color: var(--cream-muted);
+    text-transform: uppercase;
+  }
+
+  .footer-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--copper);
+    border-radius: 50%;
+    margin-left: 2px;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+    color: rgba(212, 207, 198, 0.4);
+    font-weight: 300;
+  }
+
+  .footer-email {
+    color: var(--copper);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+  }
+
+  .footer-email:hover { color: var(--copper-light); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 5rem; }
+    .problem { padding: 5rem 1.5rem; }
+    .problem-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .approach-inner { padding: 5rem 1.5rem; }
+    .approach-cards { grid-template-columns: 1fr; }
+    .cta-section { padding: 5rem 1.5rem; }
+    footer {
+      padding: 2rem 1.5rem;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+    .divider { padding: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="logo animate-fade">
+    NELVO<span class="logo-dot"></span>
+  </div>
+  <ul class="nav-links animate-fade delay-2">
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-label animate-up delay-1">AI Consulting for Canadian SMEs</p>
+  <h1 class="animate-up delay-2">
+    Helping your business figure out where AI <em>actually</em> fits
+  </h1>
+  <p class="hero-sub animate-up delay-3">
+    Not another pitch about the future of AI. A practical partner who helps your team adopt it — without the hype, the confusion, or the wasted budget.
+  </p>
+  <div class="animate-up delay-4">
+    <a href="#contact" class="hero-cta">
+      Start a conversation
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Problem Section -->
+<section class="problem">
+  <p class="section-label animate-up">The Real Problem</p>
+  <div class="problem-grid">
+    <div class="problem-statement animate-up delay-1">
+      Most AI initiatives fail not because the technology doesn't work — but because nobody gave the team time to learn it.
+    </div>
+    <div class="problem-detail animate-up delay-2">
+      <p>Organizations buy tools, announce initiatives, and expect frontline workers to figure it out on top of their existing workload. The result isn't adoption — it's animosity.</p>
+      <p>Nelvo focuses on the human side of AI implementation. We help you carve out the right space, align incentives, and build genuine buy-in — so the tools actually stick.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Approach Section -->
+<section class="approach" id="approach">
+  <div class="approach-inner">
+    <div class="approach-header">
+      <div>
+        <p class="section-label">Our Approach</p>
+        <h2 class="approach-title">Adoption over experimentation</h2>
+      </div>
+    </div>
+    <div class="approach-cards">
+      <div class="approach-card animate-up delay-2">
+        <p class="card-number">01</p>
+        <h3 class="card-title">Assess</h3>
+        <p class="card-text">We map your workflows, identify where AI creates real leverage, and filter out the noise. No generic recommendations — just what fits your business.</p>
+      </div>
+      <div class="approach-card animate-up delay-3">
+        <p class="card-number">02</p>
+        <h3 class="card-title">Align</h3>
+        <p class="card-text">We work with leadership to create protected learning time, align incentives, and build a rollout plan that doesn't put extra burden on your people.</p>
+      </div>
+      <div class="approach-card animate-up delay-4">
+        <p class="card-number">03</p>
+        <h3 class="card-title">Embed</h3>
+        <p class="card-text">Hands-on support as your team adopts new tools. We stay until the workflow changes are natural — not just announced.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section" id="contact">
+  <p class="section-label animate-up">Get Started</p>
+  <h2 class="animate-up delay-1">Let's figure out where AI <em>fits</em></h2>
+  <p class="cta-sub animate-up delay-2">No pressure, no pitch deck. Just an honest conversation about whether AI makes sense for your business right now.</p>
+  <div class="animate-up delay-3">
+    <a href="mailto:hunter@nelvo.ca" class="hero-cta">
+      Get in touch
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">
+    NELVO<span class="footer-dot"></span>
+  </div>
+  <a href="mailto:hunter@nelvo.ca" class="footer-email">hunter@nelvo.ca</a>
+  <p class="footer-text">&copy; 2025 Nelvo Inc.</p>
+</footer>
+
+</body>
+</html>
