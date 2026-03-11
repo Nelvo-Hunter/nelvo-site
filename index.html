@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nelvo — AI Consulting for Canadian SMEs</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<title>Nelvo | AI Strategy, Training & Adoption for Canadian Business</title>
+<meta name="description" content="Nelvo helps Canadian businesses adopt AI through strategy, hands-on training, and organizational change that sticks.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy: #0f1a2e;
@@ -14,23 +16,20 @@
     --copper: #c67f4e;
     --copper-light: #d4956a;
     --copper-glow: rgba(198, 127, 78, 0.12);
-    --charcoal: #2d2d2d;
-    --warm-white: #faf8f4;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background: var(--navy);
     color: var(--cream);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Noise texture overlay ── */
+  /* ── Noise texture ── */
   body::before {
     content: '';
     position: fixed;
@@ -46,32 +45,21 @@
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
   @keyframes glowPulse {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 0.7; }
   }
-
   @keyframes dotExpand {
     from { transform: scale(0); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
   }
 
-  .animate-up {
-    opacity: 0;
-    animation: fadeUp 0.8s ease-out forwards;
-  }
-
-  .animate-fade {
-    opacity: 0;
-    animation: fadeIn 1s ease-out forwards;
-  }
-
+  .animate-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; }
+  .animate-fade { opacity: 0; animation: fadeIn 1s ease-out forwards; }
   .delay-1 { animation-delay: 0.15s; }
   .delay-2 { animation-delay: 0.3s; }
   .delay-3 { animation-delay: 0.45s; }
@@ -98,7 +86,6 @@
     display: flex;
     align-items: center;
     gap: 0.1rem;
-    font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 1.35rem;
     letter-spacing: 0.18em;
@@ -144,7 +131,6 @@
     position: relative;
   }
 
-  /* Ambient glow */
   .hero::before {
     content: '';
     position: absolute;
@@ -190,7 +176,7 @@
     margin-bottom: 3rem;
   }
 
-  .hero-cta {
+  .cta-button {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
@@ -199,6 +185,7 @@
     padding: 1rem 2.25rem;
     border-radius: 2px;
     text-decoration: none;
+    font-family: 'Outfit', sans-serif;
     font-weight: 500;
     font-size: 0.9rem;
     letter-spacing: 0.04em;
@@ -207,18 +194,18 @@
     cursor: pointer;
   }
 
-  .hero-cta:hover {
+  .cta-button:hover {
     background: var(--copper-light);
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(198, 127, 78, 0.25);
   }
 
-  .hero-cta svg {
-    transition: transform 0.3s ease;
-  }
+  .cta-button svg { transition: transform 0.3s ease; }
+  .cta-button:hover svg { transform: translateX(4px); }
 
-  .hero-cta:hover svg {
-    transform: translateX(4px);
+  .cta-arrow {
+    width: 18px;
+    height: 18px;
   }
 
   /* ── Divider ── */
@@ -233,13 +220,7 @@
     background: linear-gradient(to right, transparent, rgba(245, 240, 232, 0.08), transparent);
   }
 
-  /* ── The Problem Section ── */
-  .problem {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 7rem 3rem;
-  }
-
+  /* ── Section shared ── */
   .section-label {
     font-size: 0.7rem;
     letter-spacing: 0.3em;
@@ -247,6 +228,13 @@
     color: var(--copper);
     font-weight: 400;
     margin-bottom: 3rem;
+  }
+
+  /* ── Problem Section ── */
+  .problem {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 3rem;
   }
 
   .problem-grid {
@@ -271,46 +259,69 @@
     font-size: 1rem;
   }
 
-  .problem-detail p + p {
-    margin-top: 1.25rem;
+  .problem-detail p + p { margin-top: 1.25rem; }
+
+  .stat-highlight {
+    color: var(--copper-light);
+    font-weight: 400;
   }
 
-  /* ── Approach Section ── */
-  .approach {
+  /* ── Philosophy Section ── */
+  .philosophy {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 3rem 7rem;
+    text-align: center;
+  }
+
+  .philosophy-headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+
+  .philosophy-body {
+    font-weight: 300;
+    color: var(--cream-muted);
+    line-height: 1.85;
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ── Pillars Section ── */
+  .pillars {
     background: var(--navy-light);
     border-top: 1px solid rgba(245, 240, 232, 0.04);
     border-bottom: 1px solid rgba(245, 240, 232, 0.04);
   }
 
-  .approach-inner {
+  .pillars-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 7rem 3rem;
   }
 
-  .approach-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+  .pillars-header {
     margin-bottom: 4rem;
-    flex-wrap: wrap;
-    gap: 1rem;
   }
 
-  .approach-title {
+  .pillars-title {
     font-family: 'Instrument Serif', serif;
     font-size: clamp(1.8rem, 3.5vw, 2.5rem);
     font-weight: 400;
-    max-width: 500px;
   }
 
-  .approach-cards {
+  .pillar-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
-  .approach-card {
+  .pillar-card {
     background: rgba(245, 240, 232, 0.02);
     border: 1px solid rgba(245, 240, 232, 0.05);
     border-radius: 3px;
@@ -320,7 +331,7 @@
     overflow: hidden;
   }
 
-  .approach-card::before {
+  .pillar-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -333,25 +344,24 @@
     transition: transform 0.4s ease;
   }
 
-  .approach-card:hover::before {
-    transform: scaleX(1);
-  }
+  .pillar-card:hover::before { transform: scaleX(1); }
 
-  .approach-card:hover {
+  .pillar-card:hover {
     background: rgba(245, 240, 232, 0.04);
     border-color: rgba(198, 127, 78, 0.15);
     transform: translateY(-4px);
   }
 
-  .card-number {
+  .pillar-label {
     font-size: 0.7rem;
     color: var(--copper);
     letter-spacing: 0.15em;
     font-weight: 400;
     margin-bottom: 1.5rem;
+    text-transform: uppercase;
   }
 
-  .card-title {
+  .pillar-title {
     font-family: 'Instrument Serif', serif;
     font-size: 1.35rem;
     margin-bottom: 1rem;
@@ -359,18 +369,39 @@
     font-weight: 400;
   }
 
-  .card-text {
+  .pillar-text {
     font-size: 0.9rem;
     color: var(--cream-muted);
     line-height: 1.7;
     font-weight: 300;
   }
 
+  /* ── Industries Signal ── */
+  .industries {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    text-align: center;
+  }
+
+  .industries-text {
+    font-size: 0.95rem;
+    color: var(--cream-muted);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+  }
+
+  .industries-text span {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
   /* ── CTA Section ── */
   .cta-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 8rem 3rem;
+    padding: 4rem 3rem 8rem;
     text-align: center;
   }
 
@@ -379,23 +410,21 @@
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 400;
     margin-bottom: 1.5rem;
-  }
-
-  .cta-section h2 em {
     font-style: italic;
-    color: var(--copper-light);
   }
 
-  .cta-sub {
-    color: var(--cream-muted);
+  .cta-email {
+    display: block;
+    color: var(--copper);
+    text-decoration: none;
+    font-size: 1.1rem;
     font-weight: 300;
-    font-size: 1.05rem;
-    margin-bottom: 3rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
+    letter-spacing: 0.03em;
+    margin-bottom: 2.5rem;
+    transition: color 0.3s ease;
   }
+
+  .cta-email:hover { color: var(--copper-light); }
 
   /* ── Footer ── */
   footer {
@@ -412,7 +441,6 @@
     display: flex;
     align-items: center;
     gap: 0.1rem;
-    font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 1rem;
     letter-spacing: 0.18em;
@@ -434,17 +462,6 @@
     font-weight: 300;
   }
 
-  .footer-email {
-    color: var(--copper);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    transition: color 0.3s ease;
-  }
-
-  .footer-email:hover { color: var(--copper-light); }
-
   /* ── Responsive ── */
   @media (max-width: 900px) {
     nav { padding: 1.25rem 1.5rem; }
@@ -452,9 +469,11 @@
     .hero { padding: 7rem 1.5rem 5rem; }
     .problem { padding: 5rem 1.5rem; }
     .problem-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .approach-inner { padding: 5rem 1.5rem; }
-    .approach-cards { grid-template-columns: 1fr; }
-    .cta-section { padding: 5rem 1.5rem; }
+    .philosophy { padding: 4rem 1.5rem 5rem; }
+    .pillars-inner { padding: 5rem 1.5rem; }
+    .pillar-cards { grid-template-columns: 1fr; }
+    .industries { padding: 3rem 1.5rem; }
+    .cta-section { padding: 3rem 1.5rem 5rem; }
     footer {
       padding: 2rem 1.5rem;
       flex-direction: column;
@@ -480,17 +499,17 @@
 
 <!-- Hero -->
 <section class="hero">
-  <p class="hero-label animate-up delay-1">AI Consulting for Canadian SMEs</p>
+  <p class="hero-label animate-up delay-1">AI Strategy, Training & Adoption</p>
   <h1 class="animate-up delay-2">
-    Helping your business figure out where AI <em>actually</em> fits
+    Helping your team figure out where AI <em>actually</em> fits
   </h1>
   <p class="hero-sub animate-up delay-3">
-    Not another pitch about the future of AI. A practical partner who helps your team adopt it — without the hype, the confusion, or the wasted budget.
+    AI strategy, training, and adoption for Canadian business.
   </p>
   <div class="animate-up delay-4">
-    <a href="#contact" class="hero-cta">
+    <a href="#contact" class="cta-button">
       Start a conversation
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
@@ -499,58 +518,77 @@
 
 <div class="divider"><div class="divider-line"></div></div>
 
-<!-- Problem Section -->
+<!-- Problem -->
 <section class="problem">
-  <p class="section-label animate-up">The Real Problem</p>
+  <p class="section-label animate-up">The Gap</p>
   <div class="problem-grid">
     <div class="problem-statement animate-up delay-1">
-      Most AI initiatives fail not because the technology doesn't work — but because nobody gave the team time to learn it.
+      Most organizations are using AI. Almost none are seeing real results.
     </div>
     <div class="problem-detail animate-up delay-2">
-      <p>Organizations buy tools, announce initiatives, and expect frontline workers to figure it out on top of their existing workload. The result isn't adoption — it's animosity.</p>
-      <p>Nelvo focuses on the human side of AI implementation. We help you carve out the right space, align incentives, and build genuine buy-in — so the tools actually stick.</p>
+      <p><span class="stat-highlight">88% of organizations have adopted AI tools,</span> but fewer than 1 in 10 report meaningful business impact. The gap isn't better technology. It's how the work is organized and how well the team understands what they're working with.</p>
+      <p>The difference between AI that transforms a business and AI that quietly gets abandoned comes down to two things: shared understanding across the team, and deliberate redesign of how work gets done.</p>
     </div>
   </div>
 </section>
 
-<!-- Approach Section -->
-<section class="approach" id="approach">
-  <div class="approach-inner">
-    <div class="approach-header">
-      <div>
-        <p class="section-label">Our Approach</p>
-        <h2 class="approach-title">Adoption over experimentation</h2>
-      </div>
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Philosophy -->
+<section class="philosophy">
+  <h2 class="philosophy-headline animate-up">AI doesn't adopt itself.</h2>
+  <p class="philosophy-body animate-up delay-1">
+    We believe adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
+  </p>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Pillars -->
+<section class="pillars" id="approach">
+  <div class="pillars-inner">
+    <div class="pillars-header">
+      <p class="section-label">What We Do</p>
+      <h2 class="pillars-title animate-up">Strategy. Training. Adoption.</h2>
     </div>
-    <div class="approach-cards">
-      <div class="approach-card animate-up delay-2">
-        <p class="card-number">01</p>
-        <h3 class="card-title">Assess</h3>
-        <p class="card-text">We map your workflows, identify where AI creates real leverage, and filter out the noise. No generic recommendations — just what fits your business.</p>
+    <div class="pillar-cards">
+      <div class="pillar-card animate-up delay-2">
+        <p class="pillar-label">Strategy</p>
+        <h3 class="pillar-title">Shared understanding, focused decisions</h3>
+        <p class="pillar-text">We help leadership teams build a shared understanding of the AI landscape and identify where it creates real leverage in their specific business. Focused, research-backed insight that leads to decisions, not generic recommendations.</p>
       </div>
-      <div class="approach-card animate-up delay-3">
-        <p class="card-number">02</p>
-        <h3 class="card-title">Align</h3>
-        <p class="card-text">We work with leadership to create protected learning time, align incentives, and build a rollout plan that doesn't put extra burden on your people.</p>
+      <div class="pillar-card animate-up delay-3">
+        <p class="pillar-label">Training</p>
+        <h3 class="pillar-title">Confident, capable teams</h3>
+        <p class="pillar-text">We get your people confident and capable with AI tools through hands-on learning grounded in how these tools actually work. Not tip sheets or tool tutorials, but the thinking behind effective use.</p>
       </div>
-      <div class="approach-card animate-up delay-4">
-        <p class="card-number">03</p>
-        <h3 class="card-title">Embed</h3>
-        <p class="card-text">Hands-on support as your team adopts new tools. We stay until the workflow changes are natural — not just announced.</p>
+      <div class="pillar-card animate-up delay-4">
+        <p class="pillar-label">Adoption</p>
+        <h3 class="pillar-title">Change that sticks</h3>
+        <p class="pillar-text">We help you design the conditions where AI actually sticks: protected learning time, aligned incentives, redesigned workflows, and a culture where experimentation is valued.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA Section -->
+<!-- Industries Signal -->
+<section class="industries">
+  <p class="industries-text animate-up">
+    Working with <span>Canadian businesses</span> in healthcare, professional services, manufacturing, and beyond.
+  </p>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- Contact -->
 <section class="cta-section" id="contact">
-  <p class="section-label animate-up">Get Started</p>
-  <h2 class="animate-up delay-1">Let's figure out where AI <em>fits</em></h2>
-  <p class="cta-sub animate-up delay-2">No pressure, no pitch deck. Just an honest conversation about whether AI makes sense for your business right now.</p>
+  <p class="section-label animate-up">Get in Touch</p>
+  <h2 class="animate-up delay-1">Let's figure this out together.</h2>
+  <a href="mailto:hunter@nelvo.ca" class="cta-email animate-up delay-2">hunter@nelvo.ca</a>
   <div class="animate-up delay-3">
-    <a href="mailto:hunter@nelvo.ca" class="hero-cta">
-      Get in touch
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a href="mailto:hunter@nelvo.ca" class="cta-button">
+      Start a conversation
+      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
@@ -562,8 +600,7 @@
   <div class="footer-logo">
     NELVO<span class="footer-dot"></span>
   </div>
-  <a href="mailto:hunter@nelvo.ca" class="footer-email">hunter@nelvo.ca</a>
-  <p class="footer-text">&copy; 2025 Nelvo Inc.</p>
+  <p class="footer-text">&copy; 2026 Nelvo Inc.</p>
 </footer>
 
 </body>
