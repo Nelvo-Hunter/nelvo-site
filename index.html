@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nelvo | AI Strategy, Training & Adoption for Canadian Business</title>
 <meta name="description" content="Nelvo helps Canadian businesses adopt AI through strategy, hands-on training, and organizational change that sticks.">
+<link rel="icon" type="image/png" href="./logo-dark.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0f1a2e;
-    --navy-light: #162039;
-    --cream: #f5f0e8;
-    --cream-muted: #d4cfc6;
-    --copper: #c67f4e;
-    --copper-light: #d4956a;
-    --copper-glow: rgba(198, 127, 78, 0.12);
+    --teal: #1E3538;
+    --teal-deep: #172C2F;
+    --teal-card: #233F42;
+    --terracotta: #B4602C;
+    --terracotta-light: #C97A45;
+    --terracotta-glow: rgba(180, 96, 44, 0.10);
+    --cream: #F0EBE1;
+    --cream-muted: #9BA8A5;
+    --cream-soft: rgba(240, 235, 225, 0.06);
+    --cream-border: rgba(240, 235, 225, 0.08);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,83 +27,69 @@
 
   body {
     font-family: 'Outfit', sans-serif;
-    background: var(--navy);
+    background: var(--teal);
     color: var(--cream);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Noise texture ── */
+  /* Warm grain texture */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 999;
   }
 
-  /* ── Animations ── */
+  /* Animations */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(28px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-  @keyframes glowPulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.7; }
+  @keyframes warmGlow {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.65; }
   }
-  @keyframes dotExpand {
-    from { transform: scale(0); opacity: 0; }
+  @keyframes scaleIn {
+    from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
   }
 
-  .animate-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; }
-  .animate-fade { opacity: 0; animation: fadeIn 1s ease-out forwards; }
-  .delay-1 { animation-delay: 0.15s; }
-  .delay-2 { animation-delay: 0.3s; }
-  .delay-3 { animation-delay: 0.45s; }
-  .delay-4 { animation-delay: 0.6s; }
-  .delay-5 { animation-delay: 0.75s; }
-  .delay-6 { animation-delay: 0.9s; }
+  .anim-up { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+  .anim-fade { opacity: 0; animation: fadeIn 0.9s ease-out forwards; }
+  .anim-scale { opacity: 0; animation: scaleIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.22s; }
+  .d3 { animation-delay: 0.34s; }
+  .d4 { animation-delay: 0.46s; }
+  .d5 { animation-delay: 0.58s; }
 
-  /* ── Navigation ── */
+  /* Navigation */
   nav {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
-    padding: 1.5rem 3rem;
+    padding: 1.1rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: blur(20px);
-    background: rgba(15, 26, 46, 0.7);
-    border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+    backdrop-filter: blur(24px);
+    background: rgba(30, 53, 56, 0.75);
+    border-bottom: 1px solid var(--cream-border);
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.1rem;
-    font-weight: 500;
-    font-size: 1.35rem;
-    letter-spacing: 0.18em;
-    color: var(--cream);
-    text-transform: uppercase;
-  }
-
-  .logo-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--copper);
-    border-radius: 50%;
-    margin-left: 2px;
-    animation: dotExpand 0.6s ease-out 0.3s both;
+  .nav-logo {
+    display: block;
+    height: 30px;
+    width: auto;
   }
 
   .nav-links {
@@ -111,22 +101,22 @@
   .nav-links a {
     color: var(--cream-muted);
     text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.06em;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
     font-weight: 300;
     transition: color 0.3s ease;
   }
 
-  .nav-links a:hover { color: var(--copper-light); }
+  .nav-links a:hover { color: var(--terracotta-light); }
 
-  /* ── Hero ── */
+  /* Hero */
   .hero {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 8rem 3rem 6rem;
-    max-width: 1200px;
+    padding: 9rem 3rem 6rem;
+    max-width: 1100px;
     margin: 0 auto;
     position: relative;
   }
@@ -134,120 +124,145 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: 15%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, var(--copper-glow) 0%, transparent 70%);
-    animation: glowPulse 6s ease-in-out infinite;
+    top: 12%;
+    right: -15%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, var(--terracotta-glow) 0%, transparent 65%);
+    animation: warmGlow 7s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 18%;
+    left: -12%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(240, 235, 225, 0.02) 0%, transparent 65%);
     pointer-events: none;
   }
 
   .hero-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--copper);
+    color: var(--terracotta);
     font-weight: 400;
-    margin-bottom: 2rem;
+    margin-bottom: 2.2rem;
   }
 
   .hero h1 {
     font-family: 'Instrument Serif', serif;
     font-weight: 400;
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    line-height: 1.12;
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+    line-height: 1.14;
     color: var(--cream);
-    max-width: 780px;
-    margin-bottom: 2rem;
+    max-width: 720px;
+    margin-bottom: 1.8rem;
   }
 
   .hero h1 em {
     font-style: italic;
-    color: var(--copper-light);
+    color: var(--terracotta-light);
   }
 
   .hero-sub {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 300;
     color: var(--cream-muted);
-    max-width: 520px;
+    max-width: 480px;
     line-height: 1.7;
     margin-bottom: 3rem;
   }
 
-  .cta-button {
+  /* Buttons */
+  .btn-primary {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    background: var(--copper);
-    color: var(--navy);
-    padding: 1rem 2.25rem;
-    border-radius: 2px;
+    gap: 0.7rem;
+    background: var(--terracotta);
+    color: var(--cream);
+    padding: 0.95rem 2.1rem;
+    border-radius: 3px;
     text-decoration: none;
     font-family: 'Outfit', sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 400;
+    font-size: 0.88rem;
     letter-spacing: 0.04em;
-    transition: all 0.3s ease;
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
     border: none;
     cursor: pointer;
   }
 
-  .cta-button:hover {
-    background: var(--copper-light);
+  .btn-primary:hover {
+    background: var(--terracotta-light);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(198, 127, 78, 0.25);
+    box-shadow: 0 10px 35px rgba(180, 96, 44, 0.2);
   }
 
-  .cta-button svg { transition: transform 0.3s ease; }
-  .cta-button:hover svg { transform: translateX(4px); }
-
-  .cta-arrow {
-    width: 18px;
-    height: 18px;
+  .btn-primary svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
   }
 
-  /* ── Divider ── */
+  .btn-primary:hover svg { transform: translateX(3px); }
+
+  /* Divider */
   .divider {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
   }
 
-  .divider-line {
+  .divider svg {
+    width: 60px;
+    height: 20px;
+    opacity: 0.25;
+    flex-shrink: 0;
+  }
+
+  .divider-line-left,
+  .divider-line-right {
+    flex: 1;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(245, 240, 232, 0.08), transparent);
+    background: var(--cream-border);
   }
 
-  /* ── Section shared ── */
+  /* Section Label */
   .section-label {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--copper);
+    color: var(--terracotta);
     font-weight: 400;
-    margin-bottom: 3rem;
+    margin-bottom: 2.8rem;
   }
 
-  /* ── Problem Section ── */
+  /* Problem Section */
   .problem {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 7rem 3rem;
+    padding: 6rem 3rem;
   }
 
   .problem-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 5rem;
     align-items: start;
   }
 
   .problem-statement {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    line-height: 1.35;
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    line-height: 1.4;
     color: var(--cream);
     font-weight: 400;
   }
@@ -255,78 +270,100 @@
   .problem-detail {
     font-weight: 300;
     color: var(--cream-muted);
-    line-height: 1.8;
-    font-size: 1rem;
+    line-height: 1.85;
+    font-size: 0.95rem;
   }
 
-  .problem-detail p + p { margin-top: 1.25rem; }
+  .problem-detail p + p { margin-top: 1.3rem; }
 
-  .stat-highlight {
-    color: var(--copper-light);
+  .stat {
+    color: var(--terracotta-light);
     font-weight: 400;
   }
 
-  /* ── Philosophy Section ── */
+  /* Philosophy */
   .philosophy {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 5rem 3rem 7rem;
+    padding: 5rem 3rem 6rem;
     text-align: center;
   }
 
-  .philosophy-headline {
+  .philosophy-quote {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-weight: 400;
     font-style: italic;
     color: var(--cream);
     margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .philosophy-quote::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    background: var(--terracotta);
+    border-radius: 2px;
+    opacity: 0.35;
   }
 
   .philosophy-body {
     font-weight: 300;
     color: var(--cream-muted);
-    line-height: 1.85;
-    font-size: 1.05rem;
-    max-width: 640px;
+    line-height: 1.9;
+    font-size: 1rem;
+    max-width: 580px;
     margin: 0 auto;
   }
 
-  /* ── Pillars Section ── */
+  /* Pillars */
   .pillars {
-    background: var(--navy-light);
-    border-top: 1px solid rgba(245, 240, 232, 0.04);
-    border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+    background: var(--teal-deep);
+    border-top: 1px solid var(--cream-border);
+    border-bottom: 1px solid var(--cream-border);
+    position: relative;
+  }
+
+  .pillars::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(180, 96, 44, 0.02) 0%, transparent 50%, rgba(240, 235, 225, 0.01) 100%);
+    pointer-events: none;
   }
 
   .pillars-inner {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 7rem 3rem;
+    padding: 6rem 3rem;
+    position: relative;
   }
 
-  .pillars-header {
-    margin-bottom: 4rem;
-  }
+  .pillars-header { margin-bottom: 3.5rem; }
 
   .pillars-title {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 400;
   }
 
   .pillar-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .pillar-card {
-    background: rgba(245, 240, 232, 0.02);
-    border: 1px solid rgba(245, 240, 232, 0.05);
-    border-radius: 3px;
-    padding: 2.5rem 2rem;
-    transition: all 0.4s ease;
+    background: rgba(240, 235, 225, 0.025);
+    border: 1px solid rgba(240, 235, 225, 0.06);
+    border-radius: 4px;
+    padding: 2.5rem 2rem 2.2rem;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
     overflow: hidden;
   }
@@ -338,99 +375,115 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--copper);
+    background: linear-gradient(90deg, var(--terracotta), var(--terracotta-light));
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .pillar-card:hover::before { transform: scaleX(1); }
 
   .pillar-card:hover {
-    background: rgba(245, 240, 232, 0.04);
-    border-color: rgba(198, 127, 78, 0.15);
-    transform: translateY(-4px);
+    background: rgba(240, 235, 225, 0.045);
+    border-color: rgba(180, 96, 44, 0.18);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   }
 
   .pillar-label {
-    font-size: 0.7rem;
-    color: var(--copper);
-    letter-spacing: 0.15em;
+    font-size: 0.65rem;
+    color: var(--terracotta);
+    letter-spacing: 0.2em;
     font-weight: 400;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
   }
 
-  .pillar-title {
+  .pillar-heading {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
     color: var(--cream);
     font-weight: 400;
+    line-height: 1.3;
   }
 
   .pillar-text {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--cream-muted);
-    line-height: 1.7;
+    line-height: 1.75;
     font-weight: 300;
   }
 
-  /* ── Industries Signal ── */
+  /* Industries */
   .industries {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 5rem 3rem;
+    padding: 4.5rem 3rem;
     text-align: center;
   }
 
   .industries-text {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--cream-muted);
     font-weight: 300;
     letter-spacing: 0.02em;
     line-height: 1.7;
   }
 
-  .industries-text span {
+  .industries-text strong {
     color: var(--cream);
     font-weight: 400;
   }
 
-  /* ── CTA Section ── */
-  .cta-section {
-    max-width: 1200px;
+  /* Contact */
+  .contact {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 4rem 3rem 8rem;
+    padding: 4rem 3rem 7rem;
     text-align: center;
   }
 
-  .cta-section h2 {
+  .contact h2 {
     font-family: 'Instrument Serif', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
     font-weight: 400;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     font-style: italic;
   }
 
-  .cta-email {
-    display: block;
-    color: var(--copper);
+  .contact-email {
+    display: inline-block;
+    color: var(--terracotta);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 300;
     letter-spacing: 0.03em;
     margin-bottom: 2.5rem;
     transition: color 0.3s ease;
+    position: relative;
   }
 
-  .cta-email:hover { color: var(--copper-light); }
+  .contact-email::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--terracotta);
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+  }
 
-  /* ── Footer ── */
+  .contact-email:hover { color: var(--terracotta-light); }
+  .contact-email:hover::after { opacity: 0.6; }
+
+  /* Footer */
   footer {
-    border-top: 1px solid rgba(245, 240, 232, 0.04);
-    padding: 3rem;
-    max-width: 1200px;
+    border-top: 1px solid var(--cream-border);
+    padding: 2.5rem 3rem;
+    max-width: 1100px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -438,49 +491,44 @@
   }
 
   .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.1rem;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.18em;
-    color: var(--cream-muted);
-    text-transform: uppercase;
+    display: block;
+    height: 22px;
+    width: auto;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
   }
 
-  .footer-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--copper);
-    border-radius: 50%;
-    margin-left: 2px;
-  }
+  .footer-logo:hover { opacity: 0.7; }
 
-  .footer-text {
-    font-size: 0.8rem;
-    color: rgba(212, 207, 198, 0.4);
+  .footer-right {
+    font-size: 0.75rem;
+    color: rgba(155, 168, 165, 0.5);
     font-weight: 300;
   }
 
-  /* ── Responsive ── */
+  /* Responsive */
   @media (max-width: 900px) {
-    nav { padding: 1.25rem 1.5rem; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-logo { height: 24px; }
     .nav-links { display: none; }
     .hero { padding: 7rem 1.5rem 5rem; }
-    .problem { padding: 5rem 1.5rem; }
-    .problem-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .philosophy { padding: 4rem 1.5rem 5rem; }
-    .pillars-inner { padding: 5rem 1.5rem; }
+    .problem { padding: 4.5rem 1.5rem; }
+    .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .philosophy { padding: 3.5rem 1.5rem 4.5rem; }
+    .pillars-inner { padding: 4.5rem 1.5rem; }
     .pillar-cards { grid-template-columns: 1fr; }
     .industries { padding: 3rem 1.5rem; }
-    .cta-section { padding: 3rem 1.5rem 5rem; }
+    .contact { padding: 3rem 1.5rem 5rem; }
+    .divider { padding: 0 1.5rem; }
     footer {
       padding: 2rem 1.5rem;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
       text-align: center;
     }
-    .divider { padding: 0 1.5rem; }
   }
 </style>
 </head>
@@ -488,10 +536,10 @@
 
 <!-- Navigation -->
 <nav>
-  <div class="logo animate-fade">
-    NELVO<span class="logo-dot"></span>
-  </div>
-  <ul class="nav-links animate-fade delay-2">
+  <a href="#" class="anim-fade">
+    <img src="./logo-light.png" alt="Nelvo" class="nav-logo">
+  </a>
+  <ul class="nav-links anim-fade d2">
     <li><a href="#approach">Approach</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -499,96 +547,124 @@
 
 <!-- Hero -->
 <section class="hero">
-  <p class="hero-label animate-up delay-1">AI Strategy, Training & Adoption</p>
-  <h1 class="animate-up delay-2">
+  <p class="hero-label anim-up d1">AI Strategy, Training & Adoption</p>
+  <h1 class="anim-up d2">
     Helping your team figure out where AI <em>actually</em> fits
   </h1>
-  <p class="hero-sub animate-up delay-3">
+  <p class="hero-sub anim-up d3">
     AI strategy, training, and adoption for Canadian business.
   </p>
-  <div class="animate-up delay-4">
-    <a href="#contact" class="cta-button">
+  <div class="anim-up d4">
+    <a href="#contact" class="btn-primary">
       Start a conversation
-      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
   </div>
 </section>
 
-<div class="divider"><div class="divider-line"></div></div>
+<!-- Divider -->
+<div class="divider">
+  <div class="divider-line-left"></div>
+  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
+  </svg>
+  <div class="divider-line-right"></div>
+</div>
 
 <!-- Problem -->
 <section class="problem">
-  <p class="section-label animate-up">The Gap</p>
+  <p class="section-label anim-up">The Gap</p>
   <div class="problem-grid">
-    <div class="problem-statement animate-up delay-1">
+    <div class="problem-statement anim-up d1">
       Most organizations are using AI. Almost none are seeing real results.
     </div>
-    <div class="problem-detail animate-up delay-2">
-      <p><span class="stat-highlight">88% of organizations have adopted AI tools,</span> but fewer than 1 in 10 report meaningful business impact. The gap isn't better technology. It's how the work is organized and how well the team understands what they're working with.</p>
+    <div class="problem-detail anim-up d2">
+      <p><span class="stat">88% of organizations have adopted AI tools,</span> but fewer than 1 in 10 report meaningful business impact. The gap isn't better technology. It's how the work is organized and how well the team understands what they're working with.</p>
       <p>The difference between AI that transforms a business and AI that quietly gets abandoned comes down to two things: shared understanding across the team, and deliberate redesign of how work gets done.</p>
     </div>
   </div>
 </section>
 
-<div class="divider"><div class="divider-line"></div></div>
+<!-- Divider -->
+<div class="divider">
+  <div class="divider-line-left"></div>
+  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
+  </svg>
+  <div class="divider-line-right"></div>
+</div>
 
 <!-- Philosophy -->
 <section class="philosophy">
-  <h2 class="philosophy-headline animate-up">AI doesn't adopt itself.</h2>
-  <p class="philosophy-body animate-up delay-1">
-    We believe adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
+  <h2 class="philosophy-quote anim-up">AI doesn't adopt itself.</h2>
+  <p class="philosophy-body anim-up d2">
+    Adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
   </p>
 </section>
 
-<div class="divider"><div class="divider-line"></div></div>
+<!-- Divider -->
+<div class="divider">
+  <div class="divider-line-left"></div>
+  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
+  </svg>
+  <div class="divider-line-right"></div>
+</div>
 
 <!-- Pillars -->
 <section class="pillars" id="approach">
   <div class="pillars-inner">
     <div class="pillars-header">
       <p class="section-label">What We Do</p>
-      <h2 class="pillars-title animate-up">Strategy. Training. Adoption.</h2>
+      <h2 class="pillars-title anim-up">Strategy. Training. Adoption.</h2>
     </div>
     <div class="pillar-cards">
-      <div class="pillar-card animate-up delay-2">
+      <div class="pillar-card anim-scale d2">
         <p class="pillar-label">Strategy</p>
-        <h3 class="pillar-title">Shared understanding, focused decisions</h3>
+        <h3 class="pillar-heading">Shared understanding, focused decisions</h3>
         <p class="pillar-text">We help leadership teams build a shared understanding of the AI landscape and identify where it creates real leverage in their specific business. Focused, research-backed insight that leads to decisions, not generic recommendations.</p>
       </div>
-      <div class="pillar-card animate-up delay-3">
+      <div class="pillar-card anim-scale d3">
         <p class="pillar-label">Training</p>
-        <h3 class="pillar-title">Confident, capable teams</h3>
+        <h3 class="pillar-heading">Confident, capable teams</h3>
         <p class="pillar-text">We get your people confident and capable with AI tools through hands-on learning grounded in how these tools actually work. Not tip sheets or tool tutorials, but the thinking behind effective use.</p>
       </div>
-      <div class="pillar-card animate-up delay-4">
+      <div class="pillar-card anim-scale d4">
         <p class="pillar-label">Adoption</p>
-        <h3 class="pillar-title">Change that sticks</h3>
+        <h3 class="pillar-heading">Change that sticks</h3>
         <p class="pillar-text">We help you design the conditions where AI actually sticks: protected learning time, aligned incentives, redesigned workflows, and a culture where experimentation is valued.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Industries Signal -->
+<!-- Industries -->
 <section class="industries">
-  <p class="industries-text animate-up">
-    Working with <span>Canadian businesses</span> in healthcare, professional services, manufacturing, and beyond.
+  <p class="industries-text anim-up">
+    Working with <strong>Canadian businesses</strong> in healthcare, professional services, manufacturing, and beyond.
   </p>
 </section>
 
-<div class="divider"><div class="divider-line"></div></div>
+<!-- Divider -->
+<div class="divider">
+  <div class="divider-line-left"></div>
+  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
+  </svg>
+  <div class="divider-line-right"></div>
+</div>
 
 <!-- Contact -->
-<section class="cta-section" id="contact">
-  <p class="section-label animate-up">Get in Touch</p>
-  <h2 class="animate-up delay-1">Let's figure this out together.</h2>
-  <a href="mailto:hunter@nelvo.ca" class="cta-email animate-up delay-2">hunter@nelvo.ca</a>
-  <div class="animate-up delay-3">
-    <a href="mailto:hunter@nelvo.ca" class="cta-button">
+<section class="contact" id="contact">
+  <p class="section-label anim-up">Get in Touch</p>
+  <h2 class="anim-up d1">Let's figure this out together.</h2>
+  <a href="mailto:hunter@nelvo.ca" class="contact-email anim-up d2">hunter@nelvo.ca</a>
+  <div class="anim-up d3">
+    <a href="mailto:hunter@nelvo.ca" class="btn-primary">
       Start a conversation
-      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
@@ -597,10 +673,10 @@
 
 <!-- Footer -->
 <footer>
-  <div class="footer-logo">
-    NELVO<span class="footer-dot"></span>
-  </div>
-  <p class="footer-text">&copy; 2026 Nelvo Inc.</p>
+  <a href="#">
+    <img src="./logo-light.png" alt="Nelvo" class="footer-logo">
+  </a>
+  <p class="footer-right">&copy; 2026 Nelvo Inc.</p>
 </footer>
 
 </body>
