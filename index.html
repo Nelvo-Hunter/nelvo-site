@@ -12,14 +12,14 @@
   :root {
     --teal: #1E3538;
     --teal-deep: #172C2F;
-    --teal-card: #233F42;
     --terracotta: #B4602C;
     --terracotta-light: #C97A45;
     --terracotta-glow: rgba(180, 96, 44, 0.10);
     --cream: #F0EBE1;
+    --cream-dark: #E5DFD4;
     --cream-muted: #9BA8A5;
-    --cream-soft: rgba(240, 235, 225, 0.06);
     --cream-border: rgba(240, 235, 225, 0.08);
+    --cream-border-dark: rgba(30, 53, 56, 0.08);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,7 +33,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Warm grain texture */
   body::before {
     content: '';
     position: fixed;
@@ -53,43 +52,47 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes logoReveal {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
   @keyframes warmGlow {
-    0%, 100% { opacity: 0.35; }
-    50% { opacity: 0.65; }
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
   }
   @keyframes scaleIn {
     from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
   }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
 
   .anim-up { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
   .anim-fade { opacity: 0; animation: fadeIn 0.9s ease-out forwards; }
   .anim-scale { opacity: 0; animation: scaleIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+  .anim-logo { opacity: 0; animation: logoReveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
   .d1 { animation-delay: 0.1s; }
-  .d2 { animation-delay: 0.22s; }
-  .d3 { animation-delay: 0.34s; }
-  .d4 { animation-delay: 0.46s; }
-  .d5 { animation-delay: 0.58s; }
+  .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; }
+  .d4 { animation-delay: 0.55s; }
+  .d5 { animation-delay: 0.7s; }
+  .d6 { animation-delay: 0.85s; }
 
-  /* Navigation */
+  /* Nav */
   nav {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
-    padding: 1.1rem 3rem;
+    padding: 1.2rem 3rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     backdrop-filter: blur(24px);
-    background: rgba(30, 53, 56, 0.75);
+    background: rgba(30, 53, 56, 0.6);
     border-bottom: 1px solid var(--cream-border);
-  }
-
-  .nav-logo {
-    display: block;
-    height: 30px;
-    width: auto;
   }
 
   .nav-links {
@@ -115,52 +118,54 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 9rem 3rem 6rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 3rem 6rem;
     position: relative;
   }
 
   .hero::before {
     content: '';
     position: absolute;
-    top: 12%;
-    right: -15%;
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, var(--terracotta-glow) 0%, transparent 65%);
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--terracotta-glow) 0%, transparent 60%);
     animation: warmGlow 7s ease-in-out infinite;
     pointer-events: none;
   }
 
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 18%;
-    left: -12%;
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(240, 235, 225, 0.02) 0%, transparent 65%);
-    pointer-events: none;
+  .hero-logo {
+    display: block;
+    width: clamp(280px, 40vw, 420px);
+    height: auto;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
   }
 
-  .hero-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--terracotta);
-    font-weight: 400;
-    margin-bottom: 2.2rem;
+  .hero-line {
+    width: 60px;
+    height: 2px;
+    background: var(--terracotta);
+    margin-bottom: 2.5rem;
+    opacity: 0.5;
+    animation: lineGrow 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.6s both;
+    transform-origin: center;
   }
 
   .hero h1 {
     font-family: 'Instrument Serif', serif;
     font-weight: 400;
-    font-size: clamp(2.6rem, 5.5vw, 4.2rem);
-    line-height: 1.14;
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    line-height: 1.3;
     color: var(--cream);
-    max-width: 720px;
-    margin-bottom: 1.8rem;
+    max-width: 600px;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
   }
 
   .hero h1 em {
@@ -169,12 +174,13 @@
   }
 
   .hero-sub {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 300;
     color: var(--cream-muted);
-    max-width: 480px;
-    line-height: 1.7;
     margin-bottom: 3rem;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
   }
 
   /* Buttons */
@@ -194,6 +200,8 @@
     transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
     border: none;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
   }
 
   .btn-primary:hover {
@@ -210,7 +218,40 @@
 
   .btn-primary:hover svg { transform: translateX(3px); }
 
-  /* Divider */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: transparent;
+    color: var(--teal);
+    padding: 0.95rem 2.1rem;
+    border-radius: 3px;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1.5px solid var(--teal);
+    cursor: pointer;
+  }
+
+  .btn-outline:hover {
+    background: var(--teal);
+    color: var(--cream);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 35px rgba(30, 53, 56, 0.15);
+  }
+
+  .btn-outline svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-outline:hover svg { transform: translateX(3px); }
+
+  /* Divider (dark bg) */
   .divider {
     max-width: 1100px;
     margin: 0 auto;
@@ -235,6 +276,12 @@
     background: var(--cream-border);
   }
 
+  /* Divider (light bg) */
+  .divider-light .divider-line-left,
+  .divider-light .divider-line-right {
+    background: var(--cream-border-dark);
+  }
+
   /* Section Label */
   .section-label {
     font-size: 0.68rem;
@@ -245,7 +292,7 @@
     margin-bottom: 2.8rem;
   }
 
-  /* Problem Section */
+  /* Problem */
   .problem {
     max-width: 1100px;
     margin: 0 auto;
@@ -281,12 +328,37 @@
     font-weight: 400;
   }
 
-  /* Philosophy */
+  /* Cream Section: Philosophy + Pillars */
+  .cream-section {
+    background: var(--cream);
+    color: var(--teal);
+    position: relative;
+  }
+
+  .cream-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Philosophy (inside cream) */
   .philosophy {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 5rem 3rem 6rem;
+    padding: 6rem 3rem 5rem;
     text-align: center;
+    position: relative;
+  }
+
+  .philosophy-logo {
+    display: block;
+    width: 180px;
+    height: auto;
+    margin: 0 auto 3rem;
+    opacity: 0.12;
   }
 
   .philosophy-quote {
@@ -294,7 +366,7 @@
     font-size: clamp(1.8rem, 3.5vw, 2.8rem);
     font-weight: 400;
     font-style: italic;
-    color: var(--cream);
+    color: var(--teal);
     margin-bottom: 2rem;
     position: relative;
     display: inline-block;
@@ -309,38 +381,23 @@
     height: 3px;
     background: var(--terracotta);
     border-radius: 2px;
-    opacity: 0.35;
+    opacity: 0.4;
   }
 
   .philosophy-body {
     font-weight: 300;
-    color: var(--cream-muted);
+    color: #4A6366;
     line-height: 1.9;
     font-size: 1rem;
     max-width: 580px;
     margin: 0 auto;
   }
 
-  /* Pillars */
+  /* Pillars (inside cream) */
   .pillars {
-    background: var(--teal-deep);
-    border-top: 1px solid var(--cream-border);
-    border-bottom: 1px solid var(--cream-border);
-    position: relative;
-  }
-
-  .pillars::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(180, 96, 44, 0.02) 0%, transparent 50%, rgba(240, 235, 225, 0.01) 100%);
-    pointer-events: none;
-  }
-
-  .pillars-inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 6rem 3rem;
+    padding: 3rem 3rem 6rem;
     position: relative;
   }
 
@@ -350,6 +407,7 @@
     font-family: 'Instrument Serif', serif;
     font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 400;
+    color: var(--teal);
   }
 
   .pillar-cards {
@@ -359,8 +417,8 @@
   }
 
   .pillar-card {
-    background: rgba(240, 235, 225, 0.025);
-    border: 1px solid rgba(240, 235, 225, 0.06);
+    background: rgba(30, 53, 56, 0.03);
+    border: 1px solid rgba(30, 53, 56, 0.08);
     border-radius: 4px;
     padding: 2.5rem 2rem 2.2rem;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -384,10 +442,10 @@
   .pillar-card:hover::before { transform: scaleX(1); }
 
   .pillar-card:hover {
-    background: rgba(240, 235, 225, 0.045);
-    border-color: rgba(180, 96, 44, 0.18);
+    background: rgba(30, 53, 56, 0.06);
+    border-color: rgba(180, 96, 44, 0.2);
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 40px rgba(30, 53, 56, 0.08);
   }
 
   .pillar-label {
@@ -403,36 +461,37 @@
     font-family: 'Instrument Serif', serif;
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: var(--cream);
+    color: var(--teal);
     font-weight: 400;
     line-height: 1.3;
   }
 
   .pillar-text {
     font-size: 0.88rem;
-    color: var(--cream-muted);
+    color: #4A6366;
     line-height: 1.75;
     font-weight: 300;
   }
 
-  /* Industries */
+  /* Industries (inside cream) */
   .industries {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 4.5rem 3rem;
+    padding: 0 3rem 5rem;
     text-align: center;
+    position: relative;
   }
 
   .industries-text {
     font-size: 0.92rem;
-    color: var(--cream-muted);
+    color: #4A6366;
     font-weight: 300;
     letter-spacing: 0.02em;
     line-height: 1.7;
   }
 
   .industries-text strong {
-    color: var(--cream);
+    color: var(--teal);
     font-weight: 400;
   }
 
@@ -440,7 +499,7 @@
   .contact {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 4rem 3rem 7rem;
+    padding: 6rem 3rem 7rem;
     text-align: center;
   }
 
@@ -494,11 +553,11 @@
     display: block;
     height: 22px;
     width: auto;
-    opacity: 0.5;
+    opacity: 0.45;
     transition: opacity 0.3s ease;
   }
 
-  .footer-logo:hover { opacity: 0.7; }
+  .footer-logo:hover { opacity: 0.65; }
 
   .footer-right {
     font-size: 0.75rem;
@@ -509,19 +568,20 @@
   /* Responsive */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
-    .nav-logo { height: 24px; }
     .nav-links { display: none; }
     .hero { padding: 7rem 1.5rem 5rem; }
+    .hero-logo { width: clamp(220px, 60vw, 320px); }
     .problem { padding: 4.5rem 1.5rem; }
     .problem-grid {
       grid-template-columns: 1fr;
       gap: 2.5rem;
     }
-    .philosophy { padding: 3.5rem 1.5rem 4.5rem; }
-    .pillars-inner { padding: 4.5rem 1.5rem; }
+    .philosophy { padding: 4.5rem 1.5rem 3.5rem; }
+    .philosophy-logo { width: 130px; }
+    .pillars { padding: 2rem 1.5rem 4.5rem; }
     .pillar-cards { grid-template-columns: 1fr; }
-    .industries { padding: 3rem 1.5rem; }
-    .contact { padding: 3rem 1.5rem 5rem; }
+    .industries { padding: 0 1.5rem 4rem; }
+    .contact { padding: 4.5rem 1.5rem 5rem; }
     .divider { padding: 0 1.5rem; }
     footer {
       padding: 2rem 1.5rem;
@@ -534,27 +594,25 @@
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- Nav: minimal, logo lives in the hero instead -->
 <nav>
-  <a href="#" class="anim-fade">
-    <img src="./logo-light.png" alt="Nelvo" class="nav-logo">
-  </a>
   <ul class="nav-links anim-fade d2">
     <li><a href="#approach">Approach</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- Hero -->
+<!-- Hero: logo-first, centered -->
 <section class="hero">
-  <p class="hero-label anim-up d1">AI Strategy, Training & Adoption</p>
-  <h1 class="anim-up d2">
-    Helping your team figure out where AI <em>actually</em> fits
+  <img src="./logo-light.png" alt="Nelvo" class="hero-logo anim-logo d1">
+  <div class="hero-line"></div>
+  <h1 class="anim-up d3">
+    Helping your team figure out<br>where AI <em>actually</em> fits
   </h1>
-  <p class="hero-sub anim-up d3">
+  <p class="hero-sub anim-up d4">
     AI strategy, training, and adoption for Canadian business.
   </p>
-  <div class="anim-up d4">
+  <div class="anim-up d5">
     <a href="#contact" class="btn-primary">
       Start a conversation
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -587,35 +645,29 @@
   </div>
 </section>
 
-<!-- Divider -->
-<div class="divider">
-  <div class="divider-line-left"></div>
-  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
-  </svg>
-  <div class="divider-line-right"></div>
-</div>
+<!-- Cream Section -->
+<div class="cream-section">
 
-<!-- Philosophy -->
-<section class="philosophy">
-  <h2 class="philosophy-quote anim-up">AI doesn't adopt itself.</h2>
-  <p class="philosophy-body anim-up d2">
-    Adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
-  </p>
-</section>
+  <!-- Philosophy -->
+  <section class="philosophy" id="approach">
+    <img src="./logo-dark.png" alt="" class="philosophy-logo anim-fade d1" aria-hidden="true">
+    <h2 class="philosophy-quote anim-up d2">AI doesn't adopt itself.</h2>
+    <p class="philosophy-body anim-up d3">
+      Adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
+    </p>
+  </section>
 
-<!-- Divider -->
-<div class="divider">
-  <div class="divider-line-left"></div>
-  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
-  </svg>
-  <div class="divider-line-right"></div>
-</div>
+  <!-- Divider -->
+  <div class="divider divider-light">
+    <div class="divider-line-left"></div>
+    <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.25" stroke-linecap="round" stroke-dasharray="2 3"/>
+    </svg>
+    <div class="divider-line-right"></div>
+  </div>
 
-<!-- Pillars -->
-<section class="pillars" id="approach">
-  <div class="pillars-inner">
+  <!-- Pillars -->
+  <section class="pillars">
     <div class="pillars-header">
       <p class="section-label">What We Do</p>
       <h2 class="pillars-title anim-up">Strategy. Training. Adoption.</h2>
@@ -637,15 +689,17 @@
         <p class="pillar-text">We help you design the conditions where AI actually sticks: protected learning time, aligned incentives, redesigned workflows, and a culture where experimentation is valued.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Industries -->
-<section class="industries">
-  <p class="industries-text anim-up">
-    Working with <strong>Canadian businesses</strong> in healthcare, professional services, manufacturing, and beyond.
-  </p>
-</section>
+  <!-- Industries -->
+  <section class="industries">
+    <p class="industries-text anim-up">
+      Working with <strong>Canadian businesses</strong> in healthcare, professional services, manufacturing, and beyond.
+    </p>
+  </section>
+
+</div>
+<!-- End Cream Section -->
 
 <!-- Divider -->
 <div class="divider">
