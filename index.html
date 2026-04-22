@@ -3,735 +3,1205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nelvo | AI Strategy, Training & Adoption for Canadian Business</title>
-<meta name="description" content="Nelvo helps Canadian businesses adopt AI through strategy, hands-on training, and organizational change that sticks.">
-<link rel="icon" type="image/png" href="./logo-dark.png">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<title>Nelvo — AI Adoption for Canadian SMEs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* ═══════════════════════════════════════
+     NELVO v3A — Benefit-Led, Dual Audience
+     Carrot → Stick → Method → Credibility
+     ═══════════════════════════════════════ */
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
     --teal: #1E3538;
-    --teal-deep: #172C2F;
-    --terracotta: #B4602C;
-    --terracotta-light: #C97A45;
-    --terracotta-glow: rgba(180, 96, 44, 0.10);
+    --teal-surface: #2A474B;
+    --teal-muted: #8FA3A6;
+    --terra: #B4602C;
+    --terra-hover: #9A5125;
+    --terra-light: #D4793E;
+    --bg: #FAF8F5;
     --cream: #F0EBE1;
-    --cream-dark: #E5DFD4;
-    --cream-muted: #9BA8A5;
-    --cream-border: rgba(240, 235, 225, 0.08);
-    --cream-border-dark: rgba(30, 53, 56, 0.08);
+    --text: #1E3538;
+    --text-muted: #4a5a5d;
+    --text-light: #7a8a8d;
+    --text-on-dark: #F0EBE1;
+    --text-on-dark-muted: #8FA3A6;
+    --heading: 'Libre Baskerville', 'Georgia', serif;
+    --body: 'Outfit', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: 16px; }
 
   body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--teal);
-    color: var(--cream);
-    overflow-x: hidden;
+    font-family: var(--body);
+    font-weight: 400;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
-  body::before {
+  /* Grain overlay */
+  body::after {
     content: '';
     position: fixed;
     inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 999;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
   }
 
-  /* Animations */
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── TYPOGRAPHY ── */
+  h1, h2, h3, h4 { font-family: var(--heading); font-weight: 700; line-height: 1.15; }
+  h1 { font-size: clamp(2.4rem, 4.8vw, 3.8rem); letter-spacing: -0.025em; }
+  h2 { font-size: clamp(1.65rem, 3vw, 2.5rem); letter-spacing: -0.015em; }
+  h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
+  h4 { font-size: 1rem; font-weight: 400; font-style: italic; }
+
+  p { max-width: 62ch; }
+  .label {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  section { position: relative; }
+
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .anim { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .d1 { animation-delay: 0.08s; }
+  .d2 { animation-delay: 0.16s; }
+  .d3 { animation-delay: 0.24s; }
+  .d4 { animation-delay: 0.32s; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  @keyframes logoReveal {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes warmGlow {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
-  }
-  @keyframes scaleIn {
-    from { transform: scale(0.92); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  @keyframes lineGrow {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  .anim-up { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-  .anim-fade { opacity: 0; animation: fadeIn 0.9s ease-out forwards; }
-  .anim-scale { opacity: 0; animation: scaleIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-  .anim-logo { opacity: 0; animation: logoReveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-  .d1 { animation-delay: 0.1s; }
-  .d2 { animation-delay: 0.25s; }
-  .d3 { animation-delay: 0.4s; }
-  .d4 { animation-delay: 0.55s; }
-  .d5 { animation-delay: 0.7s; }
-  .d6 { animation-delay: 0.85s; }
-
-  /* Nav */
+  /* ══════════════════════════════════
+     1. NAVIGATION
+     ══════════════════════════════════ */
   nav {
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 1.2rem 3rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    backdrop-filter: blur(24px);
-    background: rgba(30, 53, 56, 0.6);
-    border-bottom: 1px solid var(--cream-border);
+    background: rgba(250, 248, 245, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(30, 53, 56, 0.05);
+    transition: box-shadow 0.3s;
   }
-
+  nav.scrolled { box-shadow: 0 1px 16px rgba(30, 53, 56, 0.06); }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .nav-logo { display: flex; align-items: center; }
+  .nav-logo-img { height: 36px; width: auto; }
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    align-items: center;
+    gap: 2.25rem;
     list-style: none;
   }
-
   .nav-links a {
-    color: var(--cream-muted);
-    text-decoration: none;
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    font-weight: 300;
-    transition: color 0.3s ease;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
   }
+  .nav-links a:hover { color: var(--terra); }
+  .nav-cta {
+    background: var(--terra) !important;
+    color: #fff !important;
+    padding: 0.5rem 1.3rem;
+    border-radius: 6px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--terra-hover) !important; }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-toggle svg { stroke: var(--teal); }
 
-  .nav-links a:hover { color: var(--terracotta-light); }
-
-  /* Hero */
+  /* ══════════════════════════════════
+     2. HERO — Dual-audience
+     ══════════════════════════════════ */
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 8rem 3rem 6rem;
+    padding: 152px 0 0;
     position: relative;
+    overflow: hidden;
+    background: linear-gradient(165deg, var(--bg) 0%, var(--cream) 50%, var(--bg) 100%);
   }
-
   .hero::before {
     content: '';
     position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, var(--terracotta-glow) 0%, transparent 60%);
-    animation: warmGlow 7s ease-in-out infinite;
+    top: 80px; left: -40px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 96, 44, 0.04) 0%, transparent 70%);
     pointer-events: none;
   }
-
-  .hero-logo {
+  .hero-content {
+    max-width: 720px;
+    padding-bottom: 5rem;
+  }
+  .hero .label {
+    color: var(--terra);
     display: block;
-    width: clamp(280px, 40vw, 420px);
-    height: auto;
-    margin-bottom: 3rem;
-    position: relative;
-    z-index: 1;
+    margin-bottom: 1.25rem;
   }
-
-  .hero-line {
-    width: 60px;
-    height: 2px;
-    background: var(--terracotta);
-    margin-bottom: 2.5rem;
-    opacity: 0.5;
-    animation: lineGrow 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.6s both;
-    transform-origin: center;
-  }
-
   .hero h1 {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 400;
-    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
-    line-height: 1.3;
-    color: var(--cream);
-    max-width: 600px;
-    margin-bottom: 1.2rem;
-    position: relative;
-    z-index: 1;
+    color: var(--teal);
+    margin-bottom: 1.5rem;
   }
-
   .hero h1 em {
-    font-style: italic;
-    color: var(--terracotta-light);
+    font-style: normal;
+    color: var(--terra);
   }
-
-  .hero-sub {
-    font-size: 1rem;
+  .hero-body {
+    color: var(--text-muted);
+    font-size: 1.15rem;
     font-weight: 300;
-    color: var(--cream-muted);
-    margin-bottom: 3rem;
-    letter-spacing: 0.02em;
-    position: relative;
-    z-index: 1;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
   }
-
-  /* Buttons */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    background: var(--terracotta);
-    color: var(--cream);
-    padding: 0.95rem 2.1rem;
-    border-radius: 3px;
-    text-decoration: none;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 400;
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    border: none;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn-primary:hover {
-    background: var(--terracotta-light);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 35px rgba(180, 96, 44, 0.2);
-  }
-
-  .btn-primary svg {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
-  }
-
-  .btn-primary:hover svg { transform: translateX(3px); }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    background: transparent;
-    color: var(--teal);
-    padding: 0.95rem 2.1rem;
-    border-radius: 3px;
-    text-decoration: none;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 400;
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    border: 1.5px solid var(--teal);
-    cursor: pointer;
-  }
-
-  .btn-outline:hover {
-    background: var(--teal);
-    color: var(--cream);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 35px rgba(30, 53, 56, 0.15);
-  }
-
-  .btn-outline svg {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s ease;
-  }
-
-  .btn-outline:hover svg { transform: translateX(3px); }
-
-  /* Divider (dark bg) */
-  .divider {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-  }
-
-  .divider svg {
-    width: 60px;
-    height: 20px;
-    opacity: 0.25;
-    flex-shrink: 0;
-  }
-
-  .divider-line-left,
-  .divider-line-right {
-    flex: 1;
-    height: 1px;
-    background: var(--cream-border);
-  }
-
-  /* Divider (light bg) */
-  .divider-light .divider-line-left,
-  .divider-light .divider-line-right {
-    background: var(--cream-border-dark);
-  }
-
-  /* Section Label */
-  .section-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--terracotta);
-    font-weight: 400;
-    margin-bottom: 2.8rem;
-  }
-
-  /* Problem */
-  .problem {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 3rem;
-  }
-
-  .problem-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
-  }
-
-  .problem-statement {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.5rem, 2.8vw, 2rem);
-    line-height: 1.4;
-    color: var(--cream);
-    font-weight: 400;
-  }
-
-  .problem-detail {
-    font-weight: 300;
-    color: var(--cream-muted);
-    line-height: 1.85;
+  .btn {
+    display: inline-block;
+    background: var(--terra);
+    color: #fff;
+    padding: 0.85rem 2.2rem;
+    border-radius: 6px;
+    font-family: var(--body);
+    font-weight: 500;
     font-size: 0.95rem;
+    transition: background 0.25s, transform 0.2s;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: var(--terra-hover);
+    transform: translateY(-1px);
   }
 
-  .problem-detail p + p { margin-top: 1.3rem; }
-
-  .stat {
-    color: var(--terracotta-light);
-    font-weight: 400;
-  }
-
-  /* Cream Section: Philosophy + Pillars */
-  .cream-section {
-    background: var(--cream);
-    color: var(--teal);
-    position: relative;
-  }
-
-  .cream-section::before {
+  /* Decorative ensō */
+  .hero::after {
     content: '';
     position: absolute;
-    inset: 0;
-    opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    top: 120px; right: -80px;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    border: 2.5px solid var(--terra);
+    opacity: 0.08;
     pointer-events: none;
   }
 
-  /* Philosophy (inside cream) */
-  .philosophy {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 3rem 5rem;
-    text-align: center;
+  /* ══════════════════════════════════
+     2b. BENEFIT STATS — The upside (NEW)
+     ══════════════════════════════════ */
+  .benefit-bar {
+    background: var(--cream);
+    padding: 3.5rem 0;
     position: relative;
   }
-
-  .philosophy-logo {
+  .benefit-bar .label {
+    color: var(--terra);
     display: block;
-    width: 180px;
-    height: auto;
-    margin: 0 auto 3rem;
-    opacity: 0.12;
-  }
-
-  .philosophy-quote {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 400;
-    font-style: italic;
-    color: var(--teal);
+    text-align: center;
     margin-bottom: 2rem;
-    position: relative;
-    display: inline-block;
+  }
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .benefit-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 2rem 1.75rem;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(30, 53, 56, 0.04);
+  }
+  .benefit-card .stat-value {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    color: var(--terra);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .benefit-card .stat-label {
+    color: var(--text);
+    font-weight: 400;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+  .benefit-card .stat-source {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-light);
+    font-weight: 400;
   }
 
-  .philosophy-quote::after {
+  /* ── Gap Stats bar (the stick) ── */
+  .stats-bar {
+    background: var(--teal);
+    position: relative;
+  }
+  .stats-bar::before {
     content: '';
     position: absolute;
-    bottom: -8px;
-    left: 15%;
-    width: 70%;
+    top: 0; left: 0; right: 0;
     height: 3px;
-    background: var(--terracotta);
-    border-radius: 2px;
-    opacity: 0.4;
+    background: var(--terra);
   }
-
-  .philosophy-body {
+  .stats-bar .label {
+    color: var(--terra-light);
+    display: block;
+    text-align: center;
+    padding-top: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .stats-inner {
+    display: flex;
+    align-items: stretch;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 2rem 1.5rem 2.5rem;
+    border-right: 1px solid rgba(143, 163, 166, 0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .stat-value {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+    color: var(--terra-light);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat-item .stat-label {
+    color: var(--text-on-dark);
     font-weight: 300;
-    color: #4A6366;
-    line-height: 1.9;
-    font-size: 1rem;
-    max-width: 580px;
-    margin: 0 auto;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    max-width: 24ch;
+    margin: 0 auto 0.35rem;
   }
-
-  /* Pillars (inside cream) */
-  .pillars {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 3rem 6rem;
-    position: relative;
-  }
-
-  .pillars-header { margin-bottom: 3.5rem; }
-
-  .pillars-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
+  .stat-source {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-on-dark-muted);
     font-weight: 400;
-    color: var(--teal);
   }
+  .stats-quote-row {
+    padding: 1.5rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(143, 163, 166, 0.1);
+  }
+  .stats-quote-row p {
+    font-family: var(--heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.92rem;
+    color: var(--text-on-dark);
+    opacity: 0.8;
+    max-width: 58ch;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+  .stats-quote-row .stat-source { margin-top: 0.3rem; display: inline-block; }
 
-  .pillar-cards {
+  /* ══════════════════════════════════
+     3. WHERE TO BEGIN — Scenarios
+     ══════════════════════════════════ */
+  .starting-section {
+    padding: 6.5rem 0;
+    background: var(--bg);
+  }
+  .starting-header {
+    max-width: 600px;
+    margin-bottom: 3.5rem;
+  }
+  .starting-header .label {
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .starting-header h2 { margin-bottom: 1rem; }
+  .starting-header p {
+    color: var(--text-muted);
+    font-size: 1.02rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .scenarios-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
   }
+  .scenario-card {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1.75rem 1.75rem 1.75rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .scenario-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(30, 53, 56, 0.07);
+  }
+  .scenario-check {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 2px solid var(--terra);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .scenario-card:hover .scenario-check { opacity: 1; }
+  .scenario-check svg { stroke: var(--terra); }
+  .scenario-card h3 {
+    color: var(--teal);
+    margin-bottom: 0.4rem;
+    font-size: 1.05rem;
+  }
+  .scenario-card p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
 
-  .pillar-card {
-    background: rgba(30, 53, 56, 0.03);
-    border: 1px solid rgba(30, 53, 56, 0.08);
-    border-radius: 4px;
-    padding: 2.5rem 2rem 2.2rem;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  /* ══════════════════════════════════
+     4. HOW IT WORKS
+     ══════════════════════════════════ */
+  .process-section {
+    padding: 6.5rem 0;
+    background: var(--cream);
+  }
+  .process-header {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto 4rem;
+  }
+  .process-header .label {
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .process-header h2 { margin-bottom: 1rem; }
+  .process-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    margin: 0 auto;
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: calc(16.66% + 1rem);
+    right: calc(16.66% + 1rem);
+    height: 1px;
+    background: var(--terra);
+    opacity: 0.2;
+  }
+  .process-step {
+    text-align: center;
+    position: relative;
+  }
+  .step-number {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .step-number span {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--terra-light);
+  }
+  .process-step h3 {
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .process-step .step-subtitle {
+    font-family: var(--heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.82rem;
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .process-step p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 32ch;
+  }
+
+  /* ══════════════════════════════════
+     5. OUR METHOD
+     ══════════════════════════════════ */
+  .method-section {
+    background: var(--teal);
+    padding: 6.5rem 0;
     position: relative;
     overflow: hidden;
   }
-
-  .pillar-card::before {
+  .method-section::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--terracotta), var(--terracotta-light));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    bottom: -120px; right: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    border: 2px solid var(--terra);
+    opacity: 0.04;
   }
-
-  .pillar-card:hover::before { transform: scaleX(1); }
-
-  .pillar-card:hover {
-    background: rgba(30, 53, 56, 0.06);
-    border-color: rgba(180, 96, 44, 0.2);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(30, 53, 56, 0.08);
+  .method-top { margin-bottom: 3.5rem; }
+  .method-intro {
+    max-width: 680px;
+    margin-bottom: 2.5rem;
   }
-
-  .pillar-label {
-    font-size: 0.65rem;
-    color: var(--terracotta);
-    letter-spacing: 0.2em;
-    font-weight: 400;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
+  .method-intro .label {
+    color: var(--terra-light);
+    display: block;
+    margin-bottom: 0.75rem;
   }
-
-  .pillar-heading {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem;
+  .method-intro h2 {
+    color: var(--text-on-dark);
     margin-bottom: 1rem;
-    color: var(--teal);
-    font-weight: 400;
-    line-height: 1.3;
   }
-
-  .pillar-text {
-    font-size: 0.88rem;
-    color: #4A6366;
-    line-height: 1.75;
+  .method-intro p {
+    color: var(--text-on-dark-muted);
+    font-size: 1rem;
     font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 1rem;
   }
-
-  /* Industries (inside cream) */
-  .industries {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 3rem 5rem;
-    text-align: center;
+  .method-differentiators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .diff-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--teal-surface);
+    border-radius: 8px;
+    border-top: 2px solid var(--terra);
+  }
+  .diff-point-icon {
+    flex-shrink: 0;
+    color: var(--terra-light);
+    margin-top: 1px;
+  }
+  .diff-point h3 {
+    color: var(--text-on-dark);
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .diff-point p {
+    color: var(--text-on-dark-muted);
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+  .method-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .method-divider::before,
+  .method-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(143, 163, 166, 0.15);
+  }
+  .method-divider span {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--terra-light);
+    white-space: nowrap;
+  }
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .fw-card {
+    background: var(--teal-surface);
+    border-radius: 10px;
+    padding: 1.75rem 1.5rem;
     position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .fw-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .fw-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--terra);
+  }
+  .fw-card .card-num {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--terra-light);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .fw-card h3 {
+    color: var(--text-on-dark);
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+  .fw-card .fw-sub {
+    font-family: var(--heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--terra-light);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .fw-card p {
+    color: var(--text-on-dark-muted);
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: none;
   }
 
-  .industries-text {
-    font-size: 0.92rem;
-    color: #4A6366;
+  /* ══════════════════════════════════
+     6. ABOUT
+     ══════════════════════════════════ */
+  .about-section { padding: 6.5rem 0; }
+  .about-top {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 3.5rem;
+    align-items: start;
+    margin-bottom: 4rem;
+  }
+  .about-photo { position: relative; }
+  .about-photo img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .about-photo::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--terra);
+    opacity: 0.12;
+  }
+  .about-bio .label {
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .about-bio h2 { margin-bottom: 1.25rem; }
+  .about-bio p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
     font-weight: 300;
-    letter-spacing: 0.02em;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .credentials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+  .cred-tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--teal);
+    background: var(--cream);
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+  }
+  .belief-banner {
+    background: var(--teal);
+    border-radius: 14px;
+    padding: 3rem 3.5rem;
+    margin-bottom: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .belief-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--terra);
+  }
+  .belief-banner blockquote {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    color: var(--text-on-dark);
+    line-height: 1.4;
+    max-width: none;
+    margin: 0 0 1rem;
+  }
+  .belief-banner p {
+    color: var(--text-on-dark-muted);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.65;
+    max-width: none;
+  }
+  .values-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .value-card {
+    padding: 1.75rem;
+    background: var(--cream);
+    border-radius: 10px;
+  }
+  .value-card h3 {
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  .value-card p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════
+     7. CONTACT
+     ══════════════════════════════════ */
+  .contact-section {
+    padding: 6rem 0;
+    background: var(--cream);
+  }
+  .contact-inner {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .contact-inner .label {
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .contact-inner h2 { margin-bottom: 1.5rem; }
+  .contact-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    border: 2px solid var(--cream);
+    box-shadow: 0 2px 8px rgba(30, 53, 56, 0.08);
+  }
+  .contact-inner > p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 0 auto 2.25rem;
     line-height: 1.7;
   }
-
-  .industries-text strong {
-    color: var(--teal);
-    font-weight: 400;
-  }
-
-  /* Contact */
-  .contact {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 3rem 7rem;
-    text-align: center;
-  }
-
-  .contact h2 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 400;
-    margin-bottom: 1.2rem;
-    font-style: italic;
-  }
-
   .contact-email {
     display: inline-block;
-    color: var(--terracotta);
-    text-decoration: none;
-    font-size: 1.05rem;
-    font-weight: 300;
-    letter-spacing: 0.03em;
-    margin-bottom: 2.5rem;
-    transition: color 0.3s ease;
-    position: relative;
+    background: var(--terra);
+    color: #fff;
+    padding: 0.9rem 2.4rem;
+    border-radius: 8px;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 1.02rem;
+    transition: background 0.25s, transform 0.2s;
+    margin-bottom: 2rem;
   }
-
-  .contact-email::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--terracotta);
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
+  .contact-email:hover {
+    background: var(--terra-hover);
+    transform: translateY(-2px);
   }
-
-  .contact-email:hover { color: var(--terracotta-light); }
-  .contact-email:hover::after { opacity: 0.6; }
-
-  /* Footer */
-  footer {
-    border-top: 1px solid var(--cream-border);
-    padding: 2.5rem 3rem;
-    max-width: 1100px;
-    margin: 0 auto;
+  .contact-meta {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
   }
-
-  .footer-logo {
-    display: block;
-    height: 22px;
-    width: auto;
-    opacity: 0.45;
-    transition: opacity 0.3s ease;
-  }
-
-  .footer-logo:hover { opacity: 0.65; }
-
-  .footer-right {
-    font-size: 0.75rem;
-    color: rgba(155, 168, 165, 0.5);
+  .contact-meta span {
+    color: var(--text-light);
+    font-size: 0.85rem;
     font-weight: 300;
   }
+  .contact-expect {
+    font-family: var(--heading);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
 
-  /* Responsive */
+  /* ══════════════════════════════════
+     FOOTER
+     ══════════════════════════════════ */
+  footer {
+    background: var(--teal);
+    padding: 1.75rem 0;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo { display: flex; align-items: center; }
+  .footer-logo-img { height: 24px; width: auto; }
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-on-dark-muted);
+    font-weight: 300;
+  }
+  .footer-right a {
+    color: var(--text-on-dark-muted);
+    transition: color 0.2s;
+  }
+  .footer-right a:hover { color: var(--text-on-dark); }
+  .footer-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--text-on-dark-muted);
+    opacity: 0.4;
+  }
+
+  /* ══════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════ */
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
+    .hero-content { max-width: 100%; }
+    .hero::after { display: none; }
+    .benefit-grid { grid-template-columns: 1fr; }
+    .stats-inner { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(143, 163, 166, 0.1); }
+    .stat-item:last-child { border-bottom: none; }
+    .scenarios-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; gap: 2.5rem; }
+    .process-steps::before { display: none; }
+    .method-differentiators { grid-template-columns: 1fr; }
+    .framework-grid { grid-template-columns: 1fr 1fr; }
+    .about-top { grid-template-columns: 1fr; }
+    .values-row { grid-template-columns: 1fr; }
     .nav-links { display: none; }
-    .hero { padding: 7rem 1.5rem 5rem; }
-    .hero-logo { width: clamp(220px, 60vw, 320px); }
-    .problem { padding: 4.5rem 1.5rem; }
-    .problem-grid {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-    .philosophy { padding: 4.5rem 1.5rem 3.5rem; }
-    .philosophy-logo { width: 130px; }
-    .pillars { padding: 2rem 1.5rem 4.5rem; }
-    .pillar-cards { grid-template-columns: 1fr; }
-    .industries { padding: 0 1.5rem 4rem; }
-    .contact { padding: 4.5rem 1.5rem 5rem; }
-    .divider { padding: 0 1.5rem; }
-    footer {
-      padding: 2rem 1.5rem;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-    }
+    .nav-toggle { display: block; }
+  }
+  @media (max-width: 600px) {
+    .framework-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- Nav: minimal, logo lives in the hero instead -->
-<nav>
-  <ul class="nav-links anim-fade d2">
-    <li><a href="#approach">Approach</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+<!-- ═══════ 1. NAVIGATION ═══════ -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><img src="logo-dark.png" alt="Nelvo" class="nav-logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="#approach">Where to Begin</a></li>
+      <li><a href="#method">Our Method</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Start a conversation</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
 </nav>
 
-<!-- Hero: logo-first, centered -->
-<section class="hero">
-  <img src="./logo-light.png" alt="Nelvo" class="hero-logo anim-logo d1">
-  <div class="hero-line"></div>
-  <h1 class="anim-up d3">
-    Helping your team figure out<br>where AI <em>actually</em> fits
-  </h1>
-  <p class="hero-sub anim-up d4">
-    AI strategy, training, and adoption for Canadian business.
-  </p>
-  <div class="anim-up d5">
-    <a href="#contact" class="btn-primary">
-      Start a conversation
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </a>
-  </div>
-</section>
-
-<!-- Divider -->
-<div class="divider">
-  <div class="divider-line-left"></div>
-  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
-  </svg>
-  <div class="divider-line-right"></div>
-</div>
-
-<!-- Problem -->
-<section class="problem">
-  <p class="section-label anim-up">The Gap</p>
-  <div class="problem-grid">
-    <div class="problem-statement anim-up d1">
-      Most organizations are using AI. Almost none are seeing real results.
-    </div>
-    <div class="problem-detail anim-up d2">
-      <p><span class="stat">88% of organizations have adopted AI tools,</span> but fewer than 1 in 10 report meaningful business impact. The gap isn't better technology. It's how the work is organized and how well the team understands what they're working with.</p>
-      <p>The difference between AI that transforms a business and AI that quietly gets abandoned comes down to two things: shared understanding across the team, and deliberate redesign of how work gets done.</p>
+<!-- ═══════ 2. HERO ═══════ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <span class="label anim">AI Adoption for Canadian SMEs</span>
+      <h1 class="anim d1">AI is changing how businesses compete.<br>Is yours <em>ready?</em></h1>
+      <p class="hero-body anim d2">Canadian businesses using AI are seeing real results — faster operations, sharper decisions, stronger teams. But most aren't capturing any of it. Whether you're unsure where to start or already moving and need a system, Nelvo gives your team the clarity and method to make AI actually work.</p>
+      <a href="#contact" class="btn anim d3">Start a conversation</a>
     </div>
   </div>
 </section>
 
-<!-- Cream Section -->
-<div class="cream-section">
-
-  <!-- Philosophy -->
-  <section class="philosophy" id="approach">
-    <img src="./logo-dark.png" alt="" class="philosophy-logo anim-fade d1" aria-hidden="true">
-    <h2 class="philosophy-quote anim-up d2">AI doesn't adopt itself.</h2>
-    <p class="philosophy-body anim-up d3">
-      Adoption is a people challenge, not a technology challenge. When everyone on your team shares the same mental model of what AI is and what it can do for your specific business, good decisions happen naturally. When they don't, you get expensive experiments that go nowhere.
-    </p>
-  </section>
-
-  <!-- Divider -->
-  <div class="divider divider-light">
-    <div class="divider-line-left"></div>
-    <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.25" stroke-linecap="round" stroke-dasharray="2 3"/>
-    </svg>
-    <div class="divider-line-right"></div>
-  </div>
-
-  <!-- Pillars -->
-  <section class="pillars">
-    <div class="pillars-header">
-      <p class="section-label">What We Do</p>
-      <h2 class="pillars-title anim-up">Strategy. Training. Adoption.</h2>
-    </div>
-    <div class="pillar-cards">
-      <div class="pillar-card anim-scale d2">
-        <p class="pillar-label">Strategy</p>
-        <h3 class="pillar-heading">Shared understanding, focused decisions</h3>
-        <p class="pillar-text">We help leadership teams build a shared understanding of the AI landscape and identify where it creates real leverage in their specific business. Focused, research-backed insight that leads to decisions, not generic recommendations.</p>
+<!-- ═══════ 2b. BENEFIT STATS — The carrot ═══════ -->
+<section class="benefit-bar">
+  <div class="container">
+    <span class="label">The opportunity is real</span>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="stat-value">97%</div>
+        <div class="stat-label">of Canadian SMEs using AI report tangible business benefits</div>
+        <div class="stat-source">BDC, 2025</div>
       </div>
-      <div class="pillar-card anim-scale d3">
-        <p class="pillar-label">Training</p>
-        <h3 class="pillar-heading">Confident, capable teams</h3>
-        <p class="pillar-text">We get your people confident and capable with AI tools through hands-on learning grounded in how these tools actually work. Not tip sheets or tool tutorials, but the thinking behind effective use.</p>
+      <div class="benefit-card">
+        <div class="stat-value">29–34%</div>
+        <div class="stat-label">productivity increase in year one for tech-adopting Canadian SMEs</div>
+        <div class="stat-source">CFIB, 2025 (n=1,345)</div>
       </div>
-      <div class="pillar-card anim-scale d4">
-        <p class="pillar-label">Adoption</p>
-        <h3 class="pillar-heading">Change that sticks</h3>
-        <p class="pillar-text">We help you design the conditions where AI actually sticks: protected learning time, aligned incentives, redesigned workflows, and a culture where experimentation is valued.</p>
+      <div class="benefit-card">
+        <div class="stat-value">5.6 hrs</div>
+        <div class="stat-label">saved per employee per week with AI tools</div>
+        <div class="stat-source">Business.com, 2026</div>
       </div>
     </div>
-  </section>
-
-  <!-- Industries -->
-  <section class="industries">
-    <p class="industries-text anim-up">
-      Working with <strong>Canadian businesses</strong> in healthcare, professional services, manufacturing, and beyond.
-    </p>
-  </section>
-
-</div>
-<!-- End Cream Section -->
-
-<!-- Divider -->
-<div class="divider">
-  <div class="divider-line-left"></div>
-  <svg viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="30" cy="10" r="6" stroke="#B4602C" stroke-width="1.5" opacity="0.35" stroke-linecap="round" stroke-dasharray="2 3"/>
-  </svg>
-  <div class="divider-line-right"></div>
-</div>
-
-<!-- Contact -->
-<section class="contact" id="contact">
-  <p class="section-label anim-up">Get in Touch</p>
-  <h2 class="anim-up d1">Let's figure this out together.</h2>
-  <a href="mailto:hunter@nelvo.ca" class="contact-email anim-up d2">hunter@nelvo.ca</a>
-  <div class="anim-up d3">
-    <a href="mailto:hunter@nelvo.ca" class="btn-primary">
-      Start a conversation
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </a>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- ═══════ 2c. GAP STATS — The stick ═══════ -->
+<section class="stats-bar">
+  <div class="container">
+    <span class="label">But most aren't getting there</span>
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-value">93%</div>
+        <div class="stat-label">of Canadian businesses now use AI</div>
+        <div class="stat-source">KPMG Canada, 2025</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">2%</div>
+        <div class="stat-label">see actual return on that investment</div>
+        <div class="stat-source">KPMG Canada, 2025</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">84%</div>
+        <div class="stat-label">haven't redesigned jobs around AI</div>
+        <div class="stat-source">Deloitte, 2026</div>
+      </div>
+    </div>
+    <div class="stats-quote-row">
+      <p>For every dollar you spend on AI technology, plan to spend at least a dollar on learning time, workflow redesign, and support.</p>
+      <span class="stat-source">KPMG</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 3. WHERE TO BEGIN ═══════ -->
+<section class="starting-section" id="approach">
+  <div class="container">
+    <div class="starting-header reveal">
+      <span class="label">Where to begin</span>
+      <h2>You don't need more tools. You need a place to start.</h2>
+      <p>Whether you haven't started, or you've started and it's not gaining traction, the problem is the same: there's no shortage of AI. There's a shortage of clarity. Nelvo is that starting place.</p>
+    </div>
+    <div class="scenarios-grid">
+      <div class="scenario-card reveal">
+        <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div>
+          <h3>Haven't started yet</h3>
+          <p>You know AI matters but you're stuck on where to begin. We give you a structured way to start that doesn't require technical expertise.</p>
+        </div>
+      </div>
+      <div class="scenario-card reveal">
+        <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div>
+          <h3>Started but stalled</h3>
+          <p>You've tried some tools, maybe run a pilot. It hasn't stuck. We diagnose why and rebuild momentum around what your team can sustain.</p>
+        </div>
+      </div>
+      <div class="scenario-card reveal">
+        <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div>
+          <h3>Moving but misaligned</h3>
+          <p>Pockets of activity with no coordination. Good intentions, no system. We connect what's working and build the governance to scale it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 4. HOW IT WORKS ═══════ -->
+<section class="process-section">
+  <div class="container">
+    <div class="process-header reveal">
+      <span class="label">What to expect</span>
+      <h2>How it works</h2>
+      <p>No twelve-month engagement. No black-box consulting. A clear process that builds your team's capability and leaves you with a method you own.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-number"><span>01</span></div>
+        <h3>We assess</h3>
+        <span class="step-subtitle">Where you actually stand</span>
+        <p>Before we prescribe anything, we diagnose. A structured evaluation of your organization's AI readiness surfaces what's strong, what's missing, and where to focus first.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number"><span>02</span></div>
+        <h3>We build</h3>
+        <span class="step-subtitle">A session tailored to your organization</span>
+        <p>Your industry, your workflows, your people. We design a hands-on session that gets your team working with AI on real problems, not hypotheticals.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-number"><span>03</span></div>
+        <h3>You run it</h3>
+        <span class="step-subtitle">A method your team owns</span>
+        <p>Your team walks out with a repeatable process, concrete next steps, and the confidence to keep going without us. The method is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 5. OUR METHOD ═══════ -->
+<section class="method-section" id="method">
+  <div class="container">
+    <div class="method-top">
+      <div class="method-intro reveal">
+        <span class="label">Our Method</span>
+        <h2>Four frameworks.<br>One integrated system.</h2>
+        <p>Most AI consulting sells tools or runs generic training. We built an integrated method grounded in research on how organizations adopt general-purpose technologies. The frameworks work together: diagnose where you are, give you a philosophy for thinking about AI, a concrete process for moving forward, and guardrails for doing it safely.</p>
+      </div>
+      <div class="method-differentiators">
+        <div class="diff-point reveal">
+          <div class="diff-point-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div>
+            <h3>Your team walks out with a working method</h3>
+            <p>Not slides to forget. A repeatable process your people can run on their own.</p>
+          </div>
+        </div>
+        <div class="diff-point reveal">
+          <div class="diff-point-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 12h4l3-9 6 18 3-9h4"/></svg>
+          </div>
+          <div>
+            <h3>Every session is built around your organization</h3>
+            <p>The frameworks are consistent. The application is always tailored.</p>
+          </div>
+        </div>
+        <div class="diff-point reveal">
+          <div class="diff-point-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <h3>Governance is built in, not bolted on</h3>
+            <p>Move fast and stay safe. Our method treats both as inseparable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-divider reveal"><span>The Frameworks</span></div>
+
+    <div class="framework-grid">
+      <div class="fw-card reveal">
+        <span class="card-num">01</span>
+        <h3>Plot, Cultivate, Prune</h3>
+        <span class="fw-sub">The gardener's approach</span>
+        <p>A philosophy and method that reframes how organizations approach AI. Prepare the right conditions and respond to what grows.</p>
+      </div>
+      <div class="fw-card reveal">
+        <span class="card-num">02</span>
+        <h3>The Growth Map</h3>
+        <span class="fw-sub">Where you stand today</span>
+        <p>A diagnostic that measures where your organization actually stands with AI. Identifies what's strong, what's missing, and what to work on first.</p>
+      </div>
+      <div class="fw-card reveal">
+        <span class="card-num">03</span>
+        <h3>The Rotation</h3>
+        <span class="fw-sub">Focus, Execute, Learn, Adjust</span>
+        <p>The step-by-step operating cycle your team follows. Works at any scale. Each cycle compounds learning from the last.</p>
+      </div>
+      <div class="fw-card reveal">
+        <span class="card-num">04</span>
+        <h3>The Six Gates</h3>
+        <span class="fw-sub">Before anything goes live</span>
+        <p>A deployment-readiness check that ensures experimentation doesn't become recklessness. Covers governance, data, liability, and ownership.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 6. ABOUT ═══════ -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-top">
+      <div class="about-photo reveal">
+        <img src="Hunter_profile_photo.jpg" alt="Hunter Christensen">
+      </div>
+      <div class="about-bio reveal">
+        <span class="label">About</span>
+        <h2>Hunter Christensen</h2>
+        <p>Hunter Christensen designed executive programs at the Rotman School of Management, University of Toronto — the birthplace of artificial intelligence. Working alongside world-class faculty, he built custom programs for some of Canada's largest and most influential organizations, sitting in the room with C-suite leaders as they worked through where AI fit into their strategy, where it was falling short, and what to do about it.</p>
+        <p>He also led AI adoption inside the organization itself — training teams and building the tools and agents that turned strategy into practice.</p>
+        <p>He founded Nelvo after recognizing that the organizations with the most to gain from AI had the least access to serious methodology. Canadian SMEs are faster, closer to the work, and better positioned to learn by doing than the large institutions he'd been serving. They just hadn't been given the tools to start. Nelvo was built to change that.</p>
+        <div class="credentials">
+          <span class="cred-tag">MBA, Rotman School of Management</span>
+          <span class="cred-tag">Rotman Executive Programs</span>
+          <span class="cred-tag">Creative Destruction Lab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="belief-banner reveal">
+      <blockquote>People are assets made more valuable by AI, not costs to be eliminated.</blockquote>
+      <p>The companies getting real results from AI aren't replacing expertise. They're giving their people better tools to use it. That's what we build for.</p>
+    </div>
+
+    <div class="values-row">
+      <div class="value-card reveal">
+        <h3>No jargon, no theatre</h3>
+        <p>You'll understand everything we recommend and why. If we can't explain it plainly, we haven't thought it through.</p>
+      </div>
+      <div class="value-card reveal">
+        <h3>Built to leave</h3>
+        <p>We're not trying to become a permanent line item. The goal is a team that doesn't need us anymore.</p>
+      </div>
+      <div class="value-card reveal">
+        <h3>Honest over impressive</h3>
+        <p>If something isn't ready, we'll say so. We'd rather lose a sale than set you up to fail.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 7. CONTACT ═══════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <span class="label">Get Started</span>
+      <h2>Start a conversation</h2>
+      <img src="Hunter_profile_photo.jpg" alt="Hunter Christensen" class="contact-avatar">
+      <p>No pitch deck. No pressure. Just a conversation about where you are and what might make sense as a first step.</p>
+      <a href="mailto:hunter@nelvo.ca" class="contact-email">hunter@nelvo.ca</a>
+      <div class="contact-meta">
+        <span>Toronto, Canada</span>
+        <span>Serving Canadian businesses</span>
+      </div>
+      <p class="contact-expect">Expect a personal reply within one business day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
-  <a href="#">
-    <img src="./logo-light.png" alt="Nelvo" class="footer-logo">
-  </a>
-  <p class="footer-right">&copy; 2026 Nelvo Inc.</p>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="logo-light.png" alt="Nelvo" class="footer-logo-img"></div>
+    <div class="footer-right">
+      <a href="mailto:hunter@nelvo.ca">hunter@nelvo.ca</a>
+      <div class="footer-dot"></div>
+      <span>Toronto, Canada</span>
+    </div>
+  </div>
 </footer>
+
+<script>
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 
 </body>
 </html>
