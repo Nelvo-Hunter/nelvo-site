@@ -1,0 +1,16 @@
+{
+     "$schema": "node_modules/wrangler/config-schema.json",
+     "name": "nelvo-site",
+     "compatibility_date": "2026-04-27",
+     "main": "worker.js",
+     "observability": {
+       "enabled": true
+     },
+     "assets": {
+       "directory": ".",
+       "binding": "ASSETS"
+     },
+     "compatibility_flags": [
+       "nodejs_compat"
+     ]
+   }
