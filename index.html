@@ -1024,6 +1024,73 @@ footer.foot { background: var(--color-teal); padding: var(--space-12) 0 var(--sp
   .traps-viz, .gates-viz { grid-template-columns: 1fr; }
   .gates-foot { grid-column: span 1; }
 }
+
+
+/* ════════════════════════════════════════════════
+   MOBILE REFINEMENTS — added May 9, 2026
+   Targeted patches for narrow viewports.
+   Each rule is scoped to (max-width: 768px) or smaller
+   so desktop / tablet layout is untouched.
+   ════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* ── Hero / opportunity / gap stat cards ── */
+  /* Stack to single column. Fix text contrast on dark teal cards. */
+  .hs-cards { grid-template-columns: 1fr; gap: var(--space-3); }
+  .stat-card-mini { padding: var(--space-4); }
+  .stat-card-mini .digit { color: var(--color-surface); }
+  .stat-card-mini .unit  { color: var(--color-terra-lt, #D4793E); }
+  .stat-card-mini p      { color: var(--color-surface); opacity: 0.88; }
+  .stat-card-mini .src   { color: var(--color-surface); opacity: 0.55; }
+
+  /* ── What Nelvo won't do (fine print) ── */
+  /* Reset odd/even border quirks that only make sense in 2-col. */
+  .neg-item,
+  .neg-item:nth-child(odd),
+  .neg-item:nth-child(even) {
+    padding: var(--space-4) 0;
+    border-left: none;
+  }
+  .neg-item:not(:last-child) { border-bottom: 1px solid var(--color-hairline); }
+  .neg-item:last-child { border-bottom: none; }
+
+  /* ── Footer ── */
+  /* Stack vertically and center. */
+  .foot-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    justify-items: center;
+    text-align: center;
+  }
+  .foot-right {
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: center;
+  }
+  .foot img { height: 22px; }
+
+  /* ── Method block visualizations ── */
+  /* Rotation cycle: stack vertically (the 3-col arrow grid breaks on phones). */
+  .rot-loop { grid-template-columns: 1fr; gap: var(--space-2); }
+  .rot-arrow { display: none; }
+  .rot-node { padding: var(--space-3); text-align: center; }
+
+  /* Growth Map quadrant grid: keep 2x2 but tighten so text fits. */
+  .map-grid { gap: 4px; }
+  .quad { padding: var(--space-3); }
+  .quad .ql { font-size: 0.85rem; }
+  .quad .qm { font-size: 0.7rem; line-height: 1.4; }
+
+  /* Six Gates tiles: tighter gap. */
+  .gates-viz { gap: var(--space-2); }
+}
+
+@media (max-width: 480px) {
+  /* Very small phones: a touch more tightening for legibility. */
+  .stat-card-mini { padding: var(--space-3); }
+  .stat-card-mini .digit { font-size: 2.4rem; line-height: 1; }
+  .foot-right { font-size: 0.62rem; }
+}
 </style>
 
 </head>
