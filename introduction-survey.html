@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -109,6 +109,19 @@
     color: var(--light);
     margin-top: 1.25rem;
   }
+  .intro .privacy-note {
+    margin: 1.5rem 0 0;
+    padding: 0.95rem 1.15rem;
+    background: var(--cream);
+    border-left: 3px solid var(--terra);
+    border-radius: 4px;
+    font-family: var(--h);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 58ch;
+  }
 
   form { display: block; }
 
@@ -119,17 +132,27 @@
   }
   .section-label {
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--terra);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    margin-bottom: 0.85rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
     display: block;
   }
   .section-title {
     font-size: 1.55rem;
     margin-bottom: 0;
     color: var(--teal);
+  }
+  .section-intro {
+    font-family: var(--h);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    margin: 1rem 0 2.5rem;
+    max-width: 58ch;
+    line-height: 1.55;
   }
 
   /* RESPONDENT BLOCK — borderless editorial */
@@ -146,11 +169,8 @@
     display: block;
   }
   .field {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 2rem;
   }
-  .field:last-of-type { border-bottom: none; }
   .field-row {
     display: grid;
     grid-template-columns: 1fr;
@@ -158,7 +178,6 @@
   }
   @media (min-width: 640px) {
     .field-row { grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .field-row .field { padding-bottom: 1.5rem; }
   }
   .field label {
     display: block;
@@ -244,15 +263,13 @@
     padding: 2.75rem 0 0;
     margin: 0 0 0.5rem;
     background: transparent;
-    border-top: 1px solid var(--rule-soft);
   }
-  .question:first-of-type { border-top: 1px solid var(--rule); }
   .question legend {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.6rem;
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   @media (min-width: 720px) {
     .question legend {
@@ -262,12 +279,13 @@
   }
   .q-anchor {
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--terra);
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-weight: 500;
-    padding-top: 0.4rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    padding-top: 0.2rem;
   }
   .q-prompt {
     font-family: var(--h);
@@ -275,6 +293,17 @@
     font-size: 1.25rem;
     color: var(--teal);
     line-height: 1.4;
+  }
+  .q-note {
+    font-family: var(--h);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--light);
+    margin: -0.8rem 0 1.25rem;
+    line-height: 1.5;
+  }
+  @media (min-width: 720px) {
+    .q-note { padding-left: calc(70px + 1.25rem); }
   }
   .options {
     display: grid;
@@ -309,7 +338,8 @@
   .option:hover {
     transform: translateX(4px);
   }
-  .option input {
+  .option input[type=radio],
+  .option input[type=checkbox] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
@@ -321,6 +351,14 @@
     font-weight: 500;
     letter-spacing: 0.04em;
     transition: color 0.18s ease;
+  }
+  .option .bullet {
+    font-family: var(--m);
+    font-size: 1rem;
+    color: var(--terra);
+    line-height: 1.2;
+    transition: color 0.18s ease;
+    text-align: center;
   }
   .option .body {
     font-size: 0.97rem;
@@ -338,9 +376,60 @@
   .option:has(input:checked) .body strong {
     color: var(--terra-2);
   }
-  .option:has(input:checked) .num {
+  .option:has(input:checked) .num,
+  .option:has(input:checked) .bullet {
     color: var(--terra-2);
     font-weight: 600;
+  }
+
+  /* INLINE TEXT INPUT inside an option */
+  .option .inline-text {
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    background: transparent;
+    font-family: var(--h);
+    font-size: 0.95rem;
+    color: var(--teal);
+    padding: 0.15rem 0;
+    margin-left: 0.4rem;
+    min-width: 180px;
+    width: auto;
+    display: inline-block;
+    transition: border-color 0.18s ease;
+  }
+  .option .inline-text:focus {
+    outline: none;
+    border-bottom-color: var(--terra);
+  }
+
+  /* TEXTAREA FIELDS */
+  .textarea-field {
+    padding-bottom: 1.5rem;
+  }
+  @media (min-width: 720px) {
+    .textarea-field { padding-left: calc(70px + 1.25rem); }
+  }
+  .textarea-field textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #FFFDF9;
+    font-family: var(--h);
+    font-size: 0.98rem;
+    color: var(--teal);
+    line-height: 1.55;
+    resize: vertical;
+    transition: border-color 0.18s ease;
+  }
+  .textarea-field textarea:focus {
+    outline: none;
+    border-color: var(--terra);
+  }
+  .textarea-field textarea::placeholder {
+    color: var(--light);
+    font-style: italic;
   }
 
   /* SUBMIT */
@@ -447,6 +536,7 @@
     .intro h1 { font-size: 2rem; }
     .q-prompt { font-size: 1.08rem; }
     .option .body { font-size: 0.94rem; }
+    .option .inline-text { min-width: 120px; font-size: 0.92rem; }
   }
 </style>
 </head>
@@ -467,8 +557,9 @@
       <span class="mono">Before we meet</span>
       <h1>A short read on <em>where you are.</em></h1>
       <p>Thanks for taking a few minutes to complete this survey. Your responses help us shape your upcoming Nelvo session so we can meet your team where it actually is today.</p>
-      <p>There are no right or wrong answers. Pick the number that best describes your current reality.</p>
-      <p>Takes about 8 minutes.</p>
+      <p>There are no right or wrong answers. Pick the option that best describes your current reality.</p>
+      <div class="privacy-note">Your responses are confidential. What we share with your organization is aggregated and anonymized. Specific answers are never attributed back to individuals.</div>
+      <p>Takes about 9 minutes.</p>
     </div>
 
     <form id="survey-form" novalidate>
@@ -515,7 +606,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 01</span>
+          <span class="q-anchor">1</span>
           <span class="q-prompt">When your organization introduces changes that affect how people work, how does leadership communicate?</span>
         </legend>
         <div class="options">
@@ -529,7 +620,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 02</span>
+          <span class="q-anchor">2</span>
           <span class="q-prompt">When your organization decides to invest in something new, how does that decision start?</span>
         </legend>
         <div class="options">
@@ -543,7 +634,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 03</span>
+          <span class="q-anchor">3</span>
           <span class="q-prompt">How does your organization figure out whether a new initiative is actually delivering results?</span>
         </legend>
         <div class="options">
@@ -557,7 +648,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 04</span>
+          <span class="q-anchor">4</span>
           <span class="q-prompt">When your organization wants people to develop new skills or adopt new ways of working, what does investment look like?</span>
         </legend>
         <div class="options">
@@ -571,7 +662,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 05</span>
+          <span class="q-anchor">5</span>
           <span class="q-prompt">How does your organization manage risk and set boundaries around information, data, and tools?</span>
         </legend>
         <div class="options">
@@ -590,7 +681,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 06</span>
+          <span class="q-anchor">1</span>
           <span class="q-prompt">How do people in your organization engage with new technology and tools?</span>
         </legend>
         <div class="options">
@@ -604,7 +695,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 07</span>
+          <span class="q-anchor">2</span>
           <span class="q-prompt">If a key person was unavailable for a month, how much of what they know could someone pick up from what's documented?</span>
         </legend>
         <div class="options">
@@ -618,7 +709,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 08</span>
+          <span class="q-anchor">3</span>
           <span class="q-prompt">When someone figures out a better way to do something, what happens with that discovery?</span>
         </legend>
         <div class="options">
@@ -632,7 +723,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 09</span>
+          <span class="q-anchor">4</span>
           <span class="q-prompt">When important work is produced, who decides if the quality meets your standards?</span>
         </legend>
         <div class="options">
@@ -646,7 +737,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">Q 10</span>
+          <span class="q-anchor">5</span>
           <span class="q-prompt">When existing tools or processes don't quite fit what you need, what happens?</span>
         </legend>
         <div class="options">
@@ -658,12 +749,127 @@
         </div>
       </fieldset>
 
+      <div class="section-divider">
+        <span class="section-label">Part three</span>
+        <h2 class="section-title">About you and AI</h2>
+      </div>
+      <p class="section-intro">A few quick questions about your own experience with AI. Your answers help us prepare for our time together.</p>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">1</span>
+          <span class="q-prompt">Outside of work, what are your primary AI platforms?</span>
+        </legend>
+        <p class="q-note">Select all that apply.</p>
+        <div class="options">
+          <label class="option"><input type="checkbox" name="p1" value="ChatGPT"><span class="bullet">·</span><span class="body"><strong>ChatGPT</strong> (OpenAI)</span></label>
+          <label class="option"><input type="checkbox" name="p1" value="Claude"><span class="bullet">·</span><span class="body"><strong>Claude</strong> (Anthropic)</span></label>
+          <label class="option"><input type="checkbox" name="p1" value="Gemini"><span class="bullet">·</span><span class="body"><strong>Gemini</strong> (Google)</span></label>
+          <label class="option"><input type="checkbox" name="p1" value="Microsoft Copilot"><span class="bullet">·</span><span class="body"><strong>Microsoft Copilot</strong></span></label>
+          <label class="option"><input type="checkbox" name="p1" value="Perplexity"><span class="bullet">·</span><span class="body"><strong>Perplexity</strong></span></label>
+          <label class="option"><input type="checkbox" name="p1" value="Something else"><span class="bullet">·</span><span class="body"><strong>Something else.</strong> <input type="text" class="inline-text" name="p1_other" placeholder="Which one?" autocomplete="off"></span></label>
+          <label class="option"><input type="checkbox" name="p1" value="None"><span class="bullet">·</span><span class="body"><strong>I don't use AI tools personally.</strong></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">2</span>
+          <span class="q-prompt">How often do you use AI in your personal life?</span>
+        </legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="p2" value="Multiple times a day" required><span class="bullet">·</span><span class="body"><strong>Multiple times a day.</strong></span></label>
+          <label class="option"><input type="radio" name="p2" value="Most days"><span class="bullet">·</span><span class="body"><strong>Most days.</strong></span></label>
+          <label class="option"><input type="radio" name="p2" value="A few times a week"><span class="bullet">·</span><span class="body"><strong>A few times a week.</strong></span></label>
+          <label class="option"><input type="radio" name="p2" value="A few times a month"><span class="bullet">·</span><span class="body"><strong>A few times a month.</strong></span></label>
+          <label class="option"><input type="radio" name="p2" value="Rarely"><span class="bullet">·</span><span class="body"><strong>Rarely.</strong></span></label>
+          <label class="option"><input type="radio" name="p2" value="Never"><span class="bullet">·</span><span class="body"><strong>Never.</strong></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">3</span>
+          <span class="q-prompt">Which AI tools do you currently use at work?</span>
+        </legend>
+        <p class="q-note">Select all that apply.</p>
+        <div class="options">
+          <label class="option"><input type="checkbox" name="p3" value="ChatGPT"><span class="bullet">·</span><span class="body"><strong>ChatGPT</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Claude"><span class="bullet">·</span><span class="body"><strong>Claude</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Gemini"><span class="bullet">·</span><span class="body"><strong>Gemini</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Microsoft Copilot"><span class="bullet">·</span><span class="body"><strong>Microsoft Copilot</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Perplexity"><span class="bullet">·</span><span class="body"><strong>Perplexity</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Something else"><span class="bullet">·</span><span class="body"><strong>Something else.</strong> <input type="text" class="inline-text" name="p3_other" placeholder="Which one?" autocomplete="off"></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Have access but don't use"><span class="bullet">·</span><span class="body"><strong>I have access at work but don't currently use them.</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="No access"><span class="bullet">·</span><span class="body"><strong>We don't have access to AI tools at work.</strong></span></label>
+          <label class="option"><input type="checkbox" name="p3" value="Unsure"><span class="bullet">·</span><span class="body"><strong>I'm not sure what's available or allowed.</strong></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">4</span>
+          <span class="q-prompt">Do you currently pay for an AI subscription out of your own pocket?</span>
+        </legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="p4" value="Yes" required><span class="bullet">·</span><span class="body"><strong>Yes.</strong> <input type="text" class="inline-text" name="p4_which" placeholder="Which subscription(s)?" autocomplete="off"></span></label>
+          <label class="option"><input type="radio" name="p4" value="In the past"><span class="bullet">·</span><span class="body"><strong>I've paid for one in the past, but not currently.</strong></span></label>
+          <label class="option"><input type="radio" name="p4" value="Never"><span class="bullet">·</span><span class="body"><strong>No, I've never paid for an AI subscription.</strong></span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">5</span>
+          <span class="q-prompt">How would you describe your comfort with AI tools today?</span>
+        </legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="p5" value="1" required><span class="num">1.</span><span class="body"><strong>Brand new.</strong> I've barely used AI tools, or only tried one out of curiosity.</span></label>
+          <label class="option"><input type="radio" name="p5" value="2"><span class="num">2.</span><span class="body"><strong>Dabbling.</strong> I've experimented a bit and understand the basics, but I don't use AI in any regular way.</span></label>
+          <label class="option"><input type="radio" name="p5" value="3"><span class="num">3.</span><span class="body"><strong>Comfortable.</strong> I use AI occasionally and feel reasonably confident with it for everyday tasks.</span></label>
+          <label class="option"><input type="radio" name="p5" value="4"><span class="num">4.</span><span class="body"><strong>Practiced.</strong> I use AI regularly for real work and have built a sense of what it's good at and where it falls short.</span></label>
+          <label class="option"><input type="radio" name="p5" value="5"><span class="num">5.</span><span class="body"><strong>Fluent.</strong> AI is part of how I work daily. I've developed real judgment about when to trust it and when not to.</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">6</span>
+          <span class="q-prompt">Think of one task you've used AI for that actually worked well. What was the task, and which tool did you use?</span>
+        </legend>
+        <p class="q-note">If you haven't tried AI for real work yet, write "not yet" and we'll cover this in the session. Optional.</p>
+        <div class="textarea-field">
+          <textarea name="p6" rows="4" placeholder="A few sentences is plenty."></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">7</span>
+          <span class="q-prompt">What's one task in your day-to-day work where you'd love AI to help?</span>
+        </legend>
+        <p class="q-note">Describe it in a sentence or two. Optional.</p>
+        <div class="textarea-field">
+          <textarea name="p7" rows="4" placeholder="A sentence or two."></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>
+          <span class="q-anchor">8</span>
+          <span class="q-prompt">What's one concern or hesitation you have about AI at work?</span>
+        </legend>
+        <p class="q-note">Anything is fair game: privacy, quality, regulation, your own learning curve, or something else entirely. Optional.</p>
+        <div class="textarea-field">
+          <textarea name="p8" rows="4" placeholder="A sentence or two."></textarea>
+        </div>
+      </fieldset>
+
       <div class="submit-row">
         <button type="submit" class="btn-submit" id="btn-submit">
           Submit
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
-        <span class="submit-hint">Your response goes straight to Hunter</span>
         <div class="error" id="error" hidden>Something went wrong sending your response. Please try again, or email Hunter directly at hunter@nelvo.ca.</div>
       </div>
 
@@ -683,7 +889,6 @@
 <footer>
   <div class="wrap">
     <a href="https://nelvo.ca">nelvo.ca</a>
-    <span>Toronto</span>
     <span>© 2026</span>
   </div>
 </footer>
@@ -695,25 +900,49 @@
   const formWrap = document.getElementById('form-wrap');
   const doneEl = document.getElementById('done');
 
+  // Helper: show inline error and scroll into view
+  function showError(message, anchorSelector) {
+    errorEl.textContent = message;
+    errorEl.hidden = false;
+    if (anchorSelector) {
+      const el = form.querySelector(anchorSelector);
+      if (el) {
+        const block = el.closest('.question') || el;
+        block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errorEl.hidden = true;
 
-    // Native validation
+    // Native validation (required text/email/role + first radio of each scored Q + P2, P4, P5)
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    // Confirm all 10 questions answered
+    // Confirm all 10 Growth Map questions answered
     for (let i = 1; i <= 10; i++) {
       if (!form.querySelector(`input[name="q${i}"]:checked`)) {
-        errorEl.textContent = `Please answer question ${i} before submitting.`;
-        errorEl.hidden = false;
-        const field = form.querySelector(`[name="q${i}"]`).closest('.question');
-        if (field) field.scrollIntoView({behavior: 'smooth', block: 'center'});
+        showError('Please answer all questions before submitting.', `input[name="q${i}"]`);
         return;
       }
+    }
+
+    // P1: at least one checkbox
+    const p1Selected = form.querySelectorAll('input[name="p1"]:checked');
+    if (p1Selected.length === 0) {
+      showError('Please answer all questions before submitting.', 'input[name="p1"]');
+      return;
+    }
+
+    // P3: at least one checkbox
+    const p3Selected = form.querySelectorAll('input[name="p3"]:checked');
+    if (p3Selected.length === 0) {
+      showError('Please answer all questions before submitting.', 'input[name="p3"]');
+      return;
     }
 
     const data = new FormData(form);
@@ -725,6 +954,19 @@
         role: data.get('role'),
       },
       responses: {},
+      profile: {
+        p1: data.getAll('p1'),
+        p1_other: (data.get('p1_other') || '').trim() || null,
+        p2: data.get('p2'),
+        p3: data.getAll('p3'),
+        p3_other: (data.get('p3_other') || '').trim() || null,
+        p4: data.get('p4'),
+        p4_which: (data.get('p4_which') || '').trim() || null,
+        p5: parseInt(data.get('p5'), 10),
+        p6: (data.get('p6') || '').trim() || null,
+        p7: (data.get('p7') || '').trim() || null,
+        p8: (data.get('p8') || '').trim() || null,
+      },
     };
     for (let i = 1; i <= 10; i++) {
       payload.responses[`q${i}`] = parseInt(data.get(`q${i}`), 10);

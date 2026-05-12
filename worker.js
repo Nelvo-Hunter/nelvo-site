@@ -44,7 +44,7 @@ async function handleGrowthMapSubmit(request, env) {
     return jsonError('Invalid JSON payload', 400);
   }
 
-  const { respondent, responses, submittedAt } = payload || {};
+  const { respondent, responses, profile, submittedAt } = payload || {};
   if (!respondent || !responses) {
     return jsonError('Missing required fields', 400);
   }
@@ -129,6 +129,7 @@ async function handleGrowthMapSubmit(request, env) {
   <table style="width:100%;border-collapse:collapse;border:1px solid #eee;">
     ${rows}
   </table>
+  ${buildProfileSection(profile)}
 </div>
   `.trim();
 
@@ -170,6 +171,71 @@ async function handleGrowthMapSubmit(request, env) {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
+}
+
+// ─────────────────────────────────────────────────────────
+// Profile section (P1-P8, not scored — for session prep)
+// ─────────────────────────────────────────────────────────
+
+function buildProfileSection(profile) {
+  if (!profile || typeof profile !== 'object') return '';
+
+  const blank = '<em style="color:#999;font-style:italic;">(blank)</em>';
+
+  function fmtArray(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return blank;
+    return arr.map(esc).join(', ');
+  }
+  function fmtSingle(v) {
+    if (v === null || v === undefined || v === '') return blank;
+    return esc(String(v));
+  }
+
+  let p1Display = fmtArray(profile.p1);
+  if (profile.p1_other) p1Display += ` <span style="color:#888;">(other: ${esc(profile.p1_other)})</span>`;
+
+  let p3Display = fmtArray(profile.p3);
+  if (profile.p3_other) p3Display += ` <span style="color:#888;">(other: ${esc(profile.p3_other)})</span>`;
+
+  let p4Display = fmtSingle(profile.p4);
+  if (profile.p4_which) p4Display += ` <span style="color:#888;">(${esc(profile.p4_which)})</span>`;
+
+  const p5Display = (Number.isInteger(profile.p5) && profile.p5 >= 1 && profile.p5 <= 5)
+    ? `${profile.p5} / 5`
+    : blank;
+
+  const shortRows = [
+    ['P1. Primary AI platforms (personal)', p1Display],
+    ['P2. Frequency of personal AI use', fmtSingle(profile.p2)],
+    ['P3. AI tools at work', p3Display],
+    ['P4. Pays for AI subscription', p4Display],
+    ['P5. Self-rated comfort with AI', p5Display],
+  ];
+
+  const shortRowsHtml = shortRows.map(([label, value]) =>
+    `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;font-family:sans-serif;font-size:13px;color:#444;vertical-align:top;width:42%;">${esc(label)}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;font-family:sans-serif;font-size:13px;color:#1E3538;">${value}</td></tr>`
+  ).join('');
+
+  const freeText = [
+    ['P6. A task AI worked well for', profile.p6],
+    ['P7. A task they wish AI could help with', profile.p7],
+    ['P8. Concerns or hesitations about AI at work', profile.p8],
+  ];
+
+  const longBlocksHtml = freeText.map(([label, value]) => `
+    <div style="margin-bottom:14px;">
+      <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#888;margin-bottom:6px;">${esc(label)}</div>
+      <div style="font-family:Georgia,serif;font-size:14px;color:#1E3538;line-height:1.55;background:#FAF8F5;padding:10px 14px;border-left:3px solid #B4602C;border-radius:4px;white-space:pre-wrap;">${value ? esc(value) : blank}</div>
+    </div>
+  `).join('');
+
+  return `
+    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin:28px 0 10px;">Profile responses</div>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #eee;margin-bottom:20px;">
+      ${shortRowsHtml}
+    </table>
+    ${longBlocksHtml}
+  `;
 }
 
 // ─────────────────────────────────────────────────────────
