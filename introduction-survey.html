@@ -382,6 +382,35 @@
     font-weight: 600;
   }
 
+  /* SPECTRUM BAR — gradient cue for 1-5 scale questions */
+  .options.spectrum {
+    position: relative;
+  }
+  .options.spectrum::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    bottom: 1.5rem;
+    left: -16px;
+    width: 5px;
+    border-radius: 5px;
+    background: linear-gradient(
+      to bottom,
+      #B14A2C 0%,
+      #C77A3F 25%,
+      #CBA055 50%,
+      #939E5C 75%,
+      #6B8C5C 100%
+    );
+    opacity: 0.92;
+    pointer-events: none;
+  }
+  @media (min-width: 720px) {
+    .options.spectrum::before {
+      left: calc(70px + 1.25rem - 18px);
+    }
+  }
+
   /* INLINE TEXT INPUT inside an option */
   .option .inline-text {
     border: none;
@@ -609,7 +638,7 @@
           <span class="q-anchor">1</span>
           <span class="q-prompt">When your organization introduces changes that affect how people work, how does leadership communicate?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q1" value="1" required><span class="num">1.</span><span class="body"><strong>Not addressed.</strong> Changes happen without much communication. People figure it out as things unfold.</span></label>
           <label class="option"><input type="radio" name="q1" value="2"><span class="num">2.</span><span class="body"><strong>Reactive.</strong> Leadership addresses changes, but usually after people are already uncertain or anxious.</span></label>
           <label class="option"><input type="radio" name="q1" value="3"><span class="num">3.</span><span class="body"><strong>Proactive.</strong> People hear about what's coming and why before it directly affects them.</span></label>
@@ -623,7 +652,7 @@
           <span class="q-anchor">2</span>
           <span class="q-prompt">When your organization decides to invest in something new, how does that decision start?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q2" value="1" required><span class="num">1.</span><span class="body"><strong>Reactive.</strong> Someone hears about something and we try it, or a problem gets bad enough that we scramble for a fix.</span></label>
           <label class="option"><input type="radio" name="q2" value="2"><span class="num">2.</span><span class="body"><strong>Trend-driven.</strong> There's some consideration of business needs, but new tools or industry buzz tend to drive the conversation.</span></label>
           <label class="option"><input type="radio" name="q2" value="3"><span class="num">3.</span><span class="body"><strong>Problem-driven.</strong> We start from a clear business problem and work backward to figure out what solves it.</span></label>
@@ -637,7 +666,7 @@
           <span class="q-anchor">3</span>
           <span class="q-prompt">How does your organization figure out whether a new initiative is actually delivering results?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q3" value="1" required><span class="num">1.</span><span class="body"><strong>We don't.</strong> If something seems helpful, we keep it going.</span></label>
           <label class="option"><input type="radio" name="q3" value="2"><span class="num">2.</span><span class="body"><strong>Gut feel.</strong> We have a general sense of whether things improved, but it's based on feeling rather than numbers.</span></label>
           <label class="option"><input type="radio" name="q3" value="3"><span class="num">3.</span><span class="body"><strong>Informal tracking.</strong> We track what matters, time, cost, errors, quality, even if informally, and use it to make decisions.</span></label>
@@ -651,7 +680,7 @@
           <span class="q-anchor">4</span>
           <span class="q-prompt">When your organization wants people to develop new skills or adopt new ways of working, what does investment look like?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q4" value="1" required><span class="num">1.</span><span class="body"><strong>Self-directed.</strong> People are mostly expected to figure things out on their own time.</span></label>
           <label class="option"><input type="radio" name="q4" value="2"><span class="num">2.</span><span class="body"><strong>Encouraged but unprotected.</strong> There's support in principle, but it competes with daily responsibilities. Deadlines always win.</span></label>
           <label class="option"><input type="radio" name="q4" value="3"><span class="num">3.</span><span class="body"><strong>Resourced.</strong> We create real space, dedicated time, budget, or structured support, and it's treated seriously.</span></label>
@@ -665,7 +694,7 @@
           <span class="q-anchor">5</span>
           <span class="q-prompt">How does your organization manage risk and set boundaries around information, data, and tools?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q5" value="1" required><span class="num">1.</span><span class="body"><strong>No formal rules.</strong> People use their own judgment.</span></label>
           <label class="option"><input type="radio" name="q5" value="2"><span class="num">2.</span><span class="body"><strong>Informal.</strong> There are some shared understandings, but nothing documented and it's unclear if everyone follows the same approach.</span></label>
           <label class="option"><input type="radio" name="q5" value="3"><span class="num">3.</span><span class="body"><strong>Established.</strong> We have policies for sensitive information, client data, and regulated activities, and people generally know and follow them.</span></label>
@@ -684,7 +713,7 @@
           <span class="q-anchor">1</span>
           <span class="q-prompt">How do people in your organization engage with new technology and tools?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q6" value="1" required><span class="num">1.</span><span class="body"><strong>Resistant.</strong> Most people stick with what they know. New tools get introduced but rarely adopted.</span></label>
           <label class="option"><input type="radio" name="q6" value="2"><span class="num">2.</span><span class="body"><strong>Pockets of interest.</strong> A few enthusiasts try things, but most wait to be told what to use.</span></label>
           <label class="option"><input type="radio" name="q6" value="3"><span class="num">3.</span><span class="body"><strong>Open.</strong> People willingly try new tools, especially when they can see how it helps their specific work.</span></label>
@@ -698,7 +727,7 @@
           <span class="q-anchor">2</span>
           <span class="q-prompt">If a key person was unavailable for a month, how much of what they know could someone pick up from what's documented?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q7" value="1" required><span class="num">1.</span><span class="body"><strong>Almost nothing.</strong> Most of how things work lives in people's heads.</span></label>
           <label class="option"><input type="radio" name="q7" value="2"><span class="num">2.</span><span class="body"><strong>Just the basics.</strong> Job descriptions and general procedures exist, but the real know-how, the judgment calls, the "how we actually do it", isn't captured.</span></label>
           <label class="option"><input type="radio" name="q7" value="3"><span class="num">3.</span><span class="body"><strong>Workable.</strong> Important processes and decisions are documented well enough that someone could follow them, even if not perfectly.</span></label>
@@ -712,7 +741,7 @@
           <span class="q-anchor">3</span>
           <span class="q-prompt">When someone figures out a better way to do something, what happens with that discovery?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q8" value="1" required><span class="num">1.</span><span class="body"><strong>Stays with them.</strong> Other people figure things out on their own, or not at all.</span></label>
           <label class="option"><input type="radio" name="q8" value="2"><span class="num">2.</span><span class="body"><strong>Word of mouth.</strong> If you're in the right conversation, you hear about it.</span></label>
           <label class="option"><input type="radio" name="q8" value="3"><span class="num">3.</span><span class="body"><strong>Shared consistently.</strong> There are real channels, meetings, shared docs, updates, and people use them.</span></label>
@@ -726,7 +755,7 @@
           <span class="q-anchor">4</span>
           <span class="q-prompt">When important work is produced, who decides if the quality meets your standards?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q9" value="1" required><span class="num">1.</span><span class="body"><strong>No consistent check.</strong> It depends on whoever produced it.</span></label>
           <label class="option"><input type="radio" name="q9" value="2"><span class="num">2.</span><span class="body"><strong>Manager review.</strong> Leads review important work, but there's no structured approach and things sometimes slip through.</span></label>
           <label class="option"><input type="radio" name="q9" value="3"><span class="num">3.</span><span class="body"><strong>Expert-led.</strong> The person who knows the work best evaluates quality. Their domain expertise is trusted and central.</span></label>
@@ -740,7 +769,7 @@
           <span class="q-anchor">5</span>
           <span class="q-prompt">When existing tools or processes don't quite fit what you need, what happens?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="q10" value="1" required><span class="num">1.</span><span class="body"><strong>Workaround.</strong> People adapt manually or accept the limitations.</span></label>
           <label class="option"><input type="radio" name="q10" value="2"><span class="num">2.</span><span class="body"><strong>Shop for alternatives.</strong> We look for a better off-the-shelf option, but rarely customize or build anything.</span></label>
           <label class="option"><input type="radio" name="q10" value="3"><span class="num">3.</span><span class="body"><strong>Adapt and build.</strong> Someone configures software, builds templates, or adjusts workflows to fit, even if informally.</span></label>
@@ -823,7 +852,7 @@
           <span class="q-anchor">5</span>
           <span class="q-prompt">How would you describe your comfort with AI tools today?</span>
         </legend>
-        <div class="options">
+        <div class="options spectrum">
           <label class="option"><input type="radio" name="p5" value="1" required><span class="num">1.</span><span class="body"><strong>Brand new.</strong> I've barely used AI tools, or only tried one out of curiosity.</span></label>
           <label class="option"><input type="radio" name="p5" value="2"><span class="num">2.</span><span class="body"><strong>Dabbling.</strong> I've experimented a bit and understand the basics, but I don't use AI in any regular way.</span></label>
           <label class="option"><input type="radio" name="p5" value="3"><span class="num">3.</span><span class="body"><strong>Comfortable.</strong> I use AI occasionally and feel reasonably confident with it for everyday tasks.</span></label>
