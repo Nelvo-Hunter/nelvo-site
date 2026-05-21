@@ -1,10 +1,13 @@
 /**
  * Cloudflare Worker — Nelvo site.
  *
- * Handles dynamic routes (currently /api/growth-map-submit) and
- * falls through to static assets for everything else.
- *
+ * Handles dynamic routes and falls through to static assets for everything else.
  * Goes at the repo root, alongside index.html.
+ *
+ * Dynamic routes:
+ *   POST /api/growth-map-submit   — introduction survey (scored, named)
+ *   POST /api/feedback-submit     — post-session feedback (ANONYMOUS, no PII)
+ *   POST /api/testimonial-submit  — post-session testimonial (named, opt-in)
  *
  * Required environment variable (Cloudflare → Workers & Pages → Settings → Variables and Secrets):
  *   RESEND_API_KEY  — the Resend API key (re_...)
@@ -22,6 +25,22 @@ export default {
     if (url.pathname === '/api/growth-map-submit') {
       if (request.method === 'POST') {
         return handleGrowthMapSubmit(request, env);
+      }
+      return new Response('Method Not Allowed', { status: 405 });
+    }
+
+    // ─── /api/feedback-submit (anonymous) ───────────────
+    if (url.pathname === '/api/feedback-submit') {
+      if (request.method === 'POST') {
+        return handleFeedbackSubmit(request, env);
+      }
+      return new Response('Method Not Allowed', { status: 405 });
+    }
+
+    // ─── /api/testimonial-submit (named) ────────────────
+    if (url.pathname === '/api/testimonial-submit') {
+      if (request.method === 'POST') {
+        return handleTestimonialSubmit(request, env);
       }
       return new Response('Method Not Allowed', { status: 405 });
     }
@@ -174,7 +193,256 @@ async function handleGrowthMapSubmit(request, env) {
 }
 
 // ─────────────────────────────────────────────────────────
-// Profile section (P1-P8, not scored — for session prep)
+// Feedback submission handler (ANONYMOUS)
+//
+// Receives NO identifying information. This is a deliberately
+// separate request from the testimonial so the two cannot be
+// correlated. Do not add name/email handling here.
+// ─────────────────────────────────────────────────────────
+
+async function handleFeedbackSubmit(request, env) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch (err) {
+    return jsonError('Invalid JSON payload', 400);
+  }
+
+  const { session, ratings, responses, submittedAt } = payload || {};
+  if (!ratings || !responses) {
+    return jsonError('Missing required fields', 400);
+  }
+
+  // Validate the six ratings (integers 1-5)
+  const ratingKeys = ['value', 'recommend', 'understandingBefore', 'understandingAfter', 'clarityNextStep', 'mindsetShift'];
+  for (const k of ratingKeys) {
+    const v = ratings[k];
+    if (!Number.isInteger(v) || v < 1 || v > 5) {
+      return jsonError(`Invalid rating: ${k}`, 400);
+    }
+  }
+
+  // Takeaway is required free text
+  if (!responses.takeaway || typeof responses.takeaway !== 'string') {
+    return jsonError('Missing takeaway', 400);
+  }
+
+  const delta = ratings.understandingAfter - ratings.understandingBefore;
+  const deltaStr = (delta > 0 ? '+' : '') + delta;
+  const sessionLabel = (typeof session === 'string' && session.trim()) ? session.trim() : 'Nelvo session';
+
+  const ratingRows = [
+    ['Overall value', `${ratings.value} / 5`],
+    ['Likelihood to recommend', `${ratings.recommend} / 5`],
+    ['Understanding before', `${ratings.understandingBefore} / 5`],
+    ['Understanding after', `${ratings.understandingAfter} / 5`],
+    ['Understanding shift', `${deltaStr}`],
+    ['Clarity on next step', `${ratings.clarityNextStep} / 5`],
+    ['Changed how they think about AI', `${ratings.mindsetShift} / 5`],
+  ].map(([label, value]) =>
+    `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:sans-serif;font-size:14px;color:#444;">${esc(label)}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:monospace;font-size:14px;color:#1E3538;text-align:center;font-weight:600;">${esc(value)}</td></tr>`
+  ).join('');
+
+  const blank = '<em style="color:#999;font-style:italic;">(left blank)</em>';
+  const textBlocks = [
+    ['Most valuable takeaway', responses.takeaway],
+    ['Less useful / could be better', responses.improve],
+    ['What would make it more valuable / what next', responses.next],
+    ['Anything else', responses.anythingElse],
+  ].map(([label, value]) => `
+    <div style="margin-bottom:14px;">
+      <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#888;margin-bottom:6px;">${esc(label)}</div>
+      <div style="font-family:Georgia,serif;font-size:14px;color:#1E3538;line-height:1.55;background:#FAF8F5;padding:10px 14px;border-left:3px solid #B4602C;border-radius:4px;white-space:pre-wrap;">${value ? esc(value) : blank}</div>
+    </div>
+  `).join('');
+
+  const html = `
+<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1E3538;">
+  <div style="border-bottom:3px solid #B4602C;padding-bottom:12px;margin-bottom:20px;">
+    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;">Anonymous session feedback</div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;margin:6px 0 0;color:#1E3538;">${esc(sessionLabel)}</h1>
+  </div>
+
+  <div style="background:#F0EBE1;border-radius:8px;padding:10px 16px;margin-bottom:20px;font-family:sans-serif;font-size:13px;color:#4a5a5d;">
+    This response is anonymous. No name or email was collected. Submitted ${esc(submittedAt || new Date().toISOString())}.
+  </div>
+
+  <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:8px;">Ratings</div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #eee;margin-bottom:24px;">
+    ${ratingRows}
+  </table>
+
+  <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:10px;">Written feedback</div>
+  ${textBlocks}
+</div>
+  `.trim();
+
+  const to = env.NOTIFY_EMAIL || 'hunter@nelvo.ca';
+  const from = env.FROM_EMAIL || 'Nelvo Forms <forms@nelvo.ca>';
+
+  if (!env.RESEND_API_KEY) {
+    return jsonError('Server not configured: missing RESEND_API_KEY', 500);
+  }
+
+  try {
+    // NOTE: no reply_to here, on purpose. The submission is anonymous.
+    const resendResp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        subject: `Session feedback: ${sessionLabel} (anonymous)`,
+        html,
+      }),
+    });
+
+    if (!resendResp.ok) {
+      const detail = await resendResp.text();
+      console.error('Resend error (feedback):', detail);
+      return jsonError('Email send failed', 502);
+    }
+  } catch (err) {
+    console.error('Network error calling Resend (feedback):', err);
+    return jsonError('Network error', 502);
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// Testimonial submission handler (NAMED, opt-in)
+// ─────────────────────────────────────────────────────────
+
+async function handleTestimonialSubmit(request, env) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch (err) {
+    return jsonError('Invalid JSON payload', 400);
+  }
+
+  const { session, testimonial, attribution, consent, openToReference, submittedAt } = payload || {};
+  if (!testimonial || !attribution) {
+    return jsonError('Missing required fields', 400);
+  }
+
+  // Attribution: name, position, company required
+  for (const f of ['name', 'position', 'company']) {
+    if (!attribution[f] || typeof attribution[f] !== 'string') {
+      return jsonError(`Missing attribution field: ${f}`, 400);
+    }
+  }
+
+  // At least one testimonial field
+  const hasContent = ['summary', 'beforeAfter', 'recommendation']
+    .some((k) => testimonial[k] && typeof testimonial[k] === 'string' && testimonial[k].trim());
+  if (!hasContent) {
+    return jsonError('Testimonial is empty', 400);
+  }
+
+  // Consent must be explicitly true
+  if (consent !== true) {
+    return jsonError('Consent not given', 400);
+  }
+
+  const sessionLabel = (typeof session === 'string' && session.trim()) ? session.trim() : 'Nelvo session';
+  const email = (attribution.email && typeof attribution.email === 'string') ? attribution.email.trim() : '';
+  const blank = '<em style="color:#999;font-style:italic;">(left blank)</em>';
+
+  const attrRows = [
+    ['Name', esc(attribution.name)],
+    ['Position', esc(attribution.position)],
+    ['Company', esc(attribution.company)],
+    ['Email', email ? `<a href="mailto:${esc(email)}" style="color:#B4602C;">${esc(email)}</a>` : blank],
+    ['Open to being a reference', openToReference ? 'Yes' : 'No'],
+    ['Consent to publish', 'Yes, with name, title, and company'],
+    ['Submitted', esc(submittedAt || new Date().toISOString())],
+  ].map(([label, value]) =>
+    `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#888;vertical-align:top;width:42%;">${esc(label)}</td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:sans-serif;font-size:14px;color:#1E3538;">${value}</td></tr>`
+  ).join('');
+
+  const textBlocks = [
+    ['Summary (website quote)', testimonial.summary],
+    ['Before and after', testimonial.beforeAfter],
+    ['Would say to others', testimonial.recommendation],
+  ].map(([label, value]) => `
+    <div style="margin-bottom:14px;">
+      <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#888;margin-bottom:6px;">${esc(label)}</div>
+      <div style="font-family:Georgia,serif;font-size:15px;color:#1E3538;line-height:1.6;background:#FAF8F5;padding:12px 16px;border-left:3px solid #B4602C;border-radius:4px;white-space:pre-wrap;">${value && value.trim() ? esc(value) : blank}</div>
+    </div>
+  `).join('');
+
+  const html = `
+<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1E3538;">
+  <div style="border-bottom:3px solid #B4602C;padding-bottom:12px;margin-bottom:20px;">
+    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;">New testimonial</div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;margin:6px 0 0;color:#1E3538;">${esc(attribution.name)}, ${esc(attribution.company)}</h1>
+    <div style="font-family:sans-serif;font-size:13px;color:#7a8a8d;margin-top:4px;">${esc(sessionLabel)}</div>
+  </div>
+
+  <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:10px;">In their words</div>
+  ${textBlocks}
+
+  <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin:24px 0 8px;">Attribution and permission</div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #eee;">
+    ${attrRows}
+  </table>
+</div>
+  `.trim();
+
+  const to = env.NOTIFY_EMAIL || 'hunter@nelvo.ca';
+  const from = env.FROM_EMAIL || 'Nelvo Forms <forms@nelvo.ca>';
+
+  if (!env.RESEND_API_KEY) {
+    return jsonError('Server not configured: missing RESEND_API_KEY', 500);
+  }
+
+  const body = {
+    from,
+    to,
+    subject: `New testimonial: ${attribution.name}, ${attribution.company}`,
+    html,
+  };
+  // Only set reply_to if they shared an email and are open to contact.
+  if (email) {
+    body.reply_to = email;
+  }
+
+  try {
+    const resendResp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!resendResp.ok) {
+      const detail = await resendResp.text();
+      console.error('Resend error (testimonial):', detail);
+      return jsonError('Email send failed', 502);
+    }
+  } catch (err) {
+    console.error('Network error calling Resend (testimonial):', err);
+    return jsonError('Network error', 502);
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// Profile section (P1-P8, not scored — for Growth Map prep)
 // ─────────────────────────────────────────────────────────
 
 function buildProfileSection(profile) {
