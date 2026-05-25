@@ -208,10 +208,16 @@ async function handleFeedbackSubmit(request, env) {
     return jsonError('Invalid JSON payload', 400);
   }
 
-  const { session, ratings, responses, submittedAt } = payload || {};
+  const { session, ratings, responses, submittedDate } = payload || {};
   if (!ratings || !responses) {
     return jsonError('Missing required fields', 400);
   }
+
+  // Date only, no time. Anonymous feedback is never timestamped to the minute,
+  // so a response cannot be ordered against a named testimonial.
+  const dateOnly = (typeof submittedDate === 'string' && submittedDate.trim())
+    ? submittedDate.trim().slice(0, 10)
+    : new Date().toISOString().slice(0, 10);
 
   // Validate the six ratings (integers 1-5)
   const ratingKeys = ['value', 'recommend', 'understandingBefore', 'understandingAfter', 'clarityNextStep', 'mindsetShift'];
@@ -264,7 +270,7 @@ async function handleFeedbackSubmit(request, env) {
   </div>
 
   <div style="background:#F0EBE1;border-radius:8px;padding:10px 16px;margin-bottom:20px;font-family:sans-serif;font-size:13px;color:#4a5a5d;">
-    This response is anonymous. No name or email was collected. Submitted ${esc(submittedAt || new Date().toISOString())}.
+    This response is anonymous. No name, email, or submission time was collected. Received ${esc(dateOnly)}.
   </div>
 
   <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:8px;">Ratings</div>

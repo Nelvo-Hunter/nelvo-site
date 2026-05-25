@@ -155,17 +155,7 @@
     line-height: 1.55;
   }
 
-  /* RESPONDENT / FIELD BLOCKS */
-  .respondent { margin-bottom: 1rem; }
-  .respondent-title {
-    font-family: var(--m);
-    font-size: 0.78rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    margin-bottom: 1.5rem;
-    display: block;
-  }
+  /* FIELD BLOCKS */
   .field { margin-bottom: 2rem; }
   .field-row {
     display: grid;
@@ -363,67 +353,6 @@
   .textarea-field textarea:focus { outline: none; border-color: var(--terra); }
   .textarea-field textarea::placeholder { color: var(--light); font-style: italic; }
 
-  /* TESTIMONIAL FRAMING CALLOUT */
-  .framing {
-    margin: 0 0 2.5rem;
-    padding: 1.4rem 1.6rem;
-    background: var(--cream);
-    border-radius: 10px;
-    max-width: 62ch;
-  }
-  .framing p {
-    font-size: 1rem;
-    color: var(--muted);
-    margin-bottom: 0.85rem;
-    line-height: 1.6;
-  }
-  .framing p:last-child { margin-bottom: 0; }
-  .framing .ex {
-    font-family: var(--h);
-    font-style: italic;
-    color: var(--teal);
-  }
-
-  /* CONSENT + REFERENCE CHECKBOXES */
-  .consent-group {
-    margin-top: 1rem;
-    display: grid;
-    gap: 0.7rem;
-  }
-  @media (min-width: 720px) {
-    .consent-group { padding-left: 0; }
-  }
-  .consent {
-    position: relative;
-    display: grid;
-    grid-template-columns: 24px 1fr;
-    gap: 0.85rem;
-    align-items: start;
-    padding: 1rem 1.2rem;
-    background: var(--cream);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.18s ease;
-  }
-  .consent:hover { background: #FFFDF9; }
-  .consent input { position: absolute; opacity: 0; pointer-events: none; }
-  .consent .box {
-    width: 22px; height: 22px;
-    border: 1.5px solid var(--light);
-    border-radius: 5px;
-    background: #FFFDF9;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s ease;
-    margin-top: 0.1rem;
-  }
-  .consent .box svg { width: 14px; height: 14px; opacity: 0; transition: opacity 0.15s ease; }
-  .consent:has(input:checked) { background: #FFFDF9; }
-  .consent:has(input:checked) .box { background: var(--terra); border-color: var(--terra); }
-  .consent:has(input:checked) .box svg { opacity: 1; }
-  .consent .box svg path { stroke: #fff; }
-  .consent .ctext { font-size: 0.95rem; color: var(--muted); line-height: 1.5; }
-  .consent .ctext strong { color: var(--teal); font-weight: 600; }
-
   /* SUBMIT / BUTTONS */
   .submit-row {
     margin: 4rem 0 4rem;
@@ -450,18 +379,6 @@
   .btn-submit:hover:not(:disabled) { background: var(--terra-2); }
   .btn-submit:active:not(:disabled) { transform: translateY(1px); }
   .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
-  .btn-secondary {
-    background: none;
-    border: none;
-    padding: 0.4rem 0;
-    color: var(--muted);
-    font-family: var(--s);
-    font-size: 0.92rem;
-    cursor: pointer;
-    border-bottom: 1px solid var(--rule);
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .btn-secondary:hover { color: var(--terra); border-bottom-color: var(--terra); }
   .submit-hint {
     font-family: var(--m);
     font-size: 0.78rem;
@@ -485,7 +402,7 @@
   .screen { display: none; }
   .screen.active { display: block; }
 
-  /* INTERSTITIAL + DONE STATES */
+  /* STATEMENT (confirmation / done) */
   .statement { padding: 1rem 0 5rem; }
   .statement .mono {
     font-family: var(--m);
@@ -553,16 +470,16 @@
 
 <main class="wrap">
 
-  <!-- ─── SCREEN 1: ANONYMOUS FEEDBACK ─────────────────── -->
+  <!-- ─── ANONYMOUS FEEDBACK ───────────────────────────── -->
   <section id="screen-feedback" class="screen active">
 
     <div class="intro">
       <span class="mono">After the session</span>
       <h1>How did <em>today land?</em></h1>
       <p>Thanks for spending the morning with us. Your honest read is the most useful thing you can give me back, and it directly shapes how I run the next one.</p>
-      <p>This has two parts. First, a few quick questions and your candid feedback. After that, an optional testimonial. Say what you really think, including what did not work.</p>
-      <div class="privacy-note">This part is completely anonymous. No name, no email. When you continue, your answers are submitted with nothing attached, so I cannot tell who said what.</div>
-      <p class="takes">Takes about 5 to 7 minutes.</p>
+      <p>It is a few quick ratings and a handful of open questions. Say what you really think, including what did not work. When you are done, you can leave a testimonial if you would like, though that is entirely optional.</p>
+      <div class="privacy-note">This is completely anonymous. No name, no email, and no time recorded with your answers, so there is no way to connect them back to you.</div>
+      <p class="takes">Takes about 3 to 5 minutes.</p>
     </div>
 
     <form id="feedback-form" novalidate>
@@ -663,7 +580,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">5</span>
+          <span class="q-anchor">7</span>
           <span class="q-prompt">What was the most valuable thing you took away today?</span>
         </legend>
         <p class="q-note">A specific idea, tool, moment, or shift in how you think about AI.</p>
@@ -674,7 +591,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">6</span>
+          <span class="q-anchor">8</span>
           <span class="q-prompt">What was less useful, confusing, or could be better?</span>
         </legend>
         <p class="q-note">Be honest. This is the part that helps me improve the most. Optional.</p>
@@ -685,7 +602,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">7</span>
+          <span class="q-anchor">9</span>
           <span class="q-prompt">What would make a session like this even more valuable, or what would you want next?</span>
         </legend>
         <p class="q-note">Optional.</p>
@@ -696,7 +613,7 @@
 
       <fieldset class="question">
         <legend>
-          <span class="q-anchor">8</span>
+          <span class="q-anchor">10</span>
           <span class="q-prompt">Anything else you want me to know?</span>
         </legend>
         <p class="q-note">Optional.</p>
@@ -707,7 +624,7 @@
 
       <div class="submit-row">
         <button type="submit" class="btn-submit" id="btn-feedback">
-          Submit anonymously and continue
+          Submit feedback anonymously
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
         <div class="submit-hint">Your answers are sent with no name attached</div>
@@ -717,130 +634,20 @@
     </form>
   </section>
 
-  <!-- ─── INTERSTITIAL: FEEDBACK CONFIRMED ─────────────── -->
+  <!-- ─── CONFIRMATION + TESTIMONIAL INVITE ────────────── -->
   <section id="screen-confirm" class="screen">
     <div class="statement">
-      <span class="mono">Step one complete</span>
-      <h1>Your feedback is in, <em>anonymously.</em></h1>
-      <p>Thank you for the honest read. Your responses were just submitted with no name attached, so I cannot tell who wrote what. That is exactly how it should be.</p>
-      <p>One optional step is left. If you are willing to leave a short testimonial, it is a real help to a business as new as Nelvo. This is a separate submission, and it is the only place your name appears.</p>
-      <div class="btn-row">
-        <button type="button" class="btn-submit" id="btn-to-testimonial">
-          Continue to testimonial
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </button>
-        <button type="button" class="btn-secondary" id="btn-skip-testimonial">No thanks, I am all done</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SCREEN 2: TESTIMONIAL ────────────────────────── -->
-  <section id="screen-testimonial" class="screen">
-
-    <div class="intro">
-      <span class="mono">Optional</span>
-      <h1>Leave a <em>testimonial.</em></h1>
-    </div>
-
-    <div class="framing">
-      <p>Nelvo is brand new, and a few words from someone who was actually in the room carry more weight than anything I can say about myself.</p>
-      <p>Two things make a testimonial powerful: <strong>your name and position</strong>, and <strong>specifics</strong>. <span class="ex">"Hunter is great"</span> says very little. <span class="ex">"Our team went from avoiding AI to running our first experiment within a week"</span> tells a story. The more concrete you are, the more it helps.</p>
-    </div>
-
-    <form id="testimonial-form" novalidate>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">1</span>
-          <span class="q-prompt">In a sentence or two, how would you sum up the session, or working with Hunter?</span>
-        </legend>
-        <p class="q-note">Short and punchy works well. This is the kind of line that might appear on the Nelvo website.</p>
-        <div class="textarea-field">
-          <textarea name="t1" rows="3" placeholder="Your headline takeaway."></textarea>
-        </div>
-      </fieldset>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">2</span>
-          <span class="q-prompt">What was your team's relationship with AI before today, and what feels different now?</span>
-        </legend>
-        <p class="q-note">A genuine before-and-after is the most convincing thing a reader can hear.</p>
-        <div class="textarea-field">
-          <textarea name="t2" rows="5" placeholder="Where you started, what shifted, and where you are now."></textarea>
-        </div>
-      </fieldset>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">3</span>
-          <span class="q-prompt">What would you say to another business owner or leader who is on the fence about doing this?</span>
-        </legend>
-        <p class="q-note">Optional, but powerful.</p>
-        <div class="textarea-field">
-          <textarea name="t3" rows="4" placeholder="A sentence or two."></textarea>
-        </div>
-      </fieldset>
-
-      <div class="section-divider">
-        <span class="section-label">Attribution</span>
-        <h2 class="section-title">So I can credit you properly</h2>
-      </div>
-      <p class="section-intro">A testimonial is far more credible with a real name and title behind it. All three help.</p>
-
-      <div class="field-row">
-        <div class="field">
-          <label class="field-label" for="t-name">Name</label>
-          <input type="text" id="t-name" name="name" autocomplete="name">
-        </div>
-        <div class="field">
-          <label class="field-label" for="t-position">Position / title</label>
-          <input type="text" id="t-position" name="position" autocomplete="organization-title">
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="field-label" for="t-company">Company / organization</label>
-          <input type="text" id="t-company" name="company" autocomplete="organization">
-        </div>
-        <div class="field">
-          <label class="field-label" for="t-email">Email <span style="text-transform:none;letter-spacing:0;font-family:var(--h);font-style:italic;color:var(--light);">(optional)</span></label>
-          <p class="field-note">Only if you are open to being contacted.</p>
-          <input type="email" id="t-email" name="email" autocomplete="email">
-        </div>
-      </div>
-
-      <div class="consent-group">
-        <label class="consent">
-          <input type="checkbox" name="consent" value="yes">
-          <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
-          <span class="ctext"><strong>Yes, Nelvo may share my words above, along with my name, title, and company, on its website and in materials for prospective clients.</strong></span>
-        </label>
-        <label class="consent">
-          <input type="checkbox" name="reference" value="yes">
-          <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
-          <span class="ctext">I would also be open to being contacted as a reference for Nelvo.</span>
-        </label>
-      </div>
-
-      <div class="submit-row">
-        <button type="submit" class="btn-submit" id="btn-testimonial">
-          Submit testimonial
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </button>
-        <button type="button" class="btn-secondary" id="btn-skip-testimonial-2">Skip, I am all done</button>
-        <div class="error" id="testimonial-error" hidden></div>
-      </div>
-
-    </form>
-  </section>
-
-  <!-- ─── FINAL: DONE ──────────────────────────────────── -->
-  <section id="screen-done" class="screen">
-    <div class="statement">
       <span class="mono">Thank you</span>
-      <h1>That's everything. <em>Thank you.</em></h1>
-      <p id="done-line">I am grateful you spent the morning with us, and even more grateful for your candor. It directly shapes the next session.</p>
+      <h1>Your feedback is in, <em>anonymously.</em></h1>
+      <p>Thank you for the honest read. Your answers were submitted with no name and no time recorded, kept separate from anything else, so there is no way to trace them back to you.</p>
+      <p>If you have a moment for one more thing, would you leave a short testimonial? Nelvo is just getting started, and a few honest words from someone who was actually in the room will do more to earn the next business owner's trust than anything I could say about myself.</p>
+      <div class="btn-row">
+        <a href="/testimonial" class="btn-submit">
+          Leave a testimonial
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <span class="submit-hint">Not now is completely fine</span>
+      </div>
     </div>
   </section>
 
@@ -860,8 +667,6 @@
   const screens = {
     feedback: document.getElementById('screen-feedback'),
     confirm: document.getElementById('screen-confirm'),
-    testimonial: document.getElementById('screen-testimonial'),
-    done: document.getElementById('screen-done'),
   };
 
   function showScreen(key) {
@@ -875,7 +680,6 @@
     el.hidden = false;
   }
 
-  // ─── Feedback form (anonymous) ───────────────────────
   const feedbackForm = document.getElementById('feedback-form');
   const btnFeedback = document.getElementById('btn-feedback');
   const feedbackError = document.getElementById('feedback-error');
@@ -888,8 +692,7 @@
     for (let i = 1; i <= 6; i++) {
       if (!feedbackForm.querySelector(`input[name="r${i}"]:checked`)) {
         showError(feedbackError, 'Please answer all six ratings before continuing.');
-        const block = feedbackForm.querySelector(`input[name="r${i}"]`).closest('.question');
-        block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        feedbackForm.querySelector(`input[name="r${i}"]`).closest('.question').scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
     }
@@ -917,7 +720,8 @@
         next: (data.get('f7') || '').trim() || null,
         anythingElse: (data.get('f8') || '').trim() || null,
       },
-      submittedAt: new Date().toISOString(),
+      // Date only, no time, so an anonymous response cannot be ordered against a testimonial.
+      submittedDate: new Date().toISOString().slice(0, 10),
     };
 
     btnFeedback.disabled = true;
@@ -935,77 +739,6 @@
       btnFeedback.disabled = false;
       btnFeedback.innerHTML = 'Try again <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
       showError(feedbackError, 'Something went wrong sending your feedback. Please try again, or email Hunter directly at hunter@nelvo.ca.');
-    }
-  });
-
-  // ─── Interstitial buttons ────────────────────────────
-  document.getElementById('btn-to-testimonial').addEventListener('click', () => showScreen('testimonial'));
-  document.getElementById('btn-skip-testimonial').addEventListener('click', () => showScreen('done'));
-  document.getElementById('btn-skip-testimonial-2').addEventListener('click', () => showScreen('done'));
-
-  // ─── Testimonial form (named) ────────────────────────
-  const testimonialForm = document.getElementById('testimonial-form');
-  const btnTestimonial = document.getElementById('btn-testimonial');
-  const testimonialError = document.getElementById('testimonial-error');
-
-  testimonialForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    testimonialError.hidden = true;
-
-    const data = new FormData(testimonialForm);
-    const t1 = (data.get('t1') || '').trim();
-    const t2 = (data.get('t2') || '').trim();
-    const t3 = (data.get('t3') || '').trim();
-    const name = (data.get('name') || '').trim();
-    const position = (data.get('position') || '').trim();
-    const company = (data.get('company') || '').trim();
-    const email = (data.get('email') || '').trim();
-    const consent = testimonialForm.querySelector('input[name="consent"]').checked;
-    const reference = testimonialForm.querySelector('input[name="reference"]').checked;
-
-    if (!t1 && !t2 && !t3) {
-      showError(testimonialError, 'Please write a few words in at least one box above, or use "Skip, I am all done" if you would rather not.');
-      return;
-    }
-    if (!name || !position || !company) {
-      showError(testimonialError, 'Please add your name, position, and company so I can credit you properly.');
-      return;
-    }
-    if (!consent) {
-      showError(testimonialError, 'Please tick the box giving permission to share your words, or use "Skip, I am all done" instead.');
-      return;
-    }
-
-    const payload = {
-      session: SESSION_LABEL,
-      testimonial: {
-        summary: t1 || null,
-        beforeAfter: t2 || null,
-        recommendation: t3 || null,
-      },
-      attribution: { name, position, company, email: email || null },
-      consent: true,
-      openToReference: reference,
-      submittedAt: new Date().toISOString(),
-    };
-
-    btnTestimonial.disabled = true;
-    btnTestimonial.textContent = 'Sending...';
-
-    try {
-      const resp = await fetch('/api/testimonial-submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!resp.ok) throw new Error('Server error ' + resp.status);
-      document.getElementById('done-line').textContent =
-        'Your testimonial means a great deal, and putting your name to it means even more. Thank you for helping Nelvo grow.';
-      showScreen('done');
-    } catch (err) {
-      btnTestimonial.disabled = false;
-      btnTestimonial.innerHTML = 'Try again <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-      showError(testimonialError, 'Something went wrong sending your testimonial. Please try again, or email Hunter directly at hunter@nelvo.ca.');
     }
   });
 </script>
