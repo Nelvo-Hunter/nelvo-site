@@ -51,7 +51,7 @@ export default {
 };
 
 // ─────────────────────────────────────────────────────────
-// Growth Map submission handler
+// Growth Map submission handler (v2)
 // ─────────────────────────────────────────────────────────
 
 async function handleGrowthMapSubmit(request, env) {
@@ -63,7 +63,7 @@ async function handleGrowthMapSubmit(request, env) {
     return jsonError('Invalid JSON payload', 400);
   }
 
-  const { respondent, responses, profile, submittedAt } = payload || {};
+  const { respondent, responses, breadth, profile, submittedAt } = payload || {};
   if (!respondent || !responses) {
     return jsonError('Missing required fields', 400);
   }
@@ -84,15 +84,37 @@ async function handleGrowthMapSubmit(request, env) {
     }
   }
 
-  // Score
-  // Top-Down = Q1..Q5, Bottom-Up = Q6..Q10
-  // Raw 5-25 → normalized 1.0-9.0 via ((raw - 5) / 20) * 8 + 1
-  // Quadrant thresholds at 5.0
-  const topDownRaw = [1, 2, 3, 4, 5].reduce((s, i) => s + responses[`q${i}`], 0);
-  const bottomUpRaw = [6, 7, 8, 9, 10].reduce((s, i) => s + responses[`q${i}`], 0);
-  const normalize = (raw) => Math.round((((raw - 5) / 20) * 8 + 1) * 10) / 10;
-  const topDown = normalize(topDownRaw);
-  const bottomUp = normalize(bottomUpRaw);
+  // Validate breadth (B-A4): array of category strings
+  if (!Array.isArray(breadth) || breadth.length === 0 || breadth.length > 9) {
+    return jsonError('Invalid breadth selection', 400);
+  }
+  const breadthClean = breadth.map((s) => String(s).slice(0, 120));
+  const breadthCount = breadthClean.includes('None') ? 0 : breadthClean.length;
+  const breadthScore =
+    breadthCount <= 1 ? (breadthCount === 0 ? 1 : 1) :
+    breadthCount === 2 ? 2 :
+    breadthCount <= 4 ? 3 :
+    breadthCount <= 6 ? 4 : 5;
+
+  // ── Score (v2): axis = 0.3 * Change Readiness + 0.7 * AI Engagement
+  const q = (i) => responses[`q${i}`];
+  const round1 = (x) => Math.round(x * 10) / 10;
+  const normReadiness = (raw) => ((raw - 2) / 8) * 8 + 1;          // raw 2-10 → 1-9
+  const normAI3 = (raw) => ((raw - 3) / 12) * 8 + 1;               // raw 3-15 → 1-9
+  const normAI4 = (raw) => ((raw - 4) / 16) * 8 + 1;               // raw 4-20 → 1-9
+
+  const tdReadinessRaw = q(1) + q(2);
+  const tdAIRaw = q(3) + q(4) + q(5);
+  const buReadinessRaw = q(6) + q(7);
+  const buAIRaw = q(8) + q(9) + q(10) + breadthScore;
+
+  const tdReadiness = round1(normReadiness(tdReadinessRaw));
+  const tdAI = round1(normAI3(tdAIRaw));
+  const buReadiness = round1(normReadiness(buReadinessRaw));
+  const buAI = round1(normAI4(buAIRaw));
+
+  const topDown = round1(0.3 * normReadiness(tdReadinessRaw) + 0.7 * normAI3(tdAIRaw));
+  const bottomUp = round1(0.3 * normReadiness(buReadinessRaw) + 0.7 * normAI4(buAIRaw));
 
   const quadrant =
     topDown < 5.0 && bottomUp < 5.0 ? 'Unbroken Ground' :
@@ -102,16 +124,16 @@ async function handleGrowthMapSubmit(request, env) {
 
   // Compose email body
   const questionLabels = [
-    'Q1. Communication of workplace change',
-    'Q2. How investment decisions start',
-    'Q3. How results are measured',
-    'Q4. Investment in skill development',
-    'Q5. Risk and boundary management',
-    'Q6. Engagement with new technology',
-    'Q7. Knowledge documentation',
-    'Q8. Discovery sharing across the team',
-    'Q9. Quality review of important work',
-    'Q10. Response when tools do not fit',
+    'Q1. Communication of change (readiness)',
+    'Q2. Skill-building support (readiness)',
+    'Q3. AI direction (AI)',
+    'Q4. Commitment about AI and roles (AI)',
+    'Q5. Guardrail fit (AI)',
+    'Q6. Knowledge and context capture (readiness)',
+    'Q7. Discovery sharing (readiness)',
+    'Q8. Hands-on AI use (AI)',
+    'Q9. AI output review (AI)',
+    'Q10. Building with AI (AI)',
   ];
 
   const rows = questionLabels
@@ -121,10 +143,12 @@ async function handleGrowthMapSubmit(request, env) {
     })
     .join('');
 
+  const breadthRow = `<tr><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:sans-serif;font-size:14px;color:#444;">Q11. Breadth of AI use (AI)<br><span style="font-size:12px;color:#888;">${breadthClean.map(esc).join(' · ')}</span></td><td style="padding:6px 12px;border-bottom:1px solid #eee;font-family:monospace;font-size:14px;color:#1E3538;text-align:center;font-weight:600;">${breadthScore}<br><span style="font-size:11px;color:#888;">(${breadthCount} cat.)</span></td></tr>`;
+
   const html = `
 <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1E3538;">
   <div style="border-bottom:3px solid #B4602C;padding-bottom:12px;margin-bottom:20px;">
-    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;">New Growth Map response</div>
+    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;">New Growth Map response (survey v2)</div>
     <h1 style="font-family:Georgia,serif;font-size:24px;margin:6px 0 0;color:#1E3538;">${esc(respondent.organization)}</h1>
   </div>
 
@@ -136,10 +160,14 @@ async function handleGrowthMapSubmit(request, env) {
   </table>
 
   <div style="background:#F0EBE1;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
-    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:8px;">Scoring</div>
+    <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:8px;">Scoring (v2: 0.3 readiness + 0.7 AI)</div>
     <table style="width:100%;font-family:sans-serif;font-size:14px;">
-      <tr><td style="padding:3px 0;color:#4a5a5d;">Top-Down (leadership engagement, Q1-Q5)</td><td style="padding:3px 0;font-family:monospace;font-weight:600;color:#1E3538;text-align:right;">${topDown} / 9.0 (raw ${topDownRaw})</td></tr>
-      <tr><td style="padding:3px 0;color:#4a5a5d;">Bottom-Up (frontline capability, Q6-Q10)</td><td style="padding:3px 0;font-family:monospace;font-weight:600;color:#1E3538;text-align:right;">${bottomUp} / 9.0 (raw ${bottomUpRaw})</td></tr>
+      <tr><td style="padding:3px 0;color:#4a5a5d;">Top-Down (leadership enablement)</td><td style="padding:3px 0;font-family:monospace;font-weight:600;color:#1E3538;text-align:right;">${topDown} / 9.0</td></tr>
+      <tr><td style="padding:2px 0 2px 14px;color:#7a8a8d;font-size:13px;">Change Readiness (Q1-Q2)</td><td style="padding:2px 0;font-family:monospace;color:#4a5a5d;text-align:right;font-size:13px;">${tdReadiness} / 9.0 (raw ${tdReadinessRaw})</td></tr>
+      <tr><td style="padding:2px 0 6px 14px;color:#7a8a8d;font-size:13px;">AI Engagement (Q3-Q5)</td><td style="padding:2px 0 6px;font-family:monospace;color:#4a5a5d;text-align:right;font-size:13px;">${tdAI} / 9.0 (raw ${tdAIRaw})</td></tr>
+      <tr><td style="padding:3px 0;color:#4a5a5d;">Bottom-Up (frontline capability)</td><td style="padding:3px 0;font-family:monospace;font-weight:600;color:#1E3538;text-align:right;">${bottomUp} / 9.0</td></tr>
+      <tr><td style="padding:2px 0 2px 14px;color:#7a8a8d;font-size:13px;">Change Readiness (Q6-Q7)</td><td style="padding:2px 0;font-family:monospace;color:#4a5a5d;text-align:right;font-size:13px;">${buReadiness} / 9.0 (raw ${buReadinessRaw})</td></tr>
+      <tr><td style="padding:2px 0 6px 14px;color:#7a8a8d;font-size:13px;">AI Engagement (Q8-Q10 + breadth)</td><td style="padding:2px 0 6px;font-family:monospace;color:#4a5a5d;text-align:right;font-size:13px;">${buAI} / 9.0 (raw ${buAIRaw})</td></tr>
       <tr><td style="padding:8px 0 3px;color:#4a5a5d;border-top:1px solid rgba(30,53,56,0.15);">Quadrant</td><td style="padding:8px 0 3px;font-family:Georgia,serif;font-weight:700;font-size:16px;color:#B4602C;text-align:right;border-top:1px solid rgba(30,53,56,0.15);">${quadrant}</td></tr>
     </table>
   </div>
@@ -147,6 +175,7 @@ async function handleGrowthMapSubmit(request, env) {
   <div style="font-family:monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.14em;color:#B4602C;margin-bottom:8px;">Answers</div>
   <table style="width:100%;border-collapse:collapse;border:1px solid #eee;">
     ${rows}
+    ${breadthRow}
   </table>
   ${buildProfileSection(profile)}
 </div>
@@ -448,7 +477,7 @@ async function handleTestimonialSubmit(request, env) {
 }
 
 // ─────────────────────────────────────────────────────────
-// Profile section (P1-P8, not scored — for Growth Map prep)
+// Profile section (P1-P7, not scored — for Growth Map prep)
 // ─────────────────────────────────────────────────────────
 
 function buildProfileSection(profile) {
@@ -456,34 +485,49 @@ function buildProfileSection(profile) {
 
   const blank = '<em style="color:#999;font-style:italic;">(blank)</em>';
 
-  function fmtArray(arr) {
-    if (!Array.isArray(arr) || arr.length === 0) return blank;
-    return arr.map(esc).join(', ');
-  }
   function fmtSingle(v) {
     if (v === null || v === undefined || v === '') return blank;
     return esc(String(v));
   }
 
-  let p1Display = fmtArray(profile.p1);
-  if (profile.p1_other) p1Display += ` <span style="color:#888;">(other: ${esc(profile.p1_other)})</span>`;
+  // P1: tools grid → "ChatGPT (personal + work), Claude (work), ..."
+  let toolsDisplay = blank;
+  const t = profile.tools;
+  if (t && typeof t === 'object') {
+    if (t.none) {
+      toolsDisplay = "Doesn't use AI tools yet";
+    } else {
+      const names = {
+        chatgpt: 'ChatGPT',
+        claude: 'Claude',
+        gemini: 'Gemini',
+        copilot: 'Microsoft Copilot',
+        perplexity: 'Perplexity',
+        other: t.otherName ? `Other: ${t.otherName}` : 'Other',
+      };
+      const parts = [];
+      for (const key of Object.keys(names)) {
+        const uses = Array.isArray(t[key]) ? t[key] : [];
+        if (uses.length > 0) {
+          parts.push(`${names[key]} (${uses.join(' + ').toLowerCase()})`);
+        }
+      }
+      if (parts.length > 0) toolsDisplay = esc(parts.join(', '));
+    }
+  }
 
-  let p3Display = fmtArray(profile.p3);
-  if (profile.p3_other) p3Display += ` <span style="color:#888;">(other: ${esc(profile.p3_other)})</span>`;
+  let paidDisplay = fmtSingle(profile.paid);
+  if (profile.paidWhich) paidDisplay += ` <span style="color:#888;">(${esc(profile.paidWhich)})</span>`;
 
-  let p4Display = fmtSingle(profile.p4);
-  if (profile.p4_which) p4Display += ` <span style="color:#888;">(${esc(profile.p4_which)})</span>`;
-
-  const p5Display = (Number.isInteger(profile.p5) && profile.p5 >= 1 && profile.p5 <= 5)
-    ? `${profile.p5} / 5`
+  const comfortDisplay = (Number.isInteger(profile.comfort) && profile.comfort >= 1 && profile.comfort <= 5)
+    ? `${profile.comfort} / 5`
     : blank;
 
   const shortRows = [
-    ['P1. Primary AI platforms (personal)', p1Display],
-    ['P2. Frequency of personal AI use', fmtSingle(profile.p2)],
-    ['P3. AI tools at work', p3Display],
-    ['P4. Pays for AI subscription', p4Display],
-    ['P5. Self-rated comfort with AI', p5Display],
+    ['P1. AI tools used, and where', toolsDisplay],
+    ['P2. Frequency of AI use (work + personal)', fmtSingle(profile.frequency)],
+    ['P3. Self-rated comfort with AI', comfortDisplay],
+    ['P4. Pays for AI subscription', paidDisplay],
   ];
 
   const shortRowsHtml = shortRows.map(([label, value]) =>
@@ -491,9 +535,9 @@ function buildProfileSection(profile) {
   ).join('');
 
   const freeText = [
-    ['P6. A task AI worked well for', profile.p6],
-    ['P7. A task they wish AI could help with', profile.p7],
-    ['P8. Concerns or hesitations about AI at work', profile.p8],
+    ['P5. A task AI worked well for', profile.taskWorked],
+    ['P6. A task they wish AI could help with', profile.taskWish],
+    ['P7. Concerns or hesitations about AI at work', profile.concern],
   ];
 
   const longBlocksHtml = freeText.map(([label, value]) => `

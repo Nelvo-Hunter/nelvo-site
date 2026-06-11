@@ -17,19 +17,22 @@
     --teal-2: #2A474B;
     --terra: #B4602C;
     --terra-2: #9A5125;
-    --terra-lt: #D4793E;
     --bg: #FAF8F5;
     --cream: #F0EBE1;
-    --rule: rgba(30, 53, 56, 0.12);
+    --rule: rgba(30, 53, 56, 0.14);
     --rule-soft: rgba(30, 53, 56, 0.07);
     --muted: #4a5a5d;
     --light: #7a8a8d;
     --h: 'Libre Baskerville', Georgia, serif;
     --s: 'Outfit', sans-serif;
     --m: 'IBM Plex Mono', monospace;
+    --rail: 104px;
+    --rail-gap: 1.5rem;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { height: 100%; }
 
   body {
     font-family: var(--s);
@@ -37,143 +40,307 @@
     background: var(--bg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
   }
 
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; display: block; }
 
-  h1, h2, h3 {
+  h1, h2 {
     font-family: var(--h);
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.18;
     letter-spacing: -0.015em;
   }
 
-  .wrap {
-    max-width: 820px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  /* ambient ensō watermark */
+  .page-enso {
+    position: fixed;
+    right: -7rem;
+    bottom: -7rem;
+    width: 30rem;
+    height: 30rem;
+    background: url('./nelvo-enso.svg') no-repeat center / contain;
+    opacity: 0.055;
+    pointer-events: none;
+    z-index: 0;
   }
+  body.on-welcome .page-enso { display: none; }
 
-  /* HEADER */
-  .site-head {
-    padding: 2rem 0 0;
+  /* ───────────────────────── CHROME ───────────────────────── */
+
+  .chrome {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
     border-bottom: 1px solid var(--rule-soft);
-    margin-bottom: 4.5rem;
   }
-  .site-head .wrap {
+  .chrome-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 1.75rem;
     gap: 1rem;
-    flex-wrap: wrap;
   }
   .site-logo img { height: 36px; width: auto; }
-  .head-mono {
+
+  .progress-cluster {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+  }
+  .part-label {
     font-family: var(--m);
-    font-size: 0.78rem;
-    color: var(--muted);
+    font-size: 0.92rem;
+    color: var(--light);
+    letter-spacing: 0.04em;
+    text-align: right;
+    line-height: 1.55;
+  }
+  .part-label strong {
+    display: block;
+    color: var(--teal);
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
+    font-size: 0.86rem;
+  }
+  .part-label .count { color: var(--terra); }
+
+  .enso-progress {
+    position: relative;
+    width: 66px;
+    height: 66px;
+    flex: none;
+  }
+  .enso-progress .track,
+  .enso-progress .fill {
+    position: absolute;
+    inset: 0;
+    background: url('./nelvo-enso.svg') no-repeat center / contain;
+  }
+  .enso-progress .track { opacity: 0.16; }
+  @property --p {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+  }
+  .enso-progress .fill {
+    --p: 0;
+    -webkit-mask-image: conic-gradient(from 0deg, #000 calc(var(--p) * 1turn), transparent calc(var(--p) * 1turn));
+    mask-image: conic-gradient(from 0deg, #000 calc(var(--p) * 1turn), transparent calc(var(--p) * 1turn));
+    transition: --p 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* INTRO */
-  .intro { margin-bottom: 3rem; }
-  .intro .mono {
+  /* ───────────────────────── STAGE ───────────────────────── */
+
+  .stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  form { display: flex; flex-direction: column; flex: 1; }
+
+  .step {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 0 2.25rem;
+    min-height: calc(100svh - 175px);
+  }
+  .step.active { display: flex; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .step.active .anim {
+    opacity: 0;
+    animation: rise 0.45s cubic-bezier(0.22, 0.9, 0.3, 1) forwards;
+  }
+  .step.active .anim:nth-child(1) { animation-delay: 0.02s; }
+  .step.active .anim:nth-child(2) { animation-delay: 0.08s; }
+  .step.active .anim:nth-child(3) { animation-delay: 0.14s; }
+  .step.active .anim:nth-child(4) { animation-delay: 0.20s; }
+  .step.active .anim:nth-child(5) { animation-delay: 0.26s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step.active .anim { animation: none; opacity: 1; }
+    .enso-progress .fill { transition: none !important; }
+  }
+
+  /* ───────────────────────── WELCOME ───────────────────────── */
+
+  .welcome { position: relative; }
+  .welcome-enso {
+    position: absolute;
+    top: 50%;
+    right: -150px;
+    transform: translateY(-54%);
+    width: 470px;
+    height: 470px;
+    background: url('./nelvo-enso-textured.webp') no-repeat center / contain;
+    opacity: 0.95;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .welcome-enso::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--bg) 0%, rgba(250,248,245,0) 45%);
+  }
+  .mono-eyebrow {
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     color: var(--terra);
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    margin-bottom: 1rem;
     display: block;
   }
-  .intro h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+  .welcome .mono-eyebrow { margin-bottom: 1.1rem; }
+  .welcome h1 {
+    font-size: clamp(2.1rem, 5.5vw, 3rem);
+    margin-bottom: 0.9rem;
+    max-width: 16ch;
   }
-  .intro h1 em {
-    color: var(--terra);
-    font-style: italic;
-  }
-  .intro p {
-    font-size: 1.05rem;
+  .welcome h1 em { color: var(--terra); font-style: italic; }
+  .brush-underline { width: 210px; height: 13px; margin: 0.2rem 0 1.6rem; }
+  .welcome p {
+    font-size: 1.08rem;
     color: var(--muted);
     margin-bottom: 0.95rem;
-    max-width: 58ch;
+    max-width: 50ch;
   }
-  .privacy-note {
-    margin: 1.5rem 0 0;
+  .framing {
+    margin: 1.4rem 0 0;
     padding: 0.95rem 1.15rem;
     background: var(--cream);
     border-left: 3px solid var(--terra);
     border-radius: 4px;
+    font-size: 0.98rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 50ch;
+  }
+  .framing .ex {
     font-family: var(--h);
     font-style: italic;
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.55;
-    max-width: 58ch;
-  }
-
-  form { display: block; }
-
-  .section-divider {
-    margin: 4rem 0 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--rule);
-  }
-  .section-label {
-    font-family: var(--m);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--terra);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 1rem;
-    display: block;
-  }
-  .section-title {
-    font-size: 1.55rem;
-    margin-bottom: 0;
     color: var(--teal);
   }
-  .section-intro {
-    font-family: var(--h);
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--muted);
-    margin: 1rem 0 2.5rem;
-    max-width: 58ch;
-    line-height: 1.55;
+  .welcome .timing {
+    font-family: var(--m);
+    font-size: 0.88rem;
+    color: var(--light);
+    margin: 1.4rem 0 0;
   }
 
-  /* FIELD BLOCKS */
-  .field { margin-bottom: 2rem; }
+  /* ───────────────────────── QUESTION LAYOUT ───────────────────────── */
+
+  .q-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1.3rem;
+  }
+  @media (min-width: 720px) {
+    .q-head { grid-template-columns: var(--rail) 1fr; gap: var(--rail-gap); }
+  }
+  .q-anchor {
+    font-family: var(--m);
+    line-height: 1;
+    padding-top: 0.3rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+  @media (min-width: 720px) {
+    .q-anchor {
+      flex-direction: column;
+      gap: 0.5rem;
+      border-right: 1px solid var(--rule-soft);
+      padding-right: 1.1rem;
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+  .q-anchor .n {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--terra);
+    letter-spacing: -0.02em;
+  }
+  .q-anchor .of {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--light);
+    letter-spacing: 0.04em;
+  }
+  .q-prompt {
+    font-family: var(--h);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+    color: var(--teal);
+    line-height: 1.42;
+    max-width: 34ch;
+  }
+  .q-note {
+    font-family: var(--h);
+    font-style: italic;
+    font-size: 0.96rem;
+    color: var(--light);
+    margin: -0.6rem 0 1.15rem;
+    line-height: 1.5;
+  }
+  @media (min-width: 720px) {
+    .q-note, .textarea-field, .consent-group {
+      padding-left: calc(var(--rail) + var(--rail-gap));
+    }
+    .q-head ~ .step-foot,
+    .q-head ~ .step-error { margin-left: calc(var(--rail) + var(--rail-gap)); }
+  }
+
+  /* ───────────────────────── FIELDS ───────────────────────── */
+
+  .field { margin-bottom: 1.9rem; }
   .field-row {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.6rem;
+    margin-bottom: 1.9rem;
   }
   @media (min-width: 640px) {
     .field-row { grid-template-columns: 1fr 1fr; gap: 2rem; }
   }
-  .field label.field-label {
+  .field-row .field { margin-bottom: 0; }
+  .field > label {
     display: block;
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.55rem;
   }
   .field .field-note {
     font-family: var(--h);
     font-style: italic;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: var(--light);
-    margin: 0.15rem 0 0.6rem;
+    margin: -0.3rem 0 0.55rem;
   }
   .field input[type=text],
   .field input[type=email] {
@@ -183,79 +350,23 @@
     border-bottom: 1px solid var(--rule);
     background: transparent;
     font-family: var(--h);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--teal);
     transition: border-color 0.18s ease;
   }
   .field input[type=text]:focus,
-  .field input[type=email]:focus {
-    outline: none;
-    border-bottom-color: var(--terra);
-  }
+  .field input[type=email]:focus { outline: none; border-bottom-color: var(--terra); }
 
-  /* QUESTIONS */
-  .question {
-    border: none;
-    padding: 2.75rem 0 0;
-    margin: 0 0 0.5rem;
-    background: transparent;
-  }
-  .question legend {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-  @media (min-width: 720px) {
-    .question legend {
-      grid-template-columns: 70px 1fr;
-      gap: 1.25rem;
-    }
-  }
-  .q-anchor {
-    font-family: var(--m);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--terra);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    padding-top: 0.2rem;
-  }
-  .q-prompt {
-    font-family: var(--h);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--teal);
-    line-height: 1.4;
-  }
-  .q-note {
-    font-family: var(--h);
-    font-style: italic;
-    font-size: 0.95rem;
-    color: var(--light);
-    margin: -0.8rem 0 1.25rem;
-    line-height: 1.5;
-  }
-  @media (min-width: 720px) {
-    .q-note { padding-left: calc(70px + 1.25rem); }
-  }
-
-  /* TEXTAREA FIELDS */
-  .textarea-field { padding-bottom: 1.5rem; }
-  @media (min-width: 720px) {
-    .textarea-field { padding-left: calc(70px + 1.25rem); }
-  }
+  /* textarea */
   .textarea-field textarea {
     width: 100%;
-    min-height: 110px;
-    padding: 0.85rem 1rem;
+    min-height: 150px;
+    padding: 0.9rem 1rem;
     border: 1px solid var(--rule);
-    border-radius: 6px;
+    border-radius: 8px;
     background: #FFFDF9;
     font-family: var(--h);
-    font-size: 0.98rem;
+    font-size: 1rem;
     color: var(--teal);
     line-height: 1.55;
     resize: vertical;
@@ -264,291 +375,385 @@
   .textarea-field textarea:focus { outline: none; border-color: var(--terra); }
   .textarea-field textarea::placeholder { color: var(--light); font-style: italic; }
 
-  /* TESTIMONIAL FRAMING CALLOUT */
-  .framing {
-    margin: 0 0 2.5rem;
-    padding: 1.4rem 1.6rem;
-    background: var(--cream);
-    border-radius: 10px;
-    max-width: 62ch;
-  }
-  .framing p {
-    font-size: 1rem;
-    color: var(--muted);
-    margin-bottom: 0.85rem;
-    line-height: 1.6;
-  }
-  .framing p:last-child { margin-bottom: 0; }
-  .framing .ex {
-    font-family: var(--h);
-    font-style: italic;
-    color: var(--teal);
-  }
+  /* ───────────────────────── CONSENT ───────────────────────── */
 
-  /* CONSENT + REFERENCE CHECKBOXES */
   .consent-group {
-    margin-top: 1rem;
     display: grid;
     gap: 0.7rem;
   }
   .consent {
     position: relative;
     display: grid;
-    grid-template-columns: 24px 1fr;
+    grid-template-columns: 26px 1fr;
     gap: 0.85rem;
     align-items: start;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.2rem 1rem 0.95rem;
     background: var(--cream);
     border-radius: 10px;
+    border: 1px solid transparent;
     cursor: pointer;
-    transition: background 0.18s ease;
+    transition: background 0.18s ease, border-color 0.18s ease;
   }
-  .consent:hover { background: #FFFDF9; }
+  .consent:hover { background: #FFFDF9; border-color: var(--rule-soft); }
   .consent input { position: absolute; opacity: 0; pointer-events: none; }
-  .consent .box {
-    width: 22px; height: 22px;
-    border: 1.5px solid var(--light);
-    border-radius: 5px;
+  .consent .mark {
+    width: 19px;
+    height: 19px;
+    margin-top: 3px;
+    justify-self: center;
+    border: 1.5px solid var(--rule);
+    border-radius: 6px;
     background: #FFFDF9;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s ease;
-    margin-top: 0.1rem;
+    position: relative;
+    transition: background 0.16s ease, border-color 0.16s ease;
   }
-  .consent .box svg { width: 14px; height: 14px; opacity: 0; transition: opacity 0.15s ease; }
-  .consent:has(input:checked) { background: #FFFDF9; }
-  .consent:has(input:checked) .box { background: var(--terra); border-color: var(--terra); }
-  .consent:has(input:checked) .box svg { opacity: 1; }
-  .consent .box svg path { stroke: #fff; }
-  .consent .ctext { font-size: 0.95rem; color: var(--muted); line-height: 1.5; }
+  .consent .mark::after {
+    content: '';
+    position: absolute;
+    left: 5px; top: 2px;
+    width: 5px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(42deg);
+    opacity: 0;
+    transition: opacity 0.16s ease;
+  }
+  .consent:has(input:checked) { background: #FFFDF9; border-color: rgba(180, 96, 44, 0.45); }
+  .consent:has(input:checked) .mark { background: var(--terra); border-color: var(--terra); }
+  .consent:has(input:checked) .mark::after { opacity: 1; }
+  .consent:has(input:focus-visible) {
+    outline: 2px solid rgba(180, 96, 44, 0.5);
+    outline-offset: 2px;
+  }
+  .consent .ctext { font-size: 0.97rem; color: var(--muted); line-height: 1.55; }
   .consent .ctext strong { color: var(--teal); font-weight: 600; }
 
-  /* SUBMIT / BUTTONS */
-  .submit-row {
-    margin: 3.5rem 0 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.1rem;
+  .privacy-note {
+    margin: 1.6rem 0 0;
+    padding: 0.95rem 1.15rem;
+    background: var(--cream);
+    border-left: 3px solid var(--terra);
+    border-radius: 4px;
+    font-family: var(--h);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 54ch;
   }
-  .btn-submit {
+  @media (min-width: 720px) {
+    .q-head ~ .privacy-note { margin-left: calc(var(--rail) + var(--rail-gap)); }
+  }
+
+  /* ───────────────────────── STEP FOOTER ───────────────────────── */
+
+  .step-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 2.4rem;
+  }
+  .back-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.55rem 1.15rem;
+    font-family: var(--m);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .back-btn:hover { color: var(--terra-2); border-color: var(--terra); }
+  .step-foot .spacer { flex: 1; }
+  .btn {
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
-    padding: 1rem 2rem;
+    padding: 0.9rem 2rem;
     background: var(--terra);
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 9px;
     font-family: var(--s);
     font-size: 1rem;
     font-weight: 500;
+    letter-spacing: 0.01em;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
   }
-  .btn-submit:hover:not(:disabled) { background: var(--terra-2); }
-  .btn-submit:active:not(:disabled) { transform: translateY(1px); }
-  .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
-  .submit-hint {
+  .btn:hover:not(:disabled) { background: var(--terra-2); }
+  .btn:active:not(:disabled) { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .key-hint {
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--light);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
   }
 
-  /* ERROR STATE */
-  .error {
-    margin-top: 0.5rem;
-    padding: 1rem 1.25rem;
+  .step-error {
+    margin-top: 1.1rem;
+    padding: 0.85rem 1.1rem;
     background: #FBEAE1;
     border-left: 3px solid var(--terra);
     border-radius: 6px;
     font-size: 0.92rem;
     color: var(--teal);
+    display: none;
   }
+  .step-error.show { display: block; }
 
-  /* SCREENS */
-  .screen { display: none; }
-  .screen.active { display: block; }
+  /* ───────────────────────── DONE ───────────────────────── */
 
-  /* STATEMENT (done) */
-  .statement { padding: 1rem 0 5rem; }
-  .statement .mono {
-    font-family: var(--m);
-    font-size: 0.78rem;
-    color: var(--terra);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    margin-bottom: 1rem;
-    display: block;
+  #done {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 0;
+    position: relative;
   }
-  .statement h1 { font-size: 2.25rem; margin-bottom: 1.25rem; }
-  .statement h1 em { color: var(--terra); font-style: italic; }
-  .statement p {
-    font-size: 1.05rem;
-    color: var(--muted);
-    margin-bottom: 0.95rem;
-    max-width: 58ch;
-  }
+  #done.show { display: flex; }
+  #done h1 { font-size: 2.3rem; margin-bottom: 1.2rem; }
+  #done h1 em { color: var(--terra); font-style: italic; }
+  #done p { font-size: 1.08rem; color: var(--muted); margin-bottom: 0.85rem; max-width: 54ch; }
+  #done .mono-eyebrow { margin-bottom: 1.1rem; }
 
-  /* FOOTER */
+  /* ───────────────────────── FOOTER ───────────────────────── */
+
   footer {
     border-top: 1px solid var(--rule-soft);
-    padding: 2rem 0 3rem;
-    margin-top: 4rem;
+    padding: 1.3rem 0;
+    position: relative;
+    z-index: 1;
   }
-  footer .wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    flex-wrap: wrap;
+  footer .chrome-inner {
+    padding-top: 0; padding-bottom: 0;
     font-family: var(--m);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--light);
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
-  footer a { color: var(--muted); }
   footer a:hover { color: var(--terra); }
 
-  /* MOBILE */
+  /* ───────────────────────── MOBILE ───────────────────────── */
+
+  @media (max-width: 719px) {
+    .q-anchor .n { font-size: 1.5rem; }
+  }
   @media (max-width: 640px) {
-    .intro h1 { font-size: 2rem; }
-    .statement h1 { font-size: 1.8rem; }
-    .q-prompt { font-size: 1.08rem; }
+    .welcome-enso { display: none; }
+    .page-enso { width: 20rem; height: 20rem; right: -6rem; bottom: -6rem; }
+    .q-prompt { max-width: none; }
+    .part-label { font-size: 0.78rem; }
+    .part-label strong { font-size: 0.74rem; }
+    .enso-progress { width: 50px; height: 50px; }
+    .step { min-height: calc(100svh - 150px); padding-top: 1.75rem; }
+    .step-foot { flex-wrap: wrap; gap: 0.9rem; }
+    .step-foot .key-hint { display: none; }
   }
 </style>
 </head>
-<body>
+<body class="on-welcome">
 
-<header class="site-head">
-  <div class="wrap">
+<div class="page-enso" aria-hidden="true"></div>
+
+<header class="chrome">
+  <div class="chrome-inner">
     <a href="https://nelvo.ca" class="site-logo"><img src="./logo-dark.png" alt="Nelvo"></a>
-    <span class="head-mono">Testimonial</span>
+    <div class="progress-cluster">
+      <div class="part-label">
+        <strong id="part-name">Testimonial</strong>
+        <span class="count" id="q-count">A few minutes</span>
+      </div>
+      <div class="enso-progress" aria-hidden="true">
+        <div class="track"></div>
+        <div class="fill" id="enso-fill"></div>
+      </div>
+    </div>
   </div>
 </header>
 
-<main class="wrap">
+<main class="stage">
 
-  <!-- ─── TESTIMONIAL FORM ─────────────────────────────── -->
-  <section id="screen-form" class="screen active">
+  <form id="testimonial-form" novalidate>
 
-    <div class="intro">
-      <span class="mono">Share a testimonial</span>
-      <h1>A few honest words from <em>you.</em></h1>
-      <p>Nelvo is just getting started, and a few honest words from someone who was actually in the room will do more to earn the next business owner's trust than anything I could say about myself. If the session was worth your time, this would mean a great deal.</p>
-    </div>
-
-    <div class="framing">
-      <p>The more specific you can be, the better. For example, <span class="ex">"Hunter is great"</span> versus <span class="ex">"Our team went from avoiding AI to running our first experiment within a week."</span></p>
-    </div>
-
-    <form id="testimonial-form" novalidate>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">1</span>
-          <span class="q-prompt">In a sentence or two, how would you sum up the session, or working with Hunter?</span>
-        </legend>
-        <p class="q-note">Short and punchy works well. This is the kind of line that might appear on the Nelvo website.</p>
-        <div class="textarea-field">
-          <textarea name="t1" rows="3" placeholder="Your headline takeaway."></textarea>
+    <!-- ── WELCOME ─────────────────────────────────────────── -->
+    <section class="step active" data-part="Share a testimonial">
+      <div class="welcome">
+        <div class="welcome-enso" aria-hidden="true"></div>
+        <span class="mono-eyebrow anim">Share a testimonial</span>
+        <h1 class="anim">A few honest words from <em>you.</em></h1>
+        <svg class="brush-underline anim" viewBox="0 0 320 14" fill="none" aria-hidden="true">
+          <path d="M2 8 C48 3, 112 10, 160 6 S240 2, 318 7" stroke="#B4602C" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="anim">
+          <p>Nelvo is just getting started, and a few honest words from someone who was actually in the room will do more to earn the next business owner's trust than anything I could say about myself. If the session was worth your time, this would mean a great deal.</p>
+          <div class="framing">The more specific, the better. For example, <span class="ex">"Hunter is great"</span> versus <span class="ex">"Our team went from avoiding AI to running our first experiment within a week."</span></div>
+          <p class="timing">Three short prompts, a few minutes</p>
         </div>
-      </fieldset>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">2</span>
-          <span class="q-prompt">What was your team's relationship with AI before the session, and what feels different now?</span>
-        </legend>
-        <p class="q-note">A genuine before-and-after is the most convincing thing a reader can hear.</p>
-        <div class="textarea-field">
-          <textarea name="t2" rows="5" placeholder="Where you started, what shifted, and where you are now."></textarea>
-        </div>
-      </fieldset>
-
-      <fieldset class="question">
-        <legend>
-          <span class="q-anchor">3</span>
-          <span class="q-prompt">What would you say to another business owner or leader who is on the fence about doing this?</span>
-        </legend>
-        <p class="q-note">Optional, but powerful.</p>
-        <div class="textarea-field">
-          <textarea name="t3" rows="4" placeholder="A sentence or two."></textarea>
-        </div>
-      </fieldset>
-
-      <div class="privacy-note">This is separate from any feedback you may have given, which stays anonymous and cannot be connected to this. A testimonial is the one place you choose to put your name.</div>
-
-      <div class="section-divider">
-        <span class="section-label">Attribution</span>
-        <h2 class="section-title">So I can credit you properly</h2>
-      </div>
-      <p class="section-intro">A testimonial is far more credible with a real name and title behind it. All three help.</p>
-
-      <div class="field-row">
-        <div class="field">
-          <label class="field-label" for="t-name">Name</label>
-          <input type="text" id="t-name" name="name" autocomplete="name">
-        </div>
-        <div class="field">
-          <label class="field-label" for="t-position">Position / title</label>
-          <input type="text" id="t-position" name="position" autocomplete="organization-title">
+        <div class="step-foot anim">
+          <button type="button" class="btn" data-next>Begin
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+          <span class="key-hint">or press Enter</span>
         </div>
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="field-label" for="t-company">Company / organization</label>
-          <input type="text" id="t-company" name="company" autocomplete="organization">
+    </section>
+
+    <!-- ── QUOTES ──────────────────────────────────────────── -->
+
+    <section class="step" data-part="Your words" data-qnum="1">
+      <div class="q-head anim">
+        <span class="q-anchor"><span class="n">1</span><span class="of">of 3</span></span>
+        <span class="q-prompt">In a sentence or two, how would you sum up the session, or working with Hunter?</span>
+      </div>
+      <p class="q-note anim">Short and punchy works well. This is the kind of line that might appear on the Nelvo website.</p>
+      <div class="textarea-field anim">
+        <textarea name="t1" rows="4" placeholder="Your headline takeaway."></textarea>
+      </div>
+      <div class="step-error" role="alert"></div>
+      <div class="step-foot anim">
+        <button type="button" class="back-btn" data-back>&larr; Back</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-next>Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <span class="key-hint">Shift + Enter for a new line</span>
+      </div>
+    </section>
+
+    <section class="step" data-part="Your words" data-qnum="2">
+      <div class="q-head anim">
+        <span class="q-anchor"><span class="n">2</span><span class="of">of 3</span></span>
+        <span class="q-prompt">What was your team's relationship with AI before the session, and what feels different now?</span>
+      </div>
+      <p class="q-note anim">A genuine before-and-after is the most convincing thing a reader can hear.</p>
+      <div class="textarea-field anim">
+        <textarea name="t2" rows="6" placeholder="Where you started, what shifted, and where you are now."></textarea>
+      </div>
+      <div class="step-error" role="alert"></div>
+      <div class="step-foot anim">
+        <button type="button" class="back-btn" data-back>&larr; Back</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-next>Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <span class="key-hint">Shift + Enter for a new line</span>
+      </div>
+    </section>
+
+    <section class="step" data-part="Your words" data-qnum="3">
+      <div class="q-head anim">
+        <span class="q-anchor"><span class="n">3</span><span class="of">of 3</span></span>
+        <span class="q-prompt">What would you say to another business owner or leader who is on the fence about doing this?</span>
+      </div>
+      <p class="q-note anim">Optional, but powerful.</p>
+      <div class="textarea-field anim">
+        <textarea name="t3" rows="5" placeholder="A sentence or two."></textarea>
+      </div>
+      <div class="step-error" role="alert"></div>
+      <div class="step-foot anim">
+        <button type="button" class="back-btn" data-back>&larr; Back</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-next>Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <span class="key-hint">Shift + Enter for a new line</span>
+      </div>
+    </section>
+
+    <!-- ── ATTRIBUTION ─────────────────────────────────────── -->
+
+    <section class="step" data-part="Attribution" data-validate="attribution">
+      <span class="mono-eyebrow anim" style="margin-bottom:1.1rem;">Attribution</span>
+      <h2 class="anim" style="font-size:1.6rem; margin-bottom:0.8rem;">So I can credit you properly.</h2>
+      <p class="anim" style="color:var(--muted); max-width:54ch; margin-bottom:2rem;">A testimonial is far more credible with a real name and title behind it. All three help.</p>
+      <div class="anim">
+        <div class="field-row">
+          <div class="field">
+            <label for="t-name">Name</label>
+            <input type="text" id="t-name" name="name" autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="t-position">Position / title</label>
+            <input type="text" id="t-position" name="position" autocomplete="organization-title">
+          </div>
         </div>
-        <div class="field">
-          <label class="field-label" for="t-email">Email <span style="text-transform:none;letter-spacing:0;font-family:var(--h);font-style:italic;color:var(--light);">(optional)</span></label>
-          <p class="field-note">Only if you are open to being contacted.</p>
-          <input type="email" id="t-email" name="email" autocomplete="email">
+        <div class="field-row" style="margin-bottom:0;">
+          <div class="field">
+            <label for="t-company">Company / organization</label>
+            <input type="text" id="t-company" name="company" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="t-email">Email <span style="text-transform:none;letter-spacing:0;font-family:var(--h);font-style:italic;color:var(--light);">(optional)</span></label>
+            <p class="field-note">Only if you are open to being contacted.</p>
+            <input type="email" id="t-email" name="email" autocomplete="email">
+          </div>
         </div>
       </div>
+      <div class="step-error" role="alert"></div>
+      <div class="step-foot anim">
+        <button type="button" class="back-btn" data-back>&larr; Back</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-next>Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <span class="key-hint">or press Enter</span>
+      </div>
+    </section>
 
-      <div class="consent-group">
+    <!-- ── PERMISSION + SEND ───────────────────────────────── -->
+
+    <section class="step" data-part="Permission" data-validate="consent" id="step-send">
+      <span class="mono-eyebrow anim" style="margin-bottom:1.1rem;">Permission</span>
+      <h2 class="anim" style="font-size:1.6rem; margin-bottom:0.8rem;">One last thing.</h2>
+      <p class="anim" style="color:var(--muted); max-width:54ch; margin-bottom:1.6rem;">Your words only get used with your explicit permission.</p>
+      <div class="consent-group anim" style="padding-left:0;">
         <label class="consent">
           <input type="checkbox" name="consent" value="yes">
-          <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
-          <span class="ctext"><strong>Yes, Nelvo may share my words above, along with my name, title, and company, on its website and in materials for prospective clients.</strong></span>
+          <span class="mark"></span>
+          <span class="ctext"><strong>Yes, Nelvo may share my words, along with my name, title, and company, on its website and in materials for prospective clients.</strong></span>
         </label>
         <label class="consent">
           <input type="checkbox" name="reference" value="yes">
-          <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <span class="mark"></span>
           <span class="ctext">I would also be open to being contacted as a reference for Nelvo.</span>
         </label>
       </div>
-
-      <div class="submit-row">
-        <button type="submit" class="btn-submit" id="btn-testimonial">
+      <div class="privacy-note anim">This is separate from any feedback you may have given, which stays anonymous and cannot be connected to this. A testimonial is the one place you choose to put your name.</div>
+      <div class="step-error" role="alert"></div>
+      <div class="step-foot anim">
+        <button type="button" class="back-btn" data-back>&larr; Back</button>
+        <span class="spacer"></span>
+        <button type="submit" class="btn" id="btn-submit">
           Submit testimonial
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
-        <div class="submit-hint">Thank you for putting your name to it</div>
-        <div class="error" id="testimonial-error" hidden></div>
+        <span class="key-hint">or press Enter</span>
       </div>
+    </section>
 
-    </form>
-  </section>
+  </form>
 
-  <!-- ─── DONE ─────────────────────────────────────────── -->
-  <section id="screen-done" class="screen">
-    <div class="statement">
-      <span class="mono">Thank you</span>
-      <h1>Thank you, <em>truly.</em></h1>
-      <p>Your testimonial means a great deal, and putting your name to it means even more. It genuinely helps Nelvo grow, and I am grateful.</p>
-    </div>
+  <!-- ── DONE ──────────────────────────────────────────────── -->
+  <section id="done">
+    <span class="mono-eyebrow">Thank you</span>
+    <h1>Thank you, <em>truly.</em></h1>
+    <p>Your testimonial means a great deal, and putting your name to it means even more. It genuinely helps Nelvo grow, and I am grateful.</p>
   </section>
 
 </main>
 
 <footer>
-  <div class="wrap">
+  <div class="chrome-inner">
     <a href="https://nelvo.ca">nelvo.ca</a>
-    <span>© 2026</span>
+    <span>&copy; 2026</span>
   </div>
 </footer>
 
@@ -556,53 +761,141 @@
   // Session this testimonial page belongs to. Update per engagement.
   const SESSION_LABEL = "Christensen Law Firm & Collectrite";
 
-  const screens = {
-    form: document.getElementById('screen-form'),
-    done: document.getElementById('screen-done'),
-  };
+  const form = document.getElementById('testimonial-form');
+  const steps = Array.from(form.querySelectorAll('.step'));
+  const partName = document.getElementById('part-name');
+  const qCount = document.getElementById('q-count');
+  const ensoFill = document.getElementById('enso-fill');
+  const doneEl = document.getElementById('done');
+  let current = 0;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function showScreen(key) {
-    Object.values(screens).forEach(s => s.classList.remove('active'));
-    screens[key].classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function setChrome(i) {
+    const step = steps[i];
+    partName.textContent = step.dataset.part || 'Testimonial';
+    qCount.textContent = step.dataset.qnum
+      ? 'Prompt ' + step.dataset.qnum + ' of 3'
+      : (i === 0 ? 'A few minutes' : ' ');
+    ensoFill.style.setProperty('--p', (i / (steps.length - 1)).toFixed(3));
+    document.body.classList.toggle('on-welcome', i === 0);
   }
 
-  function showError(el, message) {
-    el.textContent = message;
-    el.hidden = false;
+  function clearError(step) {
+    const e = step.querySelector('.step-error');
+    if (e) e.classList.remove('show');
+  }
+  function showStepError(step, message) {
+    const e = step.querySelector('.step-error');
+    if (e) { e.textContent = message; e.classList.add('show'); }
   }
 
-  const testimonialForm = document.getElementById('testimonial-form');
-  const btnTestimonial = document.getElementById('btn-testimonial');
-  const testimonialError = document.getElementById('testimonial-error');
+  function goTo(i) {
+    if (i < 0 || i >= steps.length) return;
+    steps[current].classList.remove('active');
+    steps[i].classList.add('active');
+    current = i;
+    setChrome(i);
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    if (steps[i].dataset.validate === 'attribution') {
+      const first = steps[i].querySelector('input[type="text"]');
+      if (first && !first.value) setTimeout(() => first.focus(), reduceMotion ? 0 : 250);
+    }
+  }
 
-  testimonialForm.addEventListener('submit', async (e) => {
+  function quotesEmpty() {
+    return ['t1', 't2', 't3'].every(n => !(form.querySelector('[name="' + n + '"]').value || '').trim());
+  }
+
+  function validateStep(step) {
+    const rule = step.dataset.validate;
+    if (!rule) return true;
+
+    if (rule === 'attribution') {
+      const checks = [
+        ['#t-name', 'Please add your name.'],
+        ['#t-position', 'Please add your position or title.'],
+        ['#t-company', 'Please add your company or organization.'],
+      ];
+      for (const [sel, msg] of checks) {
+        const el = form.querySelector(sel);
+        if (!el.value.trim()) {
+          showStepError(step, msg);
+          el.focus();
+          return false;
+        }
+      }
+      const emailEl = form.querySelector('#t-email');
+      const email = emailEl.value.trim();
+      if (email && !/^\S+@\S+$/.test(email)) {
+        showStepError(step, 'The email field doesn’t look like an email address. A quick check?');
+        emailEl.focus();
+        return false;
+      }
+      return true;
+    }
+    if (rule === 'consent') {
+      if (quotesEmpty()) {
+        showStepError(step, 'Please write a few words in at least one of the three prompts. Use Back to revisit them.');
+        return false;
+      }
+      if (!form.querySelector('input[name="consent"]').checked) {
+        showStepError(step, 'Please tick the box giving permission to share your words before submitting.');
+        return false;
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function advance() {
+    const step = steps[current];
+    clearError(step);
+    if (!validateStep(step)) return;
+    if (current < steps.length - 1) goTo(current + 1);
+  }
+
+  form.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', advance));
+  form.querySelectorAll('[data-back]').forEach(btn => btn.addEventListener('click', () => {
+    clearError(steps[current]);
+    goTo(current - 1);
+  }));
+
+  // keyboard
+  document.addEventListener('keydown', (e) => {
+    if (doneEl.classList.contains('show')) return;
+    const step = steps[current];
+    const tag = document.activeElement ? document.activeElement.tagName : '';
+
+    if (e.key === 'Enter') {
+      if (tag === 'TEXTAREA' && e.shiftKey) return;
+      if (tag === 'TEXTAREA' && !e.shiftKey) { e.preventDefault(); advance(); return; }
+      if (tag === 'BUTTON') return;
+      e.preventDefault();
+      if (step.id === 'step-send') { form.requestSubmit(); return; }
+      advance();
+    }
+  });
+
+  // submit
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    testimonialError.hidden = true;
+    const sendStep = document.getElementById('step-send');
+    clearError(sendStep);
 
-    const data = new FormData(testimonialForm);
+    for (let i = 0; i < steps.length; i++) {
+      if (!steps[i].dataset.validate) continue;
+      if (!validateStep(steps[i])) {
+        goTo(i);
+        return;
+      }
+      const err = steps[i].querySelector('.step-error');
+      if (err) err.classList.remove('show');
+    }
+
+    const data = new FormData(form);
     const t1 = (data.get('t1') || '').trim();
     const t2 = (data.get('t2') || '').trim();
     const t3 = (data.get('t3') || '').trim();
-    const name = (data.get('name') || '').trim();
-    const position = (data.get('position') || '').trim();
-    const company = (data.get('company') || '').trim();
-    const email = (data.get('email') || '').trim();
-    const consent = testimonialForm.querySelector('input[name="consent"]').checked;
-    const reference = testimonialForm.querySelector('input[name="reference"]').checked;
-
-    if (!t1 && !t2 && !t3) {
-      showError(testimonialError, 'Please write a few words in at least one box above before submitting.');
-      return;
-    }
-    if (!name || !position || !company) {
-      showError(testimonialError, 'Please add your name, position, and company so I can credit you properly.');
-      return;
-    }
-    if (!consent) {
-      showError(testimonialError, 'Please tick the box giving permission to share your words before submitting.');
-      return;
-    }
 
     const payload = {
       session: SESSION_LABEL,
@@ -611,14 +904,20 @@
         beforeAfter: t2 || null,
         recommendation: t3 || null,
       },
-      attribution: { name, position, company, email: email || null },
+      attribution: {
+        name: (data.get('name') || '').trim(),
+        position: (data.get('position') || '').trim(),
+        company: (data.get('company') || '').trim(),
+        email: (data.get('email') || '').trim() || null,
+      },
       consent: true,
-      openToReference: reference,
+      openToReference: form.querySelector('input[name="reference"]').checked,
       submittedAt: new Date().toISOString(),
     };
 
-    btnTestimonial.disabled = true;
-    btnTestimonial.textContent = 'Sending...';
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
 
     try {
       const resp = await fetch('/api/testimonial-submit', {
@@ -627,13 +926,36 @@
         body: JSON.stringify(payload),
       });
       if (!resp.ok) throw new Error('Server error ' + resp.status);
-      showScreen('done');
+
+      form.style.display = 'none';
+      doneEl.classList.add('show');
+      partName.textContent = 'Thank you';
+      qCount.textContent = 'Testimonial received';
+      ensoFill.style.setProperty('--p', '1');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
-      btnTestimonial.disabled = false;
-      btnTestimonial.innerHTML = 'Try again <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-      showError(testimonialError, 'Something went wrong sending your testimonial. Please try again, or email Hunter directly at hunter@nelvo.ca.');
+      btn.disabled = false;
+      btn.innerHTML = 'Try again <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+      showStepError(sendStep, 'Something went wrong sending your testimonial. Please try again, or email Hunter directly at hunter@nelvo.ca.');
     }
   });
+
+  // init
+  setChrome(0);
+
+  // preview helpers for local auditing: ?preview=done or ?step=N (1-5)
+  const params = new URLSearchParams(location.search);
+  if (params.get('preview') === 'done') {
+    form.style.display = 'none';
+    doneEl.classList.add('show');
+    partName.textContent = 'Thank you';
+    qCount.textContent = 'Testimonial received';
+    ensoFill.style.setProperty('--p', '1');
+    document.body.classList.remove('on-welcome');
+  } else if (params.has('step')) {
+    const n = parseInt(params.get('step'), 10);
+    if (Number.isInteger(n) && n > 0 && n < steps.length) goTo(n);
+  }
 </script>
 
 </body>
