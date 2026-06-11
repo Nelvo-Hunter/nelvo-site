@@ -189,21 +189,37 @@ async function handleGrowthMapSubmit(request, env) {
     return jsonError('Server not configured: missing RESEND_API_KEY', 500);
   }
 
+  // Only set reply_to when the respondent email looks like a routable address.
+  // A malformed reply_to makes Resend reject the entire send, which must never
+  // kill the submission (the respondent's typed email still appears in the body).
+  const emailBody = {
+    from,
+    to,
+    subject: `Growth Map response: ${respondent.organization} (${respondent.name})`,
+    html,
+  };
+  const replyTo = String(respondent.email || '').trim();
+  if (/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(replyTo)) {
+    emailBody.reply_to = replyTo;
+  }
+
   try {
-    const resendResp = await fetch('https://api.resend.com/emails', {
+    const send = () => fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from,
-        to,
-        reply_to: respondent.email,
-        subject: `Growth Map response: ${respondent.organization} (${respondent.name})`,
-        html,
-      }),
+      body: JSON.stringify(emailBody),
     });
+
+    let resendResp = await send();
+    if (!resendResp.ok && emailBody.reply_to) {
+      // Belt and suspenders: if Resend still balks at the reply_to, drop it and retry once.
+      console.error('Resend rejected with reply_to, retrying without:', await resendResp.text());
+      delete emailBody.reply_to;
+      resendResp = await send();
+    }
 
     if (!resendResp.ok) {
       const detail = await resendResp.text();
@@ -445,8 +461,9 @@ async function handleTestimonialSubmit(request, env) {
     subject: `New testimonial: ${attribution.name}, ${attribution.company}`,
     html,
   };
-  // Only set reply_to if they shared an email and are open to contact.
-  if (email) {
+  // Only set reply_to if they shared an email that looks routable.
+  // A malformed reply_to makes Resend reject the entire send.
+  if (email && /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
     body.reply_to = email;
   }
 
