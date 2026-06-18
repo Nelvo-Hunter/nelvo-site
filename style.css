@@ -491,7 +491,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .nav-links { display: none; }
   .burger { display: block; }
   .hero { min-height: unset; padding-top: clamp(8rem, 14vh, 10rem); }
-  .hero-enso { top: -8vw; right: -34vw; width: 70vw; height: 70vw; transform: none; animation: none; opacity: 0.9; }
+  .hero-enso { top: -8vw; right: -49vw; width: 70vw; height: 70vw; transform: none; animation: none; opacity: 0.9; }
   .stats { grid-template-columns: 1fr; gap: 2.2rem; }
   .stat-row, .stat-row--two { grid-template-columns: 1fr; }
   .stat { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.6rem 0; }
