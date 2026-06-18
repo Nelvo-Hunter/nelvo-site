@@ -491,7 +491,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .nav-links { display: none; }
   .burger { display: block; }
   .hero { min-height: unset; padding-top: clamp(8rem, 14vh, 10rem); }
-  .hero-enso { right: -34vw; width: 78vw; height: 78vw; opacity: 0.45; }
+  .hero-enso { top: -16vw; right: -30vw; width: 70vw; height: 70vw; transform: none; animation: none; opacity: 0.9; }
   .stats { grid-template-columns: 1fr; gap: 2.2rem; }
   .stat-row, .stat-row--two { grid-template-columns: 1fr; }
   .stat { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.6rem 0; }
@@ -509,7 +509,8 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .outcome .arr { display: none; }
   .room-grid, .diag-grid, .belief-grid, .fund-grid, .cta-grid, .ahero, .first-step { grid-template-columns: 1fr; }
   .room-grid { margin-bottom: clamp(2rem, 6vw, 3rem); }
-  .belief-fig { min-height: 300px; }
+  .belief-grid { padding-left: var(--gut); padding-right: var(--gut); gap: 2.6rem; }
+  .belief-fig { min-height: 300px; margin: 0 calc(-1 * var(--gut)); }
   .belief-fig img { -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.95) 40%, transparent 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0.95) 40%, transparent 100%); }
   .path { grid-template-columns: 1fr; }
   .keep { grid-template-columns: 1fr; }
