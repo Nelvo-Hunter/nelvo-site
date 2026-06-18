@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Sessions · Nelvo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Nelvo is built in focused two- to three-hour working sessions, booked by who is in the room. Start with one. Stack as it pays off. The first diagnostic is free.">
+<link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* sessions.html: compress vertical rhythm */
+  body { --sec: clamp(3.5rem, 7vw, 6rem); }
+  .phero { padding-bottom: clamp(1.5rem, 3vh, 2.5rem); }
+  .method { padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: clamp(3rem, 6vw, 5rem); position: relative; z-index: 0; }
+  /* darker text sits over the (still-spinning) ensō */
+  .method > .wrap { --enso: min(90vw, 760px); position: relative; min-height: var(--enso); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .method .enso-stage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: var(--enso); height: var(--enso); z-index: 0; pointer-events: none; }
+  .method .enso-stage .enso-divider { width: 100%; height: 100%; margin: 0; opacity: 0.28; }
+  .method .h2, .method .lede, .method .mono-note { position: relative; z-index: 1; }
+  .method .lede { color: var(--ink); }
+  .method .mono-note { color: var(--ink-2); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo-dark.png" alt="Nelvo"></a>
+    <div class="nav-links">
+      <a href="sessions.html" class="active" style="font-size: 20px">The Sessions</a>
+      <a href="about.html" style="font-size: 20px">About</a>
+      <a href="#contact" class="btn-nav" style="font-size: 20px">Start a conversation</a>
+    </div>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="menu-overlay">
+  <a href="index.html">Home</a>
+  <a href="sessions.html">The Sessions</a>
+  <a href="about.html">About</a>
+  <a href="#contact">Start a conversation</a>
+  <span class="mono-note">hunter@nelvo.ca · Toronto</span>
+</div>
+
+<main>
+
+<!-- PAGE HERO -->
+<header class="phero">
+  <div class="phero-enso enso" data-spin="0.014" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="wrap">
+    <span class="eyebrow" style="font-size: 20px">The sessions</span>
+    <h1 class="h1">Start with one session. <em>Stack as it pays off.</em></h1>
+    <p class="lede">Nelvo is built in focused, two- to three-hour working sessions, booked by who is in the room and how far along they are. Each one stands alone and delivers on its own. Together, they take a team from curious to capable to compounding.</p>
+  </div>
+</header>
+
+<!-- THE PATH -->
+<section class="sec" style="padding-top: clamp(2rem, 4vw, 3rem); position: relative; z-index: 1;">
+  <div class="wrap">
+    <div class="path">
+      <div class="s-card rv">
+        <span class="s-badge">ENTRY POINT · DECISION-MAKERS</span>
+        <div class="s-top"><div class="s-letter">A</div><span class="s-tag">Strategy</span></div>
+        <h3>Leadership Alignment</h3>
+        <p>For owners, CEOs, and decision-makers. The competitive stakes and the "why now," an honest read on where your organization stands, and what safe adoption looks like. Leaders leave aligned and committed to a plan.</p>
+        <details>
+          <summary>What's covered</summary>
+          <ul>
+            <li>The case for moving now, grounded in data, not hype</li>
+            <li>Where your organization stands, from the free diagnostic</li>
+            <li>A leadership playbook for adoption your team keeps</li>
+            <li>What safe deployment looks like in a careful business</li>
+          </ul>
+        </details>
+        <div class="s-meta">2–3 hours · Leadership team</div>
+      </div>
+      <div class="s-card flagship rv" style="--d:.1s">
+        <span class="s-badge">ENTRY POINT · FRONTLINE</span>
+        <div class="s-top"><div class="s-letter">B</div><span class="s-tag">Training</span></div>
+        <h3>AI Fluency</h3>
+        <p>For your whole team, beginners first. How AI actually works in plain language, then laptops open: everyone builds a working AI setup around their own job and gets a first real win in the room.</p>
+        <details>
+          <summary>What's covered</summary>
+          <ul>
+            <li>A working mental model of AI, without the jargon</li>
+            <li>Context engineering: the skill that separates results from noise</li>
+            <li>Hands-on: build with AI on your real work, with help in the room</li>
+            <li>Live demonstrations of what's possible right now</li>
+          </ul>
+        </details>
+        <div class="s-meta">2–3 hours · Everyone</div>
+      </div>
+      <div class="s-card rv" style="--d:.1s">
+        <div class="s-top"><div class="s-letter">C</div><span class="s-tag">Adoption</span></div>
+        <h3>AI Infrastructure</h3>
+        <p>For teams that have put the fluency session to work. Turns personal wins into durable systems: a memory your business owns, reusable skills, and a light rhythm of improvement. The session where it starts to compound.</p>
+        <details>
+          <summary>What's covered</summary>
+          <ul>
+            <li>Owned memory: systems your business controls, not a vendor</li>
+            <li>Capturing what works as reusable skills</li>
+            <li>A personal improvement loop that doesn't need us</li>
+            <li>The first step toward sharing wins across the team</li>
+          </ul>
+        </details>
+        <div class="s-meta">2–3 hours · Session B graduates</div>
+      </div>
+      <div class="s-card rv" style="--d:.15s">
+        <div class="s-top"><div class="s-letter">D</div><span class="s-tag">Adoption</span></div>
+        <h3>Workflow Transformation</h3>
+        <p>When your team is ready, we take one real workflow and redesign it end to end: deconstruct it, rebuild it around AI, prototype it live, and leave you with a pilot plan. Built custom for your business.</p>
+        <details>
+          <summary>What's covered</summary>
+          <ul>
+            <li>One workflow, chosen for real business impact</li>
+            <li>Redesigned around AI, not bolted onto the old process</li>
+            <li>Safety checks cleared before anything goes live</li>
+            <li>A pilot plan your team owns on day one</li>
+          </ul>
+        </details>
+        <div class="s-meta">Bespoke · Teams ready to implement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD, NOT A DECK -->
+<section class="sec method">
+  <div class="wrap rv">
+    <div class="enso-stage" aria-hidden="true"><div class="enso-divider enso" data-spin="0.03"><img src="nelvo-enso-textured.webp" alt=""></div></div>
+    <h2 class="h2">Every session runs on the same method. <em>And you keep it.</em></h2>
+    <p class="lede" style="margin-inline: auto; margin-top: 1.8rem; margin-bottom: 2.4rem;">Behind the sessions sits a complete operating system for adoption: a philosophy for leading it, a diagnostic for grounding it, an operating rhythm for compounding it, and safety checks for deploying it without losing sleep. It's taught in the room, on your work, and handed over when we leave.</p>
+    <span class="mono-note">Built for cautious, regulated teams · Nothing deploys on enthusiasm alone</span>
+  </div>
+</section>
+
+<!-- WHAT YOU KEEP -->
+<section class="sec" style="position: relative; z-index: 1;">
+  <div class="wrap">
+    <div class="outcomes-head rv">
+      <span class="eyebrow" style="font-size: 20px">What you keep</span>
+      <h2 class="h2">Everything is built <em>to be left behind.</em></h2>
+    </div>
+    <div class="keep">
+      <div class="keep-item rv">
+        <span class="ki">In your hands</span>
+        <h3>A working AI setup</h3>
+        <p>Each person builds a setup around their own job during the session and walks out using it. Day one value, not a someday plan.</p>
+      </div>
+      <div class="keep-item rv" style="--d:.1s">
+        <span class="ki">On your desk</span>
+        <h3>The method on paper</h3>
+        <p>The thinking as printed reference pieces your team actually keeps: the playbook, the rhythm, and the safety checks at a glance.</p>
+      </div>
+      <div class="keep-item rv" style="--d:.2s">
+        <span class="ki">In your team</span>
+        <h3>A shared language</h3>
+        <p>Leaders and frontline speaking the same way about what AI is, where it fits, and what's safe. The foundation everything else stands on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIRST STEP -->
+<section class="sec" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="first-step rv">
+      <div>
+        <span class="eyebrow" style="font-size: 20px">The first step is free</span>
+        <h3 class="h3">A 20-minute call and a team diagnostic.</h3>
+        <p>Before you spend anything, a short conversation and a nine-minute team survey plot your organization on the Growth Map: where you stand, and what's worth doing first. You see the picture, you keep the read. And with federal funding now flowing toward SME adoption, ask about programs like BDC's LIFT in that first conversation.</p>
+      </div>
+      <div class="fs-right">
+        <a href="#contact" class="btn">Start a conversation <span class="arr">→</span></a>
+        <span class="mono-note">No commitment · A clear read either way</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec dark" id="contact">
+  <div class="enso-wm enso" style="right: -180px; top: -140px;" data-spin="0.012" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="wrap cta-grid">
+    <div class="cta-left rv">
+      <img src="Hunter_profile_photo.jpg" alt="Hunter Christensen" class="avatar">
+      <span class="eyebrow" style="font-size: 20px">Start a conversation</span>
+      <h2 class="h2">No pitch deck. No pressure. <em>Just a conversation.</em></h2>
+      <p class="lede">Where you are, what you've tried, and whether the free diagnostic makes sense as a next step. You'll hear back from Hunter personally.</p>
+      <div class="cta-meta">
+        <a href="mailto:hunter@nelvo.ca" class="btn">hunter@nelvo.ca <span class="arr">→</span></a>
+        <span class="mono-note">Serving Canadian SMEs</span>
+      </div>
+      <span class="serif-note">Two sentences about your business is plenty.</span>
+    </div>
+    <div class="expect rv" style="--d:.15s">
+      <h3>What to expect <span class="time">20 min · No slides</span></h3>
+      <ul>
+        <li>A few questions about your business and where AI has or hasn't worked so far</li>
+        <li>An honest read on your starting situation</li>
+        <li>One or two concrete things you could try on your own next week</li>
+        <li>A clear answer on whether working together makes sense, or doesn't</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot-slogan">Shared understanding. <em>Real adoption.</em></p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo-light.png" alt="Nelvo">
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="sessions.html">The Sessions</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="index.html#diagnostic">The free diagnostic</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hunter@nelvo.ca">hunter@nelvo.ca</a></li>
+          <li><a href="#contact">Start a conversation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>Nelvo · Toronto</span>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

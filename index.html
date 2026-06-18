@@ -1,1563 +1,398 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <title>Nelvo · AI Adoption for Canadian SMEs</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="AI adoption for Canadian SMEs. Nelvo gives your team the training, systems, and method to make AI actually work.">
-
+<meta name="description" content="Nelvo takes Canadian teams from using AI to having AI. Leaders aligned, people fluent, systems that stick. The first diagnostic is free.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nelvo · AI Adoption for Canadian SMEs">
-<meta property="og:description" content="AI adoption for Canadian SMEs. Training, systems, and the method to make AI actually work.">
+<meta property="og:description" content="Your team can't adopt what they don't understand. Nelvo takes teams from using AI to having AI.">
 <meta property="og:url" content="https://nelvo.ca">
 <meta property="og:site_name" content="Nelvo">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nelvo · AI Adoption for Canadian SMEs">
-<meta name="twitter:description" content="AI adoption for Canadian SMEs.">
+<meta property="og:image" content="https://nelvo.ca/resources/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>/* cyrillic-ext */
-/* cyrillic */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-/* cyrillic-ext */
-/* cyrillic */
-/* vietnamese */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-/* latin-ext */
-/* latin */
-</style>
-
-<style>
-/* ── LOCAL OUTFIT ── */
-/* ── TOKENS ── */
-:root {
-  --color-bg:        #FAF8F5;
-  --color-surface:   #F0EBE1;
-  --color-teal:      #1E3538;
-  --color-teal-2:    #2A474B;
-  --color-terra:     #B4602C;
-  --color-terra-2:   #9A5125;
-  --color-terra-lt:  #D4793E;
-  --color-muted:     #4a5a5d;
-  --color-light:     #7a8a8d;
-  --color-hairline:  #e0dbd3;
-  --color-rule:      rgba(30,53,56,0.12);
-  --color-rule-soft: rgba(30,53,56,0.07);
-
-  --font-display: 'Libre Baskerville', Georgia, serif;
-  --font-body:    'Outfit', system-ui, sans-serif;
-  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
-
-  --text-xs:   0.75rem;
-  --text-sm:   0.825rem;
-  --text-base: 1rem;
-  --text-md:   1.05rem;
-  --text-lg:   1.175rem;
-  --text-xl:   1.35rem;
-  --text-2xl:  1.6rem;
-  --text-3xl:  2rem;
-  --text-4xl:  2.5rem;
-  --text-5xl:  3.25rem;
-  --text-6xl:  4rem;
-
-  --radius-sm:  4px;
-  --radius-md:  8px;
-  --radius-lg:  10px;
-  --radius-xl:  16px;
-
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  --space-16: 4rem;
-  --space-20: 5rem;
-  --space-24: 6rem;
-
-  --max-content: 1200px;
-  --max-text:    820px;
-  --col-gutter:  2rem;
-}
-
-/* ── RESET ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-body {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: var(--color-teal);
-  background: var(--color-bg);
-  overflow-x: hidden;
-}
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
-h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-
-.wrap { max-width: var(--max-content); margin: 0 auto; padding: 0 var(--col-gutter); }
-
-/* Eyebrow */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--color-terra);
-  text-transform: uppercase;
-  display: block;
-}
-
-/* ── NAV ── */
-nav.top {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(250,248,245,0.94);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--color-hairline);
-}
-.nav-inner {
-  max-width: var(--max-content); margin: 0 auto;
-  padding: 0 var(--col-gutter);
-  display: flex; align-items: center; justify-content: space-between;
-  height: 72px;
-}
-.nav-logo img { height: 30px; }
-.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-.nav-links a { font-family: var(--font-body); font-weight: 500; font-size: 0.9rem; color: var(--color-muted); transition: color .15s ease; }
-.nav-links a:hover { color: var(--color-terra); }
-.nav-cta {
-  background: var(--color-terra); color: #fff !important;
-  padding: 0.6rem 1.25rem; border-radius: var(--radius-lg);
-  font-weight: 500; font-size: 0.9rem;
-  transition: background .15s ease;
-}
-.nav-cta:hover { background: var(--color-terra-2) !important; }
-.nav-cta:active { transform: translateY(1px); }
-
-/* ── HERO + STATS SPLIT ── */
-.hero-stats {
-  display: grid;
-  grid-template-columns: 44fr 56fr;
-  min-height: 100vh;
-  border-bottom: 1px solid var(--color-hairline);
-  overflow: hidden;
-}
-.hero-stats-left {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg);
-  position: relative;
-  z-index: 2;
-}
-.hero-stats-inner {
-  padding: var(--space-16) var(--space-10) var(--space-16) var(--space-12);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
-}
-.hero-stats-photo {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-}
-.hero-stats-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  position: absolute;
-  inset: 0;
-}
-/* Fade: left edge blends into content column */
-.hero-stats-photo::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    var(--color-bg) 0%,
-    rgba(250,248,245,0.55) 8%,
-    rgba(250,248,245,0.1) 20%,
-    transparent 32%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Hero copy inside split */
-.hs-hero .hint {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--color-muted);
-  display: block;
-  margin-bottom: var(--space-5);
-}
-.hs-hero h1 {
-  font-size: clamp(1.9rem, 3vw, 3.2rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: var(--space-5);
-}
-.hs-hero h1 em { font-style: italic; color: var(--color-terra); font-weight: 400; }
-.hero-body {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--color-muted);
-  font-weight: 300;
-  margin-bottom: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-rule);
-}
-.hero-body em { font-family: var(--font-display); font-style: italic; color: var(--color-teal); font-weight: 400; }
-.hero-actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
-
-/* Stats inside split */
-.hs-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  background: var(--color-surface);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--color-hairline);
-  overflow: hidden;
-}
-.hs-stats-row {
-  padding: var(--space-8) var(--space-8);
-  border-top: 1px solid var(--color-hairline);
-}
-.hs-stats-row:first-child {
-  border-top: none;
-}
-.stat-card-mini {
-  background: rgba(30,53,56,0.82);
-  backdrop-filter: blur(8px);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4) var(--space-4) var(--space-3);
-  display: flex; flex-direction: column;
-}
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.75rem;
-  background: var(--color-terra);
-  color: #fff;
-  padding: 1rem 1.75rem;
-  border-radius: var(--radius-lg);
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: var(--text-base);
-  transition: background .15s ease;
-}
-.btn-primary:hover { background: var(--color-terra-2); }
-.btn-primary:active { transform: translateY(1px); }
-.btn-primary svg { stroke: currentColor; flex-shrink: 0; }
-.hero-actions .note {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--color-light);
-  line-height: 1.5;
-}
-
-/* ── LOGO MOMENT ── */
-.logo-moment {
-  padding: var(--space-24) 0 var(--space-24);
-  background: var(--color-teal);
-  color: var(--color-surface);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.logo-moment .wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-.logo-moment-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: clamp(360px, 36vw, 680px);
-  margin-bottom: var(--space-10);
-}
-.logo-moment .mark { display: block; margin-bottom: var(--space-4); }
-.logo-moment .mark img { width: 100%; height: auto; display: block; }
-.logo-moment-rule {
-  width: 100%;
-  height: 1px;
-  background: rgba(240,235,225,0.2);
-  margin-bottom: var(--space-4);
-}
-.logo-moment .tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-  line-height: 1.25;
-  color: var(--color-surface);
-  width: 100%;
-  margin: var(--space-6) 0 0;
-  font-weight: 400;
-}
-.logo-moment .tagline strong {
-  font-style: normal;
-  color: var(--color-surface);
-  font-weight: 700;
-}
-.logo-moment .meta {
-  display: flex;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-surface);
-  margin-bottom: var(--space-4);
-  white-space: nowrap;
-}
-.logo-moment .meta span { display: flex; align-items: center; }
-.logo-moment .meta .dot { display: none; }
-
-/* stats-section — open card style */
-.hs-stats-row.gap-row {
-  border-top: 1px solid var(--color-hairline);
-}
-.hs-stats-head { margin-bottom: var(--space-6); }
-.hs-stats-head .eyebrow { margin-bottom: var(--space-2); }
-.hs-stats-head h3 {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2vw, 1.9rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--color-teal);
-}
-.hs-stats-head h3 em { font-style: italic; color: var(--color-terra); font-weight: 400; }
-.hs-stats-head p { font-size: 0.88rem; color: var(--color-muted); font-weight: 300; margin-top: var(--space-2); line-height: 1.5; }
-.hs-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-5);
-}
-.stat-card-mini {
-  background: transparent;
-  border-top: 2px solid var(--color-terra);
-  border-radius: 0;
-  padding: var(--space-4) 0 0;
-  display: flex; flex-direction: column;
-}
-.stat-card-mini .stat-num {
-  display: flex; align-items: baseline; gap: 1px;
-  line-height: 1; margin-bottom: var(--space-3);
-}
-.stat-card-mini .digit {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.2rem, 3.2vw, 3.2rem);
-  color: var(--color-teal);
-  letter-spacing: -0.03em;
-}
-.stat-card-mini .unit {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
-  color: var(--color-terra);
-}
-.stat-card-mini p {
-  font-size: 0.85rem; color: var(--color-muted);
-  line-height: 1.5; font-weight: 400; flex: 1;
-}
-.stat-card-mini .src {
-  font-family: var(--font-mono); font-size: 0.58rem;
-  color: var(--color-light); letter-spacing: 0.1em;
-  text-transform: uppercase; display: block;
-  margin-top: var(--space-3);
-}
-.stats-pullquote {
-  margin-top: 0;
-  padding: var(--space-6) var(--space-8);
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-hairline);
-  border-left: 3px solid var(--color-terra);
-}
-.stats-pullquote blockquote {
-  font-family: var(--font-display); font-style: italic;
-  font-size: 1rem; line-height: 1.55; color: var(--color-teal); font-weight: 400;
-}
-.stats-pullquote .eyebrow { margin-top: var(--space-3); font-size: 0.7rem; }
-@media (max-width: 1024px) {
-  .stats-row { grid-template-columns: 1fr; gap: var(--space-4); }
-  .stats-cards { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 640px) {
-  .stats-cards { grid-template-columns: 1fr; }
-}
-
-/* ── BEGIN (WHERE TO START) ── */
-.begin { padding: var(--space-24) 0; }
-
-/* ── SECTION BREAK ── */
-.section-break {
-  background: var(--color-teal);
-  padding: var(--space-8) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-8);
-  position: relative;
-  overflow: hidden;
-}
-.section-break::before,
-.section-break::after {
-  content: '';
-  flex: 1;
-  max-width: 280px;
-  height: 1px;
-  background: rgba(240,235,225,0.2);
-}
-.section-break img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  opacity: 0.35;
-  filter: brightness(0) invert(1);
-}
-.begin-head { max-width: var(--max-text); margin-bottom: var(--space-16); }
-.begin-head .eyebrow { margin-bottom: var(--space-4); }
-.begin-head h2 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.05; margin-bottom: var(--space-6); }
-.begin-head h2 em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.begin-head p { font-size: 1.1rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; max-width: 54ch; }
-.begin-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
-.b-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-xl);
-  padding: var(--space-10) var(--space-8) var(--space-8);
-  display: flex; flex-direction: column;
-  min-height: 320px;
-  transition: background .15s ease;
-}
-.b-card:hover { background: #FFFDF9; }
-.b-card.featured { background: var(--color-teal); }
-.b-card.featured h3 { color: var(--color-surface); }
-.b-card.featured p { color: rgba(240,235,225,0.7); }
-.b-card.featured .b-idx { color: var(--color-terra-lt); }
-.b-card.featured .b-foot { border-top-color: rgba(240,235,225,0.2); color: var(--color-terra-lt); }
-.b-card.featured .b-italic { color: rgba(240,235,225,0.9); }
-.b-idx {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--color-terra);
-  letter-spacing: 0.14em;
-  margin-bottom: var(--space-6);
-}
-.b-card h3 { font-size: var(--text-2xl); margin-bottom: var(--space-4); line-height: 1.15; }
-.b-card > p { font-size: 0.98rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; flex: 1; }
-.b-italic {
-  margin-top: var(--space-4);
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--color-terra);
-  font-weight: 400;
-  line-height: 1.45;
-}
-.b-foot {
-  margin-top: var(--space-6); padding-top: var(--space-4);
-  border-top: 1px solid var(--color-rule);
-  font-family: var(--font-mono);
-  font-size: 0.72rem; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--color-terra);
-  display: flex; align-items: center; gap: var(--space-2);
-}
-
-/* ── PROCESS ── */
-.process {
-  background: var(--color-bg);
-  padding: var(--space-24) 0;
-}
-.process-top {
-  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-12);
-  align-items: end; margin-bottom: var(--space-16);
-}
-.process-top .eyebrow { margin-bottom: var(--space-3); }
-.process-top h2 { font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.05; }
-.process-top h2 em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.process-top p { font-size: var(--text-md); line-height: 1.65; color: var(--color-muted); font-weight: 300; }
-.engage-strip {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  background: var(--color-surface);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  margin-bottom: var(--space-12);
-  border: 1px solid var(--color-hairline);
-}
-.engage-cell {
-  padding: var(--space-6) var(--space-6);
-  border-right: 1px solid var(--color-hairline);
-}
-.engage-cell:last-child { border-right: none; }
-.engage-cell .k {
-  font-family: var(--font-mono);
-  font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--color-terra); margin-bottom: var(--space-2); display: block;
-}
-.engage-cell .v {
-  font-family: var(--font-display);
-  font-size: 1.05rem; font-weight: 700; color: var(--color-teal); line-height: 1.25;
-}
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); position: relative; }
-.steps::before {
-  content: '';
-  position: absolute;
-  top: 54px; left: 10%; right: 10%;
-  border-top: 1px dashed var(--color-terra);
-  opacity: 0.3;
-  z-index: 0;
-}
-.step {
-  background: var(--color-surface);
-  padding: var(--space-10) var(--space-8);
-  border-radius: var(--radius-xl);
-  position: relative; z-index: 1;
-}
-.step-circle {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: var(--color-teal);
-  color: var(--color-terra-lt);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em;
-  margin-bottom: var(--space-6);
-  border: 1px solid rgba(180,96,44,0.3);
-}
-.step-circle b { font-family: var(--font-display); font-size: 1.4rem; color: var(--color-surface); font-weight: 700; letter-spacing: -0.02em; }
-.step h3 { font-size: var(--text-2xl); margin-bottom: var(--space-1); }
-.step .ssub { font-family: var(--font-display); font-style: italic; font-size: 0.95rem; color: var(--color-terra); display: block; margin-bottom: var(--space-4); font-weight: 400; }
-.step p { font-size: 0.95rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; }
-
-/* ── METHOD COMPACT PANEL ── */
-.fw-compact {
-  background: rgba(240,235,225,0.05);
-  border: 1px solid rgba(240,235,225,0.15);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  position: relative; z-index: 1;
-}
-.fw-compact-row {
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: var(--space-8);
-  padding: var(--space-6) var(--space-10);
-  border-bottom: 1px solid rgba(240,235,225,0.1);
-  align-items: start;
-  transition: background .15s ease;
-}
-.fw-compact-row:hover { background: rgba(240,235,225,0.04); }
-.fw-compact-num {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.9rem;
-  color: var(--color-terra-lt);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-.fw-compact-head {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
-  margin-bottom: var(--space-2);
-  flex-wrap: wrap;
-}
-.fw-compact-head h3 {
-  font-size: var(--text-xl);
-  color: var(--color-surface);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-.fw-compact-tag {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-terra-lt);
-  border: 1px solid rgba(180,96,44,0.4);
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--radius-sm);
-  flex-shrink: 0;
-}
-.fw-compact-body p {
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: rgba(240,235,225,0.6);
-  font-weight: 300;
-}
-.fw-compact-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-6) var(--space-10);
-  gap: var(--space-6);
-  background: rgba(240,235,225,0.04);
-  border-top: 1px solid rgba(240,235,225,0.1);
-}
-.fw-compact-foot p {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: rgba(240,235,225,0.5);
-}
-.fw-compact-cta {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-terra-lt);
-  white-space: nowrap;
-  transition: color .15s ease;
-}
-.fw-compact-cta:hover { color: var(--color-surface); }
-.method {
-  padding: var(--space-24) 0 var(--space-24);
-  background: var(--color-teal);
-  color: var(--color-surface);
-  position: relative; overflow: hidden;
-}
-.neg-enso-img {
-  position: absolute;
-  left: -170px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 340px; height: 340px;
-  object-fit: contain;
-  pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: multiply;
-  opacity: 0.22;
-}
-  color: var(--color-surface);
-  position: relative; overflow: hidden;
-}
-
-.method-intro {
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-16);
-  align-items: end; margin-bottom: var(--space-20); position: relative; z-index: 1;
-}
-.method-intro .eyebrow { color: var(--color-terra-lt); margin-bottom: var(--space-4); }
-.method-intro h2 { font-size: clamp(2.6rem, 5.5vw, 4.2rem); line-height: 1.03; color: var(--color-surface); }
-.method-intro h2 em { color: var(--color-terra-lt); font-style: italic; font-weight: 400; }
-.method-intro .lede p { font-size: var(--text-md); line-height: 1.7; color: rgba(240,235,225,0.75); font-weight: 300; margin-bottom: var(--space-4); }
-.method-intro .lede em { color: var(--color-surface); font-style: italic; font-family: var(--font-display); font-weight: 400; }
-.fw-list { display: grid; gap: var(--space-8); position: relative; z-index: 1; }
-.fw-item {
-  background: var(--color-surface);
-  color: var(--color-teal);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  display: grid; grid-template-columns: 1.1fr 1fr;
-}
-.fw-item:nth-child(even) { grid-template-columns: 1fr 1.1fr; }
-.fw-item:nth-child(even) .fw-side { order: -1; }
-.fw-main { padding: var(--space-12) var(--space-10); }
-.fw-header { display: flex; align-items: baseline; gap: var(--space-4); margin-bottom: var(--space-6); }
-.fw-num {
-  font-family: var(--font-display); font-style: italic; font-weight: 400;
-  font-size: 2.2rem; color: var(--color-terra); line-height: 0.9; letter-spacing: -0.03em;
-}
-.fw-tag {
-  font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--color-terra); padding: 0.3rem 0.7rem;
-  border: 1px solid var(--color-terra); border-radius: var(--radius-sm);
-}
-.fw-item h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin-bottom: var(--space-1); line-height: 1.05; }
-.fw-sub { font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--color-terra); font-weight: 400; display: block; margin-bottom: var(--space-6); }
-.fw-lede { font-size: var(--text-base); line-height: 1.65; color: var(--color-muted); font-weight: 300; margin-bottom: var(--space-6); }
-.fw-uses { display: flex; flex-direction: column; gap: var(--space-2); }
-.fw-use {
-  display: grid; grid-template-columns: 16px 1fr; gap: var(--space-3);
-  font-size: 0.9rem; line-height: 1.5; color: var(--color-teal); font-weight: 400;
-}
-.fw-use::before { content: '→'; font-family: var(--font-mono); color: var(--color-terra); font-size: 0.85rem; line-height: 1.5; }
-.fw-side {
-  background: var(--color-bg);
-  padding: var(--space-12) var(--space-10);
-  display: flex; flex-direction: column; justify-content: center;
-  border-left: 1px solid var(--color-hairline);
-}
-.fw-item:nth-child(even) .fw-side { border-left: none; border-right: 1px solid var(--color-hairline); }
-.fw-side-label {
-  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--color-terra); margin-bottom: var(--space-5); display: flex; align-items: center; gap: 0.6rem;
-}
-.fw-side-label::before { content: ''; width: 16px; height: 1px; background: var(--color-terra); }
-
-/* Traps */
-.traps-viz { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
-.trap-box { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5) var(--space-4); border-top: 2px solid var(--color-terra); }
-.trap-box .tn { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-terra); margin-bottom: var(--space-2); }
-.trap-box .tt { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--color-teal); margin-bottom: var(--space-1); line-height: 1.15; }
-.trap-box .td { font-size: 0.83rem; color: var(--color-muted); font-weight: 300; line-height: 1.45; }
-.traps-note {
-  margin-top: var(--space-5); font-family: var(--font-display); font-style: italic;
-  font-size: 0.93rem; line-height: 1.5; color: var(--color-teal);
-  padding: var(--space-4) var(--space-5);
-  background: var(--color-surface); border-radius: var(--radius-md);
-  border-left: 3px solid var(--color-terra);
-}
-
-/* Growth Map */
-.map-grid-wrap { position: relative; padding-left: 44px; padding-bottom: 32px; }
-.map-grid {
-  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
-  gap: 2px; background: var(--color-rule); aspect-ratio: 1.2;
-  border: 1px solid var(--color-hairline); border-radius: var(--radius-md); overflow: hidden;
-}
-.quad { background: var(--color-surface); padding: var(--space-4); display: flex; flex-direction: column; justify-content: space-between; }
-.quad.thrive { background: var(--color-surface); border: 2px solid var(--color-terra); }
-.quad.thrive .qn { color: var(--color-terra); }
-.quad .qn { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-light); }
-.quad .ql { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--color-teal); line-height: 1.15; letter-spacing: -0.01em; }
-.quad .qm { font-size: 0.76rem; color: var(--color-muted); font-weight: 300; line-height: 1.4; }
-.map-axis-y { position: absolute; left: 0; top: 0; bottom: 32px; width: 36px; display: flex; align-items: center; justify-content: center; }
-.map-axis-y span { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-light); transform: rotate(-90deg); white-space: nowrap; }
-.map-axis-x { position: absolute; bottom: 0; left: 44px; right: 0; text-align: center; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-light); }
-
-/* Rotation */
-.rot-viz { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-6); margin-bottom: var(--space-4); }
-.rot-loop { display: grid; grid-template-columns: 1fr 14px 1fr; grid-template-rows: auto auto auto; gap: 0.6rem; align-items: center; max-width: 300px; margin: 0 auto; }
-.rot-node { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--color-teal); text-align: center; padding: 0.7rem 0.4rem; background: var(--color-bg); border-radius: var(--radius-lg); border: 1px solid var(--color-hairline); line-height: 1; }
-.rot-node em { display: block; font-family: var(--font-mono); font-style: normal; font-size: 0.54rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-terra); margin-top: var(--space-1); }
-.rot-arrow { font-family: var(--font-mono); color: var(--color-terra); font-size: 0.85rem; text-align: center; }
-.rpm { text-align: center; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px dashed rgba(180,96,44,0.3); }
-.rpm .k { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-terra); margin-bottom: var(--space-1); display: block; }
-.rpm .v { font-family: var(--font-display); font-style: italic; font-size: 0.93rem; color: var(--color-teal); line-height: 1.4; }
-
-/* Gates */
-.gates-viz { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
-.gate-tile { background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--color-terra); display: flex; flex-direction: column; gap: var(--space-1); }
-.gate-tile .gn { font-family: var(--font-mono); font-size: 0.58rem; color: var(--color-terra); letter-spacing: 0.14em; font-weight: 500; }
-.gate-tile .gt { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--color-teal); line-height: 1.2; }
-.gates-foot { grid-column: span 2; font-family: var(--font-display); font-style: italic; font-size: 0.85rem; color: var(--color-muted); text-align: center; padding-top: var(--space-2); line-height: 1.5; }
-
-/* Method connect */
-.method-connect {
-  margin-top: var(--space-16);
-  padding: var(--space-10) var(--space-12);
-  background: rgba(240,235,225,0.05);
-  border: 1px solid rgba(240,235,225,0.15);
-  border-radius: var(--radius-xl);
-  display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-12);
-  align-items: center; position: relative; z-index: 1;
-}
-.method-connect h3 { font-size: var(--text-2xl); color: var(--color-surface); margin-bottom: var(--space-3); }
-.method-connect h3 em { color: var(--color-terra-lt); font-style: italic; font-weight: 400; }
-.method-connect .eyebrow { color: var(--color-terra-lt); margin-bottom: var(--space-3); }
-.method-connect > div:first-child p { font-size: 0.95rem; line-height: 1.6; color: rgba(240,235,225,0.65); font-weight: 300; }
-.connect-chain { display: grid; gap: var(--space-3); }
-.connect-row {
-  display: grid; grid-template-columns: 130px 20px 1fr; gap: var(--space-4);
-  align-items: center; padding: var(--space-3) 0;
-  border-bottom: 1px solid rgba(240,235,225,0.1);
-}
-.connect-row:last-child { border-bottom: none; }
-.connect-row .k { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-terra-lt); }
-.connect-row .arr { color: var(--color-terra-lt); font-family: var(--font-mono); text-align: center; }
-.connect-row .v { font-family: var(--font-display); font-style: italic; font-size: 0.96rem; color: var(--color-surface); line-height: 1.4; font-weight: 400; }
-
-/* ── WHAT WE DON'T DO ── */
-.neg {
-  padding: var(--space-16) 0;
-  background: var(--color-surface);
-  position: relative;
-  overflow: hidden;
-}
-.neg-header {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: var(--space-12);
-  align-items: center;
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--color-hairline);
-}
-.neg-header .eyebrow { margin-bottom: var(--space-2); }
-.neg-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.05; }
-.neg-header h2 em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.neg-header p { font-size: 0.92rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; margin-top: 0; }
-.neg-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-}
-.neg-item {
-  padding: var(--space-5) var(--space-6) var(--space-5) 0;
-  border-bottom: 1px solid var(--color-hairline);
-  display: grid;
-  grid-template-columns: 20px 1fr;
-  gap: var(--space-4);
-  align-items: baseline;
-}
-.neg-item:nth-child(odd) { padding-right: var(--space-8); }
-.neg-item:nth-child(even) { padding-left: var(--space-8); border-left: 1px solid var(--color-hairline); }
-.neg-item:nth-last-child(-n+2) { border-bottom: none; }
-.neg-item .x { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-terra); line-height: 1; font-weight: 500; }
-.neg-item h4 { font-family: var(--font-body); font-weight: 600; font-size: var(--text-base); margin-bottom: var(--space-1); color: var(--color-teal); }
-.neg-item p { font-size: 0.88rem; line-height: 1.5; color: var(--color-muted); font-weight: 300; }
-
-/* ── BELIEF PULL ── */
-.belief-pull {
-  display: grid;
-  grid-template-columns: 50fr 50fr;
-  min-height: 70vh;
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-hairline);
-  border-bottom: 1px solid var(--color-hairline);
-  overflow: hidden;
-}
-.belief-photo-col {
-  position: relative;
-  overflow: hidden;
-}
-.belief-photo-col img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  display: block;
-  position: absolute;
-  inset: 0;
-}
-/* Fade: right edge blends into copy */
-.belief-photo-fade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    transparent 55%,
-    rgba(250,248,245,0.6) 75%,
-    var(--color-bg) 100%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-.belief-copy-col {
-  display: flex;
-  align-items: center;
-  padding: var(--space-20) var(--space-12) var(--space-20) var(--space-10);
-  position: relative;
-  z-index: 2;
-}
-.belief-pull-inner {
-  display: grid;
-  gap: var(--space-8);
-  max-width: 52ch;
-}
-.belief-pull .eyebrow { margin-bottom: var(--space-4); }
-.belief-pull blockquote {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-  line-height: 1.15;
-  font-weight: 700;
-  color: var(--color-teal);
-  letter-spacing: -0.015em;
-}
-.belief-pull blockquote em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.belief-side { padding-left: var(--space-8); border-left: 2px solid var(--color-terra); }
-.belief-side p { font-size: var(--text-base); line-height: 1.65; color: var(--color-muted); font-weight: 300; margin-bottom: var(--space-3); }
-.belief-citation {
-  margin-top: var(--space-6); padding-top: var(--space-5);
-  border-top: 1px solid var(--color-hairline);
-}
-.belief-citation blockquote {
-  font-family: var(--font-display); font-style: italic;
-  font-size: 0.95rem; line-height: 1.55; color: var(--color-muted); font-weight: 400; margin-bottom: var(--space-2);
-}
-.belief-citation .eyebrow { font-size: 0.72rem; }
-
-/* ── ABOUT ── */
-.about { padding: var(--space-24) 0; background: var(--color-surface); }
-.about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: var(--space-16); align-items: stretch; }
-.about-photo { position: relative; display: flex; flex-direction: column; padding: var(--space-6) 0; }
-.about-photo img { width: 100%; flex: 1; min-height: 400px; object-fit: cover; object-position: center top; border-radius: var(--radius-xl); }
-.about-text .eyebrow { margin-bottom: var(--space-4); }
-.about-text h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-bottom: var(--space-2); line-height: 1.05; }
-.about-text .role {
-  font-family: var(--font-display); font-style: italic;
-  font-size: 1.1rem; color: var(--color-terra); margin-bottom: var(--space-8); display: block;
-}
-.about-text p { font-size: var(--text-base); line-height: 1.7; color: var(--color-muted); font-weight: 300; margin-bottom: var(--space-5); max-width: 58ch; }
-.about-facts {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-  margin-top: var(--space-8);
-  background: var(--color-surface); border-radius: var(--radius-xl); overflow: hidden;
-  border: 1px solid var(--color-hairline);
-}
-.about-fact { padding: var(--space-5) var(--space-6); border-right: 1px solid var(--color-hairline); }
-.about-fact:last-child { border-right: none; }
-.about-fact .v { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-terra); line-height: 1; margin-bottom: var(--space-2); letter-spacing: -0.02em; }
-.about-fact .k { font-size: 0.82rem; color: var(--color-muted); line-height: 1.35; font-weight: 300; }
-.creds { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
-.cred { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-teal); background: var(--color-surface); padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--color-hairline); }
-
-/* About belief banner */
-.about-belief {
-  margin: var(--space-10) 0 var(--space-8);
-  padding: var(--space-8) var(--space-8);
-  background: var(--color-surface);
-  border-radius: var(--radius-xl);
-  border-left: 3px solid var(--color-terra);
-}
-.about-belief .eyebrow { margin-bottom: var(--space-3); }
-.about-belief blockquote {
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
-  line-height: 1.2; font-weight: 700; color: var(--color-teal); letter-spacing: -0.015em; margin-bottom: var(--space-5);
-}
-.about-belief blockquote em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.about-belief-side { padding-top: var(--space-4); border-top: 1px solid var(--color-hairline); }
-.about-belief-side p { font-size: 0.93rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; margin-bottom: var(--space-2); max-width: none; }
-.about-belief-side p:last-child { margin-bottom: 0; }
-
-/* ── CONTACT ── */
-.contact { padding: var(--space-24) 0; background: var(--color-bg); position: relative; overflow: hidden; }
-.contact-enso {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: 520px; height: 520px; opacity: 0.07;
-  pointer-events: none; object-fit: contain;
-}
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-20); align-items: center; position: relative; z-index: 1; }
-.contact-left .eyebrow { margin-bottom: var(--space-4); }
-.contact-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: var(--space-6); border: 2px solid var(--color-hairline); }
-.contact-left h2 { font-size: clamp(2.2rem, 4.8vw, 3.4rem); margin-bottom: var(--space-5); line-height: 1.05; }
-.contact-left h2 em { color: var(--color-terra); font-style: italic; font-weight: 400; }
-.contact-body { font-size: 1.05rem; line-height: 1.6; color: var(--color-muted); font-weight: 300; margin-bottom: var(--space-8); max-width: 44ch; }
-.contact-meta {
-  display: flex; gap: var(--space-8); margin-top: 0;
-  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--color-light); flex-wrap: wrap;
-}
-.expect {
-  background: var(--color-surface); border-radius: var(--radius-xl);
-  padding: var(--space-10);
-  border: 1px solid var(--color-hairline);
-  border-top: 2px solid var(--color-terra);
-}
-.expect h3 { font-family: var(--font-body); font-weight: 600; font-size: var(--text-lg); margin-bottom: var(--space-6); display: flex; align-items: baseline; gap: var(--space-3); color: var(--color-teal); }
-.expect h3 .time {
-  font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-terra);
-  letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
-  background: rgba(240,235,225,0.1); color: var(--color-terra-lt); padding: 0.2rem 0.55rem; border-radius: var(--radius-sm);
-}
-.expect ul { list-style: none; display: grid; gap: var(--space-4); }
-.expect li {
-  display: grid; grid-template-columns: 22px 1fr; gap: var(--space-3);
-  font-size: 0.95rem; line-height: 1.5; color: var(--color-muted); font-weight: 300;
-  padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-hairline);
-}
-.expect li:last-child { border-bottom: none; padding-bottom: 0; }
-.expect li::before { content: '→'; color: var(--color-terra); font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.5; }
-
-/* ── FOOTER ── */
-footer.foot { background: var(--color-teal); padding: var(--space-12) 0 var(--space-8); color: var(--color-surface); }
-.foot-inner {
-  max-width: var(--max-content); margin: 0 auto; padding: 0 var(--col-gutter);
-  display: grid; grid-template-columns: 1fr auto; gap: var(--space-8); align-items: center;
-}
-.foot img { height: 26px; filter: brightness(0) invert(1) opacity(0.9); }
-.foot-right {
-  display: flex; align-items: center; gap: var(--space-6);
-  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: #8FA3A6;
-}
-.foot-right a { color: var(--color-surface); transition: color .15s ease; }
-.foot-right a:hover { color: var(--color-terra-lt); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
-  .fw-item, .fw-item:nth-child(even) { grid-template-columns: 1fr; }
-  .fw-side { border-left: none; border-top: 1px solid var(--color-hairline); }
-  .fw-item:nth-child(even) .fw-side { order: unset; border-right: none; border-top: 1px solid var(--color-hairline); }
-  .method-intro, .method-connect, .contact-grid, .about-grid, .process-top { grid-template-columns: 1fr; gap: var(--space-8); }
-  .neg-header { grid-template-columns: 1fr; gap: var(--space-4); }
-  .neg-grid { grid-template-columns: 1fr; }
-  .belief-pull { grid-template-columns: 1fr; }
-  .belief-photo-col { height: 320px; }
-  .belief-copy-col { padding: var(--space-12) var(--col-gutter); }
-  .hs-cards { grid-template-columns: 1fr 1fr; }
-  .begin-cards, .strip-grid, .steps, .values-grid { grid-template-columns: 1fr; }
-  .engage-strip { grid-template-columns: 1fr 1fr; }
-  .steps::before { display: none; }
-  .connect-row { grid-template-columns: 1fr; gap: var(--space-1); }
-  .connect-row .arr { display: none; }
-}
-@media (max-width: 768px) {
-  .hero-stats { grid-template-columns: 1fr; min-height: unset; }
-  .hero-stats-photo { height: 380px; }
-  .hero-stats-photo::before { background: linear-gradient(to bottom, transparent 50%, var(--color-bg) 100%); }
-  .hero-stats-inner { padding: var(--space-12) var(--col-gutter); }
-  .stat-card-mini { background: var(--color-teal); backdrop-filter: none; }
-}
-@media (max-width: 640px) {
-  :root { --col-gutter: 1.25rem; }
-  .nav-links li:not(:last-child) { display: none; }
-  .about-facts { grid-template-columns: 1fr; }
-  .about-fact { border-right: none; border-bottom: 1px solid var(--color-hairline); }
-  .about-fact:last-child { border-bottom: none; }
-  .engage-strip { grid-template-columns: 1fr; }
-  .traps-viz, .gates-viz { grid-template-columns: 1fr; }
-  .gates-foot { grid-column: span 1; }
-}
-
-
-/* ════════════════════════════════════════════════
-   MOBILE REFINEMENTS — added May 9, 2026
-   Targeted patches for narrow viewports.
-   Each rule is scoped to (max-width: 768px) or smaller
-   so desktop / tablet layout is untouched.
-   ════════════════════════════════════════════════ */
-
-@media (max-width: 768px) {
-  /* ── Hero / opportunity / gap stat cards ── */
-  /* Stack to single column. Fix text contrast on dark teal cards. */
-  .hs-cards { grid-template-columns: 1fr; gap: var(--space-3); }
-  .stat-card-mini { padding: var(--space-4); }
-  .stat-card-mini .digit { color: var(--color-surface); }
-  .stat-card-mini .unit  { color: var(--color-terra-lt, #D4793E); }
-  .stat-card-mini p      { color: var(--color-surface); opacity: 0.88; }
-  .stat-card-mini .src   { color: var(--color-surface); opacity: 0.55; }
-
-  /* ── What Nelvo won't do (fine print) ── */
-  /* Reset odd/even border quirks that only make sense in 2-col. */
-  .neg-item,
-  .neg-item:nth-child(odd),
-  .neg-item:nth-child(even) {
-    padding: var(--space-4) 0;
-    border-left: none;
-  }
-  .neg-item:not(:last-child) { border-bottom: 1px solid var(--color-hairline); }
-  .neg-item:last-child { border-bottom: none; }
-
-  /* ── Footer ── */
-  /* Stack vertically and center. */
-  .foot-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-    justify-items: center;
-    text-align: center;
-  }
-  .foot-right {
-    flex-direction: column;
-    gap: var(--space-2);
-    align-items: center;
-  }
-  .foot img { height: 22px; }
-
-  /* ── Method block visualizations ── */
-  /* Rotation cycle: stack vertically (the 3-col arrow grid breaks on phones). */
-  .rot-loop { grid-template-columns: 1fr; gap: var(--space-2); }
-  .rot-arrow { display: none; }
-  .rot-node { padding: var(--space-3); text-align: center; }
-
-  /* Growth Map quadrant grid: keep 2x2 but tighten so text fits. */
-  .map-grid { gap: 4px; }
-  .quad { padding: var(--space-3); }
-  .quad .ql { font-size: 0.85rem; }
-  .quad .qm { font-size: 0.7rem; line-height: 1.4; }
-
-  /* Six Gates tiles: tighter gap. */
-  .gates-viz { gap: var(--space-2); }
-
-  /* ── Toronto skyline photo (hero): tighter height + smoother fade into about ── */
-  .hero-stats-photo { height: 280px; }
-  .hero-stats-photo::before {
-    background: linear-gradient(
-      to bottom,
-      transparent 25%,
-      rgba(250,248,245,0.4) 60%,
-      rgba(250,248,245,0.85) 85%,
-      var(--color-bg) 100%
-    );
-  }
-
-  /* ── About: move "About" eyebrow above the portrait on mobile ── */
-  .about-text .eyebrow { display: none; }
-  .about-photo::before {
-    content: "About";
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--color-terra);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: var(--space-3);
-  }
-
-  /* ── Belief photo: vertical fade into cream (override desktop horizontal fade) ── */
-  .belief-photo-fade {
-    background: linear-gradient(
-      to bottom,
-      transparent 45%,
-      rgba(250,248,245,0.6) 80%,
-      var(--color-bg) 100%
-    );
-  }
-
-  /* ── Toronto photo: reorder between hero copy and stats card on mobile ── */
-  /* Use display:contents on wrappers so hs-hero, hero-stats-photo, hs-stats
-     become direct grid children of .hero-stats; then reorder via `order`. */
-  .hero-stats-left,
-  .hero-stats-inner { display: contents; }
-  .hs-hero { order: 1; padding: var(--space-12) var(--col-gutter) 0; }
-  .hero-stats-photo { order: 2; height: 260px; }
-  .hs-stats { order: 3; margin: -5rem var(--col-gutter) var(--space-12); position: relative; z-index: 2; }
-
-  /* Soft fade on top + bottom so the photo sits cleanly between the two
-     surrounding sections without hard edges. */
-  .hero-stats-photo::before {
-    background: linear-gradient(
-      to bottom,
-      var(--color-bg) 0%,
-      rgba(250,248,245,0.4) 5%,
-      transparent 14%,
-      transparent 70%,
-      rgba(250,248,245,0.5) 88%,
-      var(--color-bg) 100%
-    );
-  }
-
-  /* ── About: move ABOUT + Hunter Christensen + Founder above the portrait ── */
-  /* Use display:contents on about-text so its children become direct grid children
-     of about-grid; reorder eyebrow/h2/role to appear before the photo. */
-  .about-grid { gap: 0; }
-  .about-text { display: contents; }
-  .about-text .eyebrow {
-    display: block;
-    order: -3;
-    margin-bottom: var(--space-2);
-  }
-  .about-text h2 {
-    order: -2;
-    margin-bottom: var(--space-1);
-  }
-  .about-text .role {
-    order: -1;
-    margin-bottom: var(--space-6);
-  }
-  /* Cancel the earlier ::before approach now that the real eyebrow is visible */
-  .about-photo::before { content: none; }
-  /* Restore margins (were previously via grid gap) */
-  .about-photo { margin-bottom: var(--space-6); }
-  .about-text p { margin-bottom: var(--space-4); }
-  .about-text .about-facts { margin-top: var(--space-6); }
-  .about-text .creds { margin-top: var(--space-6); }
-
-  /* ── Engage strip: tighter row spacing on mobile ── */
-  .engage-strip { margin-bottom: var(--space-8); }
-  .engage-cell {
-    padding: var(--space-3) var(--space-5);
-    border-right: none;
-    border-bottom: 1px solid var(--color-hairline);
-  }
-  .engage-cell:last-child { border-bottom: none; }
-  .engage-cell .k { margin-bottom: var(--space-1); }
-
-
-
-}
-
-@media (max-width: 480px) {
-  /* Very small phones: a touch more tightening for legibility. */
-  .stat-card-mini { padding: var(--space-3); }
-  .stat-card-mini .digit { font-size: 2.4rem; line-height: 1; }
-  .foot-right { font-size: 0.62rem; }
-}
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home">
 
-<!-- NAV -->
-<nav class="top">
+<nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo"><img src="resources/logo-dark.png" alt="Nelvo"></a>
-    <ul class="nav-links">
-      <li><a href="#engagement">How it works</a></li>
-      <li><a href="#method">Method</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact" class="nav-cta">Start a conversation →</a></li>
-    </ul>
+    <a href="index.html" class="nav-logo"><img src="logo-dark.png" alt="Nelvo"></a>
+    <div class="nav-links">
+      <a href="sessions.html" style="font-size: 20px">The Sessions</a>
+      <a href="about.html" style="font-size: 20px">About</a>
+      <a href="#contact" class="btn-nav" style="font-size: 20px">Start a conversation</a>
+    </div>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="menu-overlay">
+  <a href="index.html">Home</a>
+  <a href="sessions.html">The Sessions</a>
+  <a href="about.html">About</a>
+  <a href="#contact">Start a conversation</a>
+  <span class="mono-note">hunter@nelvo.ca · Toronto</span>
+</div>
 
-<!-- LOGO MOMENT -->
-<section class="logo-moment">
+<main>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-enso enso" data-spin="0.012" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
   <div class="wrap">
-    <div class="logo-moment-stack">
-      <div class="mark"><img src="resources/logo-light.png" alt="Nelvo"></div>
-      <div class="logo-moment-rule"></div>
-      <div class="meta">
-        <span style="font-size: 20px">AI Adoption for Canadian SMEs</span>
-      </div>
-      <p class="tagline" style="margin: 8px 0px 0px"><span style="color: var(--color-terra-lt);">The tools are everywhere.</span><br><strong>The method is the gap.</strong></p>
+    <span class="eyebrow" style="font-size: 20px;">AI adoption for Canadian SMEs</span>
+    <h1 class="h1">Your team can't adopt what they <em>don't understand.</em></h1>
+    <p class="lede lede-lead">Nelvo takes teams from simply using AI to <em style="font-family:var(--display);font-style:italic;font-weight:400;color:var(--terra)">having AI</em>.</p>
+    <ul class="hero-points">
+      <li>Leaders aligned on a real strategy.</li>
+      <li>People fluent on their actual work.</li>
+      <li>Systems that make adoption stick.</li>
+    </ul>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn">Start a conversation <span class="arr">→</span></a>
+      <a href="#diagnostic" class="btn-ghost">Get your free read <span class="arr">→</span></a>
     </div>
-    <a href="#contact" class="btn-primary" style="margin: 0 auto var(--space-10); background: var(--color-terra);">Start a conversation
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
-    </a>
+    <span class="hero-note serif-note">A personal reply from Hunter within one business day.</span>
   </div>
-</section>
+</header>
 
-<!-- HERO + STATS -->
-<section class="hero-stats">
-  <div class="hero-stats-left">
-    <div class="hero-stats-inner">
-      <!-- Hero copy -->
-      <div class="hs-hero">
-        <span class="hint" style="font-size: 20px; margin: 0px 0px 30px">A methodology firm. Not a vendor.</span>
-        <h1>AI is rewriting how your industry works. <em>Every business has access.</em> Almost none have a plan for it.</h1>
-        <p class="hero-body">Few Canadian SMEs actively use AI. Those who do are making faster decisions, reclaiming hours every week, and building teams that know exactly what to do with it.<br><br>Most don't know where to start.<br><br>The tools aren't the problem. <em>The method is.</em><br><br><strong>Nelvo gives your people the training, the systems, and the method to make AI actually work.</strong></p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn-primary">Start a conversation
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
-          </a>
-          <span class="note">A personal reply within one business day.</span>
+<!-- THE GAP -->
+<section class="sec whynow">
+  <div class="whynow-text">
+    <div class="gap-head rv">
+      <span class="eyebrow" style="font-size: 20px">Why now</span>
+      <h2 class="h2">Canada invented modern AI. <em>Canadian businesses are falling behind on it.</em></h2>
+      <p class="lede" style="font-weight: 300">The tools are everywhere. <strong style="font-weight:700">The method is the gap.</strong></p>
+      <p class="lede" style="font-weight: 300">While most teams poke at AI with little to show for it, <strong style="font-weight:700">the ones that figure out the method are pulling away</strong>, because the technology was never the hard part.</p>
+    </div>
+    <div class="stats rv">
+      <div class="stat-set stat-set--gap">
+        <span class="stat-lead stat-lead--gap" style="font-size: 18px; font-weight: 700">Only</span>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="v"><span data-count="12">0</span><span class="u">%</span></div>
+            <p style="font-size: 20px">of Canadian businesses use AI to produce goods or deliver services</p>
+            <span class="src">Statistics Canada · 2025</span>
+          </div>
         </div>
       </div>
-
-      <!-- Stats -->
-      <div class="hs-stats">
-        <div class="hs-stats-row">
-          <div class="hs-stats-head">
-            <span class="eyebrow">The opportunity</span>
-            <h3>The opportunity <em>is real.</em></h3>
-            <p>Canadian SMEs leading on AI adoption are seeing the difference.</p>
+      <div class="stat-set stat-set--gain">
+        <span class="stat-lead stat-lead--gain" style="font-size: 18px; font-weight: 700">Yet the ones who do</span>
+        <div class="stat-row stat-row--two">
+          <div class="stat">
+            <div class="v"><span data-count="24">0</span><span class="u">%</span></div>
+            <p style="font-size: 20px">more productive: SMEs using AI vs. those not using it</p>
+            <span class="src">BDC · 2026</span>
           </div>
-          <div class="hs-cards">
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">24</span><span class="unit">%</span></div>
-              <p>more productive than SMEs not using AI</p>
-              <span class="src">BDC · 2026</span>
-            </div>
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">$2.40</span></div>
-              <p>returned per $1 invested in tech, vs. $1.60 average</p>
-              <span class="src">CFIB · 2025</span>
-            </div>
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">3</span><span class="unit">×</span></div>
-              <p>more likely to have fundamentally improved their workflows</p>
-              <span class="src">McKinsey · 2025</span>
-            </div>
+          <div class="stat">
+            <div class="v"><span data-count="2.40" data-decimals="2" data-prefix="$">$0</span></div>
+            <p style="font-size: 20px">returned per $1 invested in tech, vs. $1.60 average</p>
+            <span class="src">CFIB · 2025</span>
           </div>
-        </div>
-        <div class="hs-stats-row gap-row">
-          <div class="hs-stats-head">
-            <span class="eyebrow">The gap</span>
-            <h3>But most <em>aren't getting there.</em></h3>
-            <p>Most Canadian businesses haven't started. Of those that have, almost none are getting a return.</p>
-          </div>
-          <div class="hs-cards">
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">12</span><span class="unit">%</span></div>
-              <p>of Canadian businesses use AI to produce goods or deliver services</p>
-              <span class="src">Statistics Canada · 2025</span>
-            </div>
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">95</span><span class="unit">%</span></div>
-              <p>of organizations getting zero return from generative AI investments</p>
-              <span class="src">MIT · 2025</span>
-            </div>
-            <div class="stat-card-mini">
-              <div class="stat-num"><span class="digit">84</span><span class="unit">%</span></div>
-              <p>haven't redesigned a single job around AI</p>
-              <span class="src">Deloitte · 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="stats-pullquote">
-          <blockquote>"Just 21% of organizations using generative AI have redesigned any workflows. Yet workflow redesign is the single biggest predictor of AI's impact on the bottom line."</blockquote>
-          <span class="eyebrow" style="margin-top: 0.75rem;">McKinsey · The State of AI 2025</span>
         </div>
       </div>
     </div>
+    <div class="gap-quote rv">
+      <blockquote>"Just 21% of organizations using generative AI have redesigned any workflows. Yet workflow redesign is the single biggest predictor of AI's impact on the bottom line."</blockquote>
+      <span class="mono-note">McKinsey · The State of AI 2025</span>
+    </div>
   </div>
-  <div class="hero-stats-photo">
-    <img src="resources/Toronto_1.jpg" alt="Toronto">
+  <div class="whynow-photo rv" aria-hidden="true">
+    <img src="Toronto_1.jpg" alt="">
   </div>
 </section>
-<!-- ABOUT -->
-<section class="about" id="about">
+
+<!-- OUTCOMES -->
+<section class="sec" style="padding-top: 0;">
   <div class="wrap">
-    <div class="about-grid">
-      <div class="about-photo">
-        <img src="resources/Hunter_profile_photo.jpg" alt="Hunter Christensen">
+    <div class="outcomes-head rv">
+      <span class="eyebrow" style="font-size: 20px">What Nelvo does</span>
+      <h2 class="h2">Three outcomes. <em>One measure: real use.</em></h2>
+      <p class="lede outcomes-lede">Three sessions, run in focused two- to three-hour blocks built<br>around <em>the work your team already does.</em><span class="lede-next">Start with one. Add the next as the results earn it.</span></p>
+    </div>
+    <div class="outcomes rv">
+      <div class="outcome">
+        <div class="outcome-key">
+          <span class="ok-index">1.</span>
+          <span class="ok-word">Strategy</span>
+        </div>
+        <div class="outcome-body">
+          <h3>Leaders aligned on a plan worth committing to</h3>
+          <p>The competitive stakes, an honest read on where you stand, and what safe adoption looks like for a business like yours. Your leadership team leaves with a strategy, not a slide deck.</p>
+        </div>
+        <span class="arr">→</span>
+        <a href="sessions.html" class="cover" aria-label="Strategy sessions"></a>
       </div>
-      <div class="about-text">
-        <span class="eyebrow">About</span>
-        <h2>Hunter Christensen</h2>
-        <span class="role">Founder</span>
+      <div class="outcome">
+        <div class="outcome-key">
+          <span class="ok-index">2.</span>
+          <span class="ok-word">Training</span>
+        </div>
+        <div class="outcome-body">
+          <h3>People fluent with AI on their real work</h3>
+          <p>Everyone learns how AI actually works, in plain language, then builds with it on their own job and gets a first win before the room empties.</p>
+        </div>
+        <span class="arr">→</span>
+        <a href="sessions.html" class="cover" aria-label="Training sessions"></a>
+      </div>
+      <div class="outcome">
+        <div class="outcome-key">
+          <span class="ok-index">3.</span>
+          <span class="ok-word">Adoption</span>
+        </div>
+        <div class="outcome-body">
+          <h3>Systems that make it stick and compound</h3>
+          <p>Memory your business owns, reusable skills, and a rhythm of improvement your team runs without us. The difference between a good week and a different company.</p>
+        </div>
+        <span class="arr">→</span>
+        <a href="sessions.html" class="cover" aria-label="Adoption sessions"></a>
+      </div>
+    </div>
+    <div class="outcomes-cta rv">
+      <a href="sessions.html" class="btn-ghost">See the sessions <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
 
-        <p>Hunter Christensen designed executive programs at the Rotman School of Management, University of Toronto, the birthplace of modern artificial intelligence. Working alongside world-class faculty, he built custom programs for some of Canada's largest and most influential organizations, sitting in the room with C-suite leaders as they worked through where AI fit into their strategy, where it was falling short, and what to do about it.</p>
-        <p>He also led AI adoption inside the organization itself, training teams and building the tools and agents that turned strategy into practice.</p>
-        <p>He founded Nelvo after recognizing that the organizations with the most to gain from AI had the least access to serious methodology. Canadian SMEs are faster, closer to the work, and better positioned to learn by doing than the large institutions he'd been serving. They just hadn't been given the tools to start. Nelvo was built to change that.</p>
-
-        <div class="about-facts">
-          <div class="about-fact">
-            <div class="v">Rotman</div>
-            <div class="k">Executive programs designed at U of T</div>
-          </div>
-          <div class="about-fact">
-            <div class="v">C-suite</div>
-            <div class="k">In the room with Canada's largest orgs</div>
-          </div>
-          <div class="about-fact">
-            <div class="v">Operator</div>
-            <div class="k">Led internal AI adoption, not just theory</div>
+<!-- IN THE ROOM -->
+<section class="sec dark room">
+  <div class="enso-wm enso" style="right: -180px; top: -140px;" data-spin="0.015" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="wrap room-grid">
+    <div class="room-copy rv">
+      <span class="eyebrow" style="font-size: 20px">What a session is like</span>
+      <h2 class="h2">Less lecture. <em>More building.</em></h2>
+      <p class="lede">Sessions are built around your real work. Not generic exercises. Four kinds of work, mixed to fit who is in the room.</p>
+    </div>
+    <div class="modes rv">
+        <div class="mode">
+          <span class="n">1</span>
+          <div>
+            <h3>Taught live, in plain language</h3>
+            <p style="font-size: 16px">Short interactive blocks built for conversation, not a webinar. Real questions aimed at your business, and room to push back.</p>
           </div>
         </div>
-
-        <div class="creds">
-          <span class="cred">MBA, Rotman</span>
-          <span class="cred">Rotman Executive Programs</span>
-          <span class="cred">Creative Destruction Lab</span>
+        <div class="mode">
+          <span class="n">2</span>
+          <div>
+            <h3>Demonstrated on real work</h3>
+            <p>No canned videos. AI runs live in front of the room, on tasks that look like yours. Watching it happen is what changes minds.</p>
+          </div>
         </div>
+        <div class="mode">
+          <span class="n">3</span>
+          <div>
+            <h3>Hands-on, laptops open</h3>
+            <p>You practice on your own work with help in the room. People go from watching AI to using it well before the session ends.</p>
+          </div>
+        </div>
+        <div class="mode feature">
+          <span class="n">4</span>
+          <div>
+            <h3>You walk out with it running</h3>
+            <p>Every session ends with something built. Each person keeps a working setup they use the next morning. Not a binder. A system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="room-banner rv">
+    <img src="teaching_close.jpeg" alt="Hunter Christensen teaching a Nelvo session" loading="lazy">
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section class="sec" id="diagnostic">
+  <div class="wrap diag-grid">
+    <div class="diag-copy rv">
+      <span class="eyebrow" style="font-size: 20px">The free diagnostic</span>
+      <h2 class="h2">See exactly where your organization stands. <em>Before you spend a dollar.</em></h2>
+      <p>Adoption fails when it starts from guesses. Nelvo starts from a measurement. After a first conversation, your team takes a short survey, about nine minutes per person, and the answers plot your organization on the Growth Map: how engaged your leadership is, how capable your frontline is, and where the fastest wins are hiding.</p>
+      <ul class="diag-steps">
+        <li><b>1</b>A 20-minute conversation about your business</li>
+        <li><b>2</b>A nine-minute survey for your whole team</li>
+        <li><b>3</b>Your position, mapped and walked through together</li>
+      </ul>
+      <p><strong>The diagnostic is free.</strong> You see the picture, you keep the read, and you decide what happens next. No commitment attached.</p>
+      <a href="#contact" class="btn" style="margin-top: 0.8rem;">Get your free read <span class="arr">→</span></a>
+    </div>
+    <div class="rv" style="--d:.15s">
+      <div class="gmap-card">
+        <div class="gmap">
+          <div class="gmap-grid">
+            <div class="gq"></div><div class="gq"></div><div class="gq"></div><div class="gq"></div>
+          </div>
+          <div class="gdot">
+            <div class="enso" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+            <span class="pt"></span>
+            <span class="lbl">Your team</span>
+          </div>
+          <span class="garrow gy" aria-hidden="true"></span>
+          <span class="garrow gx" aria-hidden="true"></span>
+          <span class="ax y">Leadership engagement</span>
+          <span class="ax x">Frontline capability</span>
+        </div>
+        <div class="gmap-cap">The Growth Map · Your organization, plotted</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS / HOW IT WORKS -->
-<section class="process" id="engagement">
-  <div class="wrap">
-    <div class="process-top">
-      <div>
-        <span class="eyebrow">How it works</span>
-        <h2>Short engagements. <em>Lasting capability.</em></h2>
-      </div>
-      <div>
-        <p>We work directly with leadership teams over weeks, not months. Every engagement ends with your people owning the method, not waiting for us to come back.</p>
-      </div>
+<!-- BELIEF -->
+<section class="sec belief">
+  <div class="wrap belief-grid">
+    <div class="belief-fig rv">
+      <img src="office_workers.jpg" alt="A team working together" loading="lazy">
     </div>
-    <div class="engage-strip">
-      <div class="engage-cell"><span class="k" style="font-weight: 700">Format</span><div class="v">1-3 working sessions</div></div>
-      <div class="engage-cell"><span class="k" style="font-weight: 700">Length</span><div class="v">4 – 8 weeks</div></div>
-      <div class="engage-cell"><span class="k" style="font-weight: 700">Team size</span><div class="v">Leadership + key staff</div></div>
-      <div class="engage-cell"><span class="k" style="font-weight: 700">Output</span><div class="v">Method your team owns</div></div>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-circle"><span style="font-weight: 700">Step</span><b>1</b></div>
-        <h3>Diagnose</h3>
-        <span class="ssub">Where you actually stand</span>
-        <p>A structured look at where your organization sits today: what's working, what isn't, and where the real leverage is. We use the Growth Map to make the diagnosis concrete.</p>
-      </div>
-      <div class="step">
-        <div class="step-circle"><span style="font-weight: 700">Step</span><b>2</b></div>
-        <h3>Design</h3>
-        <span class="ssub">Build around real workflows</span>
-        <p>We work directly on the workflows that matter to your business. No generic exercises. Sessions are built around your actual tasks, your actual tools, your actual team.</p>
-      </div>
-      <div class="step">
-        <div class="step-circle"><span style="font-weight: 700">Step</span><b>3</b></div>
-        <h3>Deploy</h3>
-        <span class="ssub">Run the rotation</span>
-        <p>We hand off a Rotation your team runs independently: a repeating cycle of learning, experimenting, and improving. The goal is a team that doesn't need us to keep going.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- METHOD -->
-<section class="method" id="method">
-  <div class="wrap">
-    <div class="method-intro">
-      <div>
-        <span class="eyebrow">The Nelvo Method</span>
-        <h2>Four frameworks. <em>One system.</em></h2>
-      </div>
-      <div class="lede">
-        <p>Most consulting firms bring a playbook. We bring a method your team can actually run. These four frameworks connect into a single operating system for AI adoption.</p>
-        <p>They're not abstract. Each one has a job to do <em>the week after we leave.</em></p>
-      </div>
-    </div>
-
-    <div class="fw-compact">
-      <div class="fw-compact-row">
-        <span class="fw-compact-num">01</span>
-        <div class="fw-compact-body">
-          <div class="fw-compact-head">
-            <h3>Plot. Cultivate. Prune.</h3>
-            <span class="fw-compact-tag">Philosophy</span>
-          </div>
-          <p>A mental model for adoption that changes how leadership talks about AI, and what they decide to do on Monday.</p>
-        </div>
-      </div>
-      <div class="fw-compact-row">
-        <span class="fw-compact-num">02</span>
-        <div class="fw-compact-body">
-          <div class="fw-compact-head">
-            <h3>The Growth Map</h3>
-            <span class="fw-compact-tag">Diagnostic</span>
-          </div>
-          <p>A two-axis diagnostic that shows you where your organization actually stands. Not where you assume it does.</p>
-        </div>
-      </div>
-      <div class="fw-compact-row">
-        <span class="fw-compact-num">03</span>
-        <div class="fw-compact-body">
-          <div class="fw-compact-head">
-            <h3>The Rotation</h3>
-            <span class="fw-compact-tag">Operating Rhythm</span>
-          </div>
-          <p>A repeating cycle your team runs independently after we leave. Designed so progress compounds rather than stalls.</p>
-        </div>
-      </div>
-      <div class="fw-compact-row">
-        <span class="fw-compact-num">04</span>
-        <div class="fw-compact-body">
-          <div class="fw-compact-head">
-            <h3>The Six Gates</h3>
-            <span class="fw-compact-tag">Guardrails</span>
-          </div>
-          <p>Six checkpoints between experiment and deployment. Built from real cases of organizations that skipped them.</p>
-        </div>
-      </div>
-      <div class="fw-compact-foot">
-        <p>Ask about the method in your first conversation.</p>
-        <a href="#contact" class="fw-compact-cta">Start a conversation →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BELIEF PULL -->
-<section class="belief-pull">
-  <div class="belief-photo-col">
-    <img src="resources/office_workers.jpg" alt="Team at work">
-    <div class="belief-photo-fade"></div>
-  </div>
-  <div class="belief-copy-col">
-    <div class="belief-pull-inner">
-      <div>
-        <span class="eyebrow">The belief Nelvo is built on</span>
-        <blockquote>People are <em>assets made more valuable</em> by AI, not costs to be eliminated.</blockquote>
-      </div>
-      <div class="belief-side">
+    <div class="belief-copy rv" style="--d:.12s">
+      <span class="eyebrow" style="font-size: 20px">The belief Nelvo is built on</span>
+      <h2 class="h2">People are <em>assets made more valuable</em> by AI, not costs to be eliminated.</h2>
+      <div class="belief-body">
         <p>The companies getting real results from AI aren't replacing expertise. They're giving their people better tools to use it.</p>
         <p>Research shows that for every dollar spent on technology, a dollar should be spent on people. That's what we build for.</p>
-        <div class="belief-citation">
-          <blockquote style="font-weight: 700">"Organizations need to make the investments not just in technology, but in the people and processes that make AI work, including a strong focus on AI literacy to ensure teams are empowered to use these tools with confidence and clarity."</blockquote>
-          <span class="eyebrow" style="margin-top: 0.6rem;">Stephanie Terrill · KPMG Canada · Nov 2025</span>
-        </div>
+      </div>
+      <div class="belief-quote">
+        <blockquote>"Organizations need to make the investments not just in technology, but in the people and processes that make AI work, including a strong focus on AI literacy to ensure teams are empowered to use these tools with confidence and clarity."</blockquote>
+        <span class="mono-note">Stephanie Terrill · KPMG Canada · Nov 2025</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT WE DON'T DO -->
-<section class="neg">
-  <img class="neg-enso-img" src="resources/circle-only.jpeg" alt="">
-  <div class="wrap">
-    <div class="neg-header">
-      <div>
-        <span class="eyebrow">The fine print</span>
-        <h2>What Nelvo <em>won't</em> do.</h2>
-      </div>
-      <p>There's a lot of noise in AI consulting. The clearest way to say what we are is to say what we're not. If you need any of the following, we'll tell you honestly, and often point you somewhere else.</p>
+<!-- PROOF -->
+<section class="sec proof" style="background: var(--surface); border-top: 1px solid var(--rule);">
+  <div class="wrap rv">
+    <span class="qmark" aria-hidden="true">&#8220;</span>
+    <blockquote>Hunter made AI feel simple, practical, and immediately useful, turning big, abstract ideas into clear actions our team could actually run with.</blockquote>
+    <div class="who">
+      <div class="n">Danielle Picot</div>
+      <span class="t">Human Resources Administrator, Collectrite</span>
     </div>
-    <div class="neg-grid">
-      <div class="neg-item">
-        <span class="x">✕</span>
-        <div>
-          <h4>Sell you software</h4>
-          <p>We're tool-agnostic. Our job is to make your team better at choosing and using tools, not to sell one.</p>
-        </div>
-      </div>
-      <div class="neg-item">
-        <span class="x">✕</span>
-        <div>
-          <h4>Run a generic workshop</h4>
-          <p>Prompt-engineering workshops are everywhere and forgotten by Friday. We build sessions around your real workflows.</p>
-        </div>
-      </div>
-      <div class="neg-item">
-        <span class="x">✕</span>
-        <div>
-          <h4>Embed for twelve months</h4>
-          <p>Short engagements by design. If we can't leave you with a method your team owns, we haven't done the job.</p>
-        </div>
-      </div>
-      <div class="neg-item">
-        <span class="x">✕</span>
-        <div>
-          <h4>Replace your people</h4>
-          <p>We don't build strategies that start with headcount reduction. The math works better when people get sharper, not fewer.</p>
-        </div>
-      </div>
+    <p class="proof-context">Collectrite · collections agency · Cambridge, ON · 4.5 / 5 would recommend</p>
+    <div class="more">
+      <a href="about.html#testimonials" class="btn-ghost">Read the full Collectrite story <span class="arr">→</span></a>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-left">
-        <img src="resources/Hunter_profile_photo.jpg" class="contact-avatar" alt="Hunter Christensen">
-        <span class="eyebrow">Start a conversation</span>
-        <h2>No pitch deck. No pressure. Just a <em>conversation.</em></h2>
-        <p class="contact-body">Where you are, what you've tried, what might make sense as a first step. You'll hear back from Hunter personally.</p>
-        <div style="display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap;">
-          <a href="mailto:hunter@nelvo.ca" class="btn-primary">hunter@nelvo.ca
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
-          </a>
-          <div class="contact-meta" style="margin-top: 0;">
-            <span>Serving Canadian SMEs</span>
-          </div>
-        </div>
+<!-- METHOD TEASE -->
+<section class="sec method dark">
+  <div class="enso-wm enso" data-spin="0.02" aria-hidden="true" style="left: -160px; bottom: -180px;"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="wrap rv">
+    <span class="eyebrow method-eyebrow" style="font-size: 20px">The math of adoption</span>
+    <p class="method-stmt">Technology is only <em>20%</em> of the value. Redesigning how the work gets done is the other <em>80%</em>.</p>
+    <div class="split-bar" role="img" aria-label="Technology is 20 percent of the value; the redesign is 80 percent.">
+      <div class="split-seg tech">
+        <span class="pct">20<span class="s">%</span></span>
+        <span class="cap">Technology</span>
       </div>
-      <div class="expect">
-        <h3>What to expect <span class="time">20 MIN · NO SLIDES</span></h3>
-        <ul>
-          <li>A few questions about your business and where AI has or hasn't worked so far</li>
-          <li>An honest read on your starting situation</li>
-          <li>One or two concrete things you could try on your own next week</li>
-          <li>A clear answer on whether working together makes sense, or doesn't</li>
-        </ul>
+      <div class="split-seg work">
+        <span class="pct">80<span class="s">%</span></span>
+        <span class="cap">The redesign</span>
       </div>
+    </div>
+    <span class="mono-note" style="display: block; margin-top: 1.4rem;">PwC · 2026 · McKinsey · The State of AI 2025</span>
+    <div class="method-foot">
+      <div class="enso-divider enso" data-spin="0.03" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+      <h2 class="h3 method-foot-h" style="font-size: 38px">Powered by a method, <em>not a deck.</em></h2>
+      <p class="method-foot-p" style="font-size: 20px">Nelvo runs on a tested operating system for that redesign, built to be handed over. Your team keeps it, and runs it, long after we leave.</p>
     </div>
   </div>
 </section>
 
-<div id="tweaks-root"></div>
+<!-- FUNDING -->
+<section class="sec">
+  <div class="wrap fund-grid">
+    <div class="jump rv">
+      <span class="jump-title">Canada's national AI adoption target</span>
+      <div class="jump-row">
+        <div class="jstat">
+          <span class="jv"><span data-count="12">0</span><span class="ju">%</span></span>
+          <span class="jlbl" style="font-size: 20px">of businesses use AI today</span>
+        </div>
+        <span class="jarr">→</span>
+        <div class="jstat">
+          <span class="jv terra"><span data-count="60">0</span><span class="ju">%</span></span>
+          <span class="jlbl" style="font-size: 20px">government goal by 2034</span>
+        </div>
+      </div>
+      <div class="jump-cap">AI for All · Government of Canada · June 2026</div>
+    </div>
+    <div class="fund-copy rv" style="--d:.15s">
+      <span class="eyebrow" style="font-size: 20px">The timing</span>
+      <h2 class="h2">That gap is now a <em>funded</em> national priority.</h2>
+      <p style="font-size: 20px">On June 4, 2026, Canada launched AI for All, its first national AI strategy: over $2.3 billion aimed squarely at the adoption gap, with a stated goal of moving business adoption from roughly 12 percent to 60 percent by 2034.</p>
+      <p style="font-size: 20px">And it's more than a strategy document. BDC's LIFT program is live now: $500 million in financing for SMEs adopting AI, from $25,000 to $5 million, advisory support included, with a preferential 2.25 percent rate for businesses choosing Canadian AI solutions.</p>
+      <p style="font-size: 20px">If cost has been the reason to wait, the math may have changed. <strong>Ask about funding in your first conversation.</strong> We'll tell you plainly what applies to you and what doesn't.</p>
+      <span class="mono-note">Government of Canada · June 2026 · BDC LIFT · 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec dark" id="contact">
+  <div class="enso-wm enso" style="left: -200px; bottom: -180px;" data-spin="0.012" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="wrap cta-grid">
+    <div class="cta-left rv">
+      <img src="Hunter_profile_photo.jpg" alt="Hunter Christensen" class="avatar">
+      <span class="eyebrow" style="font-size: 20px">Start a conversation</span>
+      <h2 class="h2">No pitch deck. No pressure. <em>Just a conversation.</em></h2>
+      <p class="lede">Where you are, what you've tried, and whether the free diagnostic makes sense as a next step. You'll hear back from Hunter personally.</p>
+      <div class="cta-meta">
+        <a href="mailto:hunter@nelvo.ca" class="btn">hunter@nelvo.ca <span class="arr">→</span></a>
+        <span class="mono-note">Serving Canadian SMEs</span>
+      </div>
+      <span class="serif-note">Two sentences about your business is plenty.</span>
+    </div>
+    <div class="expect rv" style="--d:.15s">
+      <h3>What to expect <span class="time">20 min · No slides</span></h3>
+      <ul>
+        <li>A few questions about your business and where AI has or hasn't worked so far</li>
+        <li>An honest read on your starting situation</li>
+        <li>One or two concrete things you could try on your own next week</li>
+        <li>A clear answer on whether working together makes sense, or doesn't</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <!-- FOOTER -->
 <footer class="foot">
-  <div class="foot-inner">
-    <img src="resources/logo-light.png" alt="Nelvo">
-    <div class="foot-right">
-      <a href="mailto:hunter@nelvo.ca">hunter@nelvo.ca</a>
-      <span>Toronto</span>
+  <div class="wrap">
+    <p class="foot-slogan">Shared understanding. <em>Real adoption.</em></p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo-light.png" alt="Nelvo">
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="sessions.html">The Sessions</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#diagnostic">The free diagnostic</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hunter@nelvo.ca">hunter@nelvo.ca</a></li>
+          <li><a href="#contact">Start a conversation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>Nelvo · Toronto</span>
       <span>© 2026</span>
     </div>
   </div>
 </footer>
 
-</body></html>
+<script src="main.js"></script>
+</body>
+</html>
