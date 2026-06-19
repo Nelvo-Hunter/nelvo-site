@@ -190,6 +190,8 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .stat:last-child { border-right: none; }
 .stat .v { font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 5.2vw, 4.6rem); line-height: 1; letter-spacing: -0.03em; display: flex; align-items: baseline; gap: 2px; }
 .stat .v .u { font-style: italic; font-weight: 400; font-size: 0.55em; color: var(--terra); }
+/* reserve digit width so the count-up animation can't reflow the layout (was making the photo jitter) */
+.stat .v [data-count], .jump .jv [data-count] { font-variant-numeric: tabular-nums; display: inline-block; min-width: 2ch; text-align: right; }
 .stat p { font-size: 1.02rem; color: var(--muted); font-weight: 300; margin-top: 0.8rem; line-height: 1.55; max-width: 30ch; }
 .stat .src { display: block; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-top: 0.9rem; }
 .gap-quote { margin-top: clamp(2.6rem, 5vw, 4rem); padding: 1.8rem 0 0 1.8rem; border-left: 3px solid var(--terra); max-width: 760px; }
@@ -504,9 +506,13 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .stat + .stat { padding-left: 0; }
   .stat:last-child { border-bottom: none; }
   .stat-row .stat:last-child { border-bottom: none; }
-  .whynow { grid-template-columns: 1fr; padding-left: var(--gut); padding-right: var(--gut); gap: 2.6rem; }
-  .whynow-text { max-width: none; }
-  .whynow-photo { min-height: 340px; margin: 0 calc(-1 * var(--gut)); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); }
+  /* mobile: flatten so the photo can sit between the headline and the stats */
+  .whynow { display: flex; flex-direction: column; padding-left: var(--gut); padding-right: var(--gut); gap: 2.6rem; }
+  .whynow-text { display: contents; }
+  .whynow .gap-head { order: 1; margin-bottom: 0; }
+  .whynow-photo { order: 2; min-height: 300px; margin: 0 calc(-1 * var(--gut)); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); }
+  .whynow .stats { order: 3; }
+  .whynow .gap-quote { order: 4; }
   .whynow-photo::before { display: none; }
   .outcome { grid-template-columns: 1fr; row-gap: 1rem; padding-right: 0.6rem; }
   .outcome-key { flex-direction: row; align-items: baseline; gap: 0.8rem; }
