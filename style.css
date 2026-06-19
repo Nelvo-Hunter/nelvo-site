@@ -208,8 +208,8 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .whynow-text { max-width: 720px; align-self: center; }
 .whynow .gap-head { max-width: none; margin-bottom: clamp(2rem, 3.5vw, 3rem); }
 .whynow .gap-quote { max-width: none; }
-.whynow-photo { position: relative; align-self: stretch; overflow: hidden; min-height: 460px; opacity: 1; transform: none; transition: none; }
-.whynow-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+.whynow-photo { position: relative; align-self: stretch; overflow: hidden; min-height: 460px; opacity: 1; transform: none; transition: none; will-change: transform; }
+.whynow-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; transform: translateZ(0); backface-visibility: hidden; }
 .whynow-photo::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to right, var(--paper) 0%, rgba(250,248,245,0) 17%);
