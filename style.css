@@ -208,7 +208,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .whynow-text { max-width: 720px; align-self: center; }
 .whynow .gap-head { max-width: none; margin-bottom: clamp(2rem, 3.5vw, 3rem); }
 .whynow .gap-quote { max-width: none; }
-.whynow-photo { position: relative; align-self: stretch; overflow: hidden; min-height: 460px; }
+.whynow-photo { position: relative; align-self: stretch; overflow: hidden; min-height: 460px; opacity: 1; transform: none; transition: none; }
 .whynow-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
 .whynow-photo::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -325,6 +325,12 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .split-seg .cap { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; margin-top: 0.6rem; white-space: nowrap; }
 .split-seg.tech .cap { color: var(--cream-60); }
 .split-seg.work .cap { color: rgba(251,246,239,0.82); }
+/* narrow screens: stack the 20/80 bar vertically so labels aren't clipped */
+@media (max-width: 700px) {
+  .split-bar { flex-direction: column; height: clamp(168px, 48vw, 220px); gap: 6px; max-width: 440px; }
+  .split-seg { flex-direction: row; align-items: center; justify-content: flex-start; gap: 0.75rem; padding: 0 1.3rem; }
+  .split-seg .cap { margin-top: 0; }
+}
 .method-foot { max-width: 56ch; margin: clamp(3rem, 6vw, 5rem) auto 0; padding-top: clamp(2.4rem, 4.5vw, 3.4rem); border-top: 1px solid var(--rule-dk); }
 .method-foot .enso-divider { width: 60px; height: 60px; margin: 0 auto 1.6rem; }
 .method-foot-h { margin: 0 auto 1.1rem; }
