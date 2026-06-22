@@ -344,7 +344,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .split-seg.tech, .split-seg.work { background: transparent; border: none; }
   .split-seg .pct { font-size: clamp(1.5rem, 6vw, 1.9rem); }
   .split-seg .cap { margin-top: 0; white-space: nowrap; font-size: 0.72rem; }
-  .split-seg::after { content: ""; flex: none; width: clamp(96px, 34vw, 150px); height: 12px; border-radius: 6px; margin-left: auto; }
+  .split-seg::after { content: ""; flex: none; width: clamp(96px, 34vw, 150px); height: 12px; border-radius: 6px; order: -1; margin-right: 0.35rem; }
   .split-seg.tech::after { background: linear-gradient(to right, var(--cream-60) 0 20%, rgba(240,235,225,0.12) 20% 100%); }
   .split-seg.work::after { background: linear-gradient(to right, var(--terra) 0 80%, rgba(240,235,225,0.12) 80% 100%); }
 }
