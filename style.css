@@ -178,20 +178,25 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 /* ── Stats band (the gap) ── */
 .gap-head { max-width: 880px; margin-bottom: clamp(2.6rem, 5vw, 4.2rem); }
 .gap-head .h2 { margin-bottom: 1.4rem; }
-.stats { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(1.6rem, 3.4vw, 3rem); }
-.stat-set { display: flex; flex-direction: column; }
-.stat-lead { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.95rem; }
+.stats { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
+.stat-set { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 16px; padding: clamp(1.3rem, 2.2vw, 1.9rem) clamp(1.4rem, 2.4vw, 2rem) clamp(1.5rem, 2.6vw, 2.1rem); }
+.stat-set--gap { background: var(--surface); }
+.stat-set--gain { background: var(--paper); border-color: rgba(180,96,44,0.38); box-shadow: 0 26px 54px -40px rgba(180,96,44,0.55); }
+.stat-lead { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin: 0 0 clamp(1.1rem, 2.2vw, 1.5rem); padding-bottom: 0.9rem; border-bottom: 1px solid var(--rule); }
 .stat-lead--gap { color: var(--faint); }
 .stat-lead--gain { color: var(--terra); }
-.stat-row { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--rule); }
-.stat-row--two { grid-template-columns: 1fr 1fr; }
-.stat { padding: clamp(1.8rem, 3vw, 2.8rem) clamp(1.4rem, 2.6vw, 2.4rem) 0 0; border-right: 1px solid var(--rule); }
-.stat + .stat { padding-left: clamp(1.4rem, 2.6vw, 2.4rem); }
-.stat:last-child { border-right: none; }
+.stat-set--gain .stat-lead { border-bottom-color: rgba(180,96,44,0.28); }
+.stat-row { display: grid; grid-template-columns: 1fr; flex: 1; align-content: center; }
+.stat-row--two { grid-template-columns: 1fr 1fr; align-content: stretch; }
+.stat { padding: 0; border-right: none; }
+.stat-row--two .stat:first-child { padding-right: clamp(1.3rem, 2.6vw, 2.2rem); }
+.stat-row--two .stat:last-child { padding-left: clamp(1.3rem, 2.6vw, 2.2rem); border-left: 1px solid rgba(180,96,44,0.22); }
 .stat .v { font-family: var(--display); font-weight: 700; font-size: clamp(3rem, 5.2vw, 4.6rem); line-height: 1; letter-spacing: -0.03em; display: flex; align-items: baseline; gap: 2px; }
 .stat .v .u { font-style: italic; font-weight: 400; font-size: 0.55em; color: var(--terra); }
 /* reserve digit width so the count-up animation can't reflow the layout (was making the photo jitter) */
 .stat .v [data-count], .jump .jv [data-count] { font-variant-numeric: tabular-nums; display: inline-block; min-width: 2ch; text-align: right; }
+.whynow .stat .v [data-count] { text-align: left; }
+.whynow .stat .v [data-count][data-prefix] { min-width: 4.2ch; }
 .stat p { font-size: 1.02rem; color: var(--muted); font-weight: 300; margin-top: 0.8rem; line-height: 1.55; max-width: 30ch; }
 .stat .src { display: block; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-top: 0.9rem; }
 .gap-quote { margin-top: clamp(2.6rem, 5vw, 4rem); padding: 1.8rem 0 0 1.8rem; border-left: 3px solid var(--terra); max-width: 760px; }
@@ -210,12 +215,15 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .whynow-text { max-width: 720px; align-self: center; }
 .whynow .gap-head { max-width: none; margin-bottom: clamp(2rem, 3.5vw, 3rem); }
 .whynow .gap-quote { max-width: none; }
-.whynow-photo { position: relative; align-self: stretch; overflow: hidden; min-height: 460px; opacity: 1; transform: none; transition: none; will-change: transform; }
+.whynow-photo { position: relative; z-index: 1; align-self: stretch; overflow: hidden; min-height: 460px; opacity: 1; transform: none; transition: none; will-change: transform; }
 .whynow-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; transform: translateZ(0); backface-visibility: hidden; }
 .whynow-photo::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to right, var(--paper) 0%, rgba(250,248,245,0) 17%);
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(to right, var(--paper) 0%, var(--paper) 3%, rgba(250,248,245,0) 24%);
 }
+/* stats band overlaps onto the photo's faded left edge, sitting on top */
+.whynow-text { position: relative; z-index: 2; }
+.whynow .stats { position: relative; z-index: 2; margin-right: clamp(-9rem, -9vw, -5rem); }
 
 /* ── Outcomes rows ── */
 .outcomes-head { max-width: 880px; margin-bottom: clamp(2.8rem, 5vw, 4.4rem); }
@@ -227,7 +235,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .outcome { display: grid; grid-template-columns: minmax(210px, 270px) 1fr; gap: clamp(1.8rem, 4vw, 4.5rem); align-items: center; padding: clamp(2.2rem, 3.8vw, 3.2rem) 3.2rem clamp(2.2rem, 3.8vw, 3.2rem) 0.6rem; border-bottom: 1px solid var(--rule); position: relative; transition: background .3s; }
 .outcome:hover { background: rgba(240,235,225,0.55); }
 .outcome-key { display: flex; flex-direction: row; align-items: baseline; gap: 1.15rem; }
-.outcome .ok-index { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(2.8rem, 4.4vw, 3.9rem); line-height: 1.02; color: var(--terra); }
+.outcome .ok-index { font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(2rem, 3.2vw, 2.8rem); line-height: 1.02; color: var(--terra); }
 .outcome .ok-word { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 3.2vw, 2.8rem); line-height: 1.02; letter-spacing: -0.025em; color: var(--ink); }
 .outcome-body { max-width: 60ch; }
 .outcome h3 { font-family: var(--body); font-weight: 600; font-size: clamp(1.18rem, 1.6vw, 1.4rem); line-height: 1.32; color: var(--ink); white-space: nowrap; margin-bottom: 0.7rem; }
@@ -500,18 +508,17 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .burger { display: block; }
   .hero { min-height: unset; padding-top: clamp(8rem, 14vh, 10rem); }
   .hero-enso { top: -8vw; right: -49vw; width: 70vw; height: 70vw; transform: none; animation: none; opacity: 0.9; }
-  .stats { grid-template-columns: 1fr; gap: 2.2rem; }
+  .stats { grid-template-columns: 1fr; gap: 1.2rem; }
   .stat-row, .stat-row--two { grid-template-columns: 1fr; }
-  .stat { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.6rem 0; }
-  .stat + .stat { padding-left: 0; }
-  .stat:last-child { border-bottom: none; }
-  .stat-row .stat:last-child { border-bottom: none; }
+  .stat { border-right: none; padding: 0; }
+  .stat-row--two .stat:first-child { padding: 0 0 1.4rem; }
+  .stat-row--two .stat:last-child { padding: 1.4rem 0 0; border-left: none; border-top: 1px solid rgba(180,96,44,0.22); }
   /* mobile: flatten so the photo can sit between the headline and the stats */
   .whynow { display: flex; flex-direction: column; padding-left: var(--gut); padding-right: var(--gut); gap: 2.6rem; }
   .whynow-text { display: contents; }
   .whynow .gap-head { order: 1; margin-bottom: 0; }
   .whynow-photo { order: 2; min-height: 300px; margin: 0 calc(-1 * var(--gut)); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 16%, rgba(0,0,0,1) 82%, transparent 100%); }
-  .whynow .stats { order: 3; }
+  .whynow .stats { order: 3; margin-right: 0; }
   .whynow .gap-quote { order: 4; }
   .whynow-photo::before { display: none; }
   .outcome { grid-template-columns: 1fr; row-gap: 1rem; padding-right: 0.6rem; }
