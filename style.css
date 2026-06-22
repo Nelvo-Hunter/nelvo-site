@@ -340,7 +340,8 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 @media (max-width: 700px) {
   /* thin proportional bars with the label and percentage beside them */
   .split-bar { flex-direction: column; height: auto; gap: 1.05rem; max-width: 460px; }
-  .split-seg { flex-direction: row; align-items: center; justify-content: flex-start; gap: 0.6rem; padding: 0; background: transparent; border: none; border-radius: 0; overflow: visible; }
+  .split-seg { flex-direction: row; align-items: center; justify-content: flex-start; gap: 0.6rem; padding: 0; border-radius: 0; overflow: visible; }
+  .split-seg.tech, .split-seg.work { background: transparent; border: none; }
   .split-seg .pct { font-size: clamp(1.5rem, 6vw, 1.9rem); }
   .split-seg .cap { margin-top: 0; white-space: nowrap; font-size: 0.72rem; }
   .split-seg::after { content: ""; flex: none; width: clamp(96px, 34vw, 150px); height: 12px; border-radius: 6px; margin-left: auto; }
