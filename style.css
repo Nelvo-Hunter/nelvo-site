@@ -131,8 +131,9 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .nav-links a:not(.btn-nav):hover { color: var(--ink); }
 .nav-links a:not(.btn-nav):hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--ink); }
-.btn-nav { background: var(--terra); color: #fff; padding: 0.75rem 1.5rem; border-radius: 999px; font-weight: 500; font-size: 0.98rem; transition: background .2s; }
-.btn-nav:hover { background: var(--terra-2); }
+.btn-nav { background-color: var(--terra); background-image: linear-gradient(180deg, #C66E35 0%, var(--terra) 52%, #A55620 100%); color: #fff; padding: 0.75rem 1.5rem; border-radius: 999px; font-weight: 500; font-size: 0.98rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 5px 14px -6px rgba(180,96,44,0.55); transition: background-image .2s, box-shadow .25s var(--ease), transform .2s var(--ease); }
+.btn-nav:hover { background-image: linear-gradient(180deg, #CB7339 0%, var(--terra) 52%, #9A5020 100%); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.26), 0 9px 20px -7px rgba(180,96,44,0.62); }
+.btn-nav:active { transform: translateY(0); box-shadow: inset 0 1px 2px rgba(120,60,24,0.35), 0 3px 9px -6px rgba(180,96,44,0.5); }
 .burger { display: none; background: none; border: 0; cursor: pointer; width: 46px; height: 46px; position: relative; z-index: 95; }
 .burger span { position: absolute; left: 10px; right: 10px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform .3s var(--ease), opacity .2s, background .3s; }
 .burger span:nth-child(1) { top: 17px; }
@@ -159,6 +160,8 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .hero-enso { position: absolute; right: clamp(-26vw, -340px, -120px); top: 50%; transform: translateY(-50%); width: clamp(420px, 56vw, 880px); height: clamp(420px, 56vw, 880px); opacity: 0.9; z-index: 0; }
 .hero .wrap { position: relative; z-index: 1; }
 .hero .h1 { max-width: 13ch; margin-bottom: 2rem; }
+/* per-letter spans flip to navy where they overlap the enso (set in main.js) */
+.hero .h1 em .eo, .hero .eyebrow .eo, .hero .lede-lead em .eo { transition: color .18s var(--ease); }
 .hero .lede { margin-bottom: 2.8rem; }
 .hero .lede-lead { margin-bottom: 1.25rem; }
 .hero-points { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.8rem; margin-left: 1.4rem; max-width: 42ch; }
@@ -304,6 +307,9 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 .belief-fig { position: relative; min-height: 560px; height: 100%; align-self: stretch; }
 .belief-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0; filter: saturate(0.7); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 62%, transparent 100%); mask-image: linear-gradient(to right, rgba(0,0,0,1) 62%, transparent 100%); }
 .belief-copy .h2 { margin-bottom: 2rem; max-width: 17ch; }
+/* keep the eyebrow dash on the first line when it wraps */
+.belief-copy .eyebrow { align-items: flex-start; }
+.belief-copy .eyebrow::before { margin-top: 0.8em; }
 .belief-body { padding-left: 1.8rem; border-left: 3px solid var(--terra); }
 .belief-body p { font-size: 1.12rem; font-weight: 300; color: var(--muted); line-height: 1.75; margin-bottom: 1.1rem; max-width: 52ch; }
 .belief-quote { margin-top: 2.2rem; padding-top: 1.8rem; border-top: 1px solid var(--rule); max-width: 56ch; }
@@ -386,7 +392,7 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
 
 /* ── Footer ── */
 .foot { background: #142528; color: var(--surface); border-top: 1px solid var(--rule-dk); padding: clamp(3.4rem, 6vw, 5rem) 0 2.6rem; position: relative; overflow: hidden; }
-.foot-slogan { font-family: var(--display); font-weight: 700; font-style: italic; font-size: clamp(1.7rem, 3.6vw, 2.9rem); color: var(--surface); margin-bottom: 2.8rem; max-width: 18ch; line-height: 1.25; }
+.foot-slogan { font-family: var(--display); font-weight: 400; font-style: italic; font-size: clamp(1.7rem, 3.6vw, 2.9rem); color: var(--surface); margin-bottom: 2.8rem; max-width: 18ch; line-height: 1.25; }
 .foot-slogan em { color: var(--terra-lt); font-weight: 400; }
 .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; align-items: start; margin-bottom: 3rem; position: relative; z-index: 1; }
 .foot-brand img { height: 28px; }
@@ -552,7 +558,12 @@ h1 em, h2 em, h3 em { font-style: italic; font-weight: 400; color: var(--terra);
   .facts { grid-template-columns: 1fr; }
   .fact { border-right: none; border-bottom: 1px solid var(--rule); }
   .fact:last-child { border-bottom: none; }
-  .hero .h1 { max-width: none; }
+  .hero .h1 { max-width: none; white-space: nowrap !important; font-size: clamp(2rem, 10.4vw, 3.6rem) !important; }
+  .hero .h1 > span { display: block; }
+  .hero .h1 em { display: block; }
+  /* keep the eyebrow dash aligned to the first line when it wraps */
+  .hero .eyebrow { align-items: flex-start; }
+  .hero .eyebrow::before { margin-top: 0.8em; }
   .jump .jv { font-size: clamp(2.6rem, 13vw, 3.8rem); }
   .gdot { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
 }
