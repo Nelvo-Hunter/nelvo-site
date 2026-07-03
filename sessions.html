@@ -5,34 +5,22 @@
 <title>The Sessions · Nelvo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Nelvo is built in focused two- to three-hour working sessions, booked by who is in the room. Start with one. Stack as it pays off. The first diagnostic is free.">
+<meta name="theme-color" content="#FAF8F5">
 <link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<style>
-  /* sessions.html: compress vertical rhythm */
-  body { --sec: clamp(3.5rem, 7vw, 6rem); }
-  .phero { padding-bottom: clamp(1.5rem, 3vh, 2.5rem); }
-  .method { padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: clamp(3rem, 6vw, 5rem); position: relative; z-index: 0; }
-  /* darker text sits over the (still-spinning) ensō */
-  .method > .wrap { --enso: min(90vw, 760px); position: relative; min-height: var(--enso); display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .method .enso-stage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: var(--enso); height: var(--enso); z-index: 0; pointer-events: none; }
-  .method .enso-stage .enso-divider { width: 100%; height: 100%; margin: 0; opacity: 0.28; }
-  .method .h2, .method .lede, .method .mono-note { position: relative; z-index: 1; }
-  .method .lede { color: var(--ink); }
-  .method .mono-note { color: var(--ink-2); }
-</style>
 </head>
-<body>
+<body class="sessions">
 
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="logo-dark.png" alt="Nelvo"></a>
     <div class="nav-links">
-      <a href="sessions.html" class="active" style="font-size: 20px">The Sessions</a>
-      <a href="about.html" style="font-size: 20px">About</a>
-      <a href="#contact" class="btn-nav" style="font-size: 20px">Start a conversation</a>
+      <a href="sessions.html" class="active">The Sessions</a>
+      <a href="about.html">About</a>
+      <a href="#contact" class="btn-nav">Start a conversation</a>
     </div>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
@@ -51,14 +39,14 @@
 <header class="phero">
   <div class="phero-enso enso" data-spin="0.014" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
   <div class="wrap">
-    <span class="eyebrow" style="font-size: 20px">The sessions</span>
+    <span class="eyebrow">The sessions</span>
     <h1 class="h1">Start with one session.<br><em>Stack as it pays off.</em></h1>
     <p class="lede">Nelvo is built in focused, two- to three-hour working sessions, booked by who is in the room and how far along they are. Each one stands alone and delivers on its own. Together, they take a team from curious to capable to compounding.</p>
   </div>
 </header>
 
 <!-- THE PATH -->
-<section class="sec" style="padding-top: clamp(2rem, 4vw, 3rem); position: relative; z-index: 1;">
+<section class="sec path-sec">
   <div class="wrap">
     <div class="path">
       <div class="s-card rv">
@@ -77,7 +65,7 @@
         </details>
         <div class="s-meta">2–3 hours · Leadership team</div>
       </div>
-      <div class="s-card flagship rv" style="--d:.1s">
+      <div class="s-card flagship rv d1">
         <span class="s-badge">ENTRY POINT · FRONTLINE</span>
         <div class="s-top"><div class="s-letter">B</div><span class="s-tag">Training</span></div>
         <h3>AI Fluency</h3>
@@ -93,7 +81,7 @@
         </details>
         <div class="s-meta">2–3 hours · Everyone</div>
       </div>
-      <div class="s-card rv" style="--d:.1s">
+      <div class="s-card rv d2">
         <div class="s-top"><div class="s-letter">C</div><span class="s-tag">Adoption</span></div>
         <h3>AI Infrastructure</h3>
         <p>For teams that have put the fluency session to work. Turns personal wins into durable systems: a memory your business owns, reusable skills, and a light rhythm of improvement. The session where it starts to compound.</p>
@@ -108,7 +96,7 @@
         </details>
         <div class="s-meta">2–3 hours · Session B graduates</div>
       </div>
-      <div class="s-card rv" style="--d:.15s">
+      <div class="s-card rv d3">
         <div class="s-top"><div class="s-letter">D</div><span class="s-tag">Adoption</span></div>
         <h3>Workflow Transformation</h3>
         <p>When your team is ready, we take one real workflow and redesign it end to end: deconstruct it, rebuild it around AI, prototype it live, and leave you with a pilot plan. Custom-built for your business.</p>
@@ -132,16 +120,16 @@
   <div class="wrap rv">
     <div class="enso-stage" aria-hidden="true"><div class="enso-divider enso" data-spin="0.03"><img src="nelvo-enso-textured.webp" alt=""></div></div>
     <h2 class="h2">Every session runs on the same method.<br><em>And you keep it.</em></h2>
-    <p class="lede" style="margin-inline: auto; margin-top: 1.8rem; margin-bottom: 2.4rem;">Behind the sessions sits a complete operating system for adoption: a philosophy for leading it, a diagnostic for grounding it, an operating rhythm for compounding it, and safety checks for deploying it without losing sleep. It's taught in the room, on your work, and handed over when we leave.</p>
+    <p class="lede">Behind the sessions sits a complete operating system for adoption: a philosophy for leading it, a diagnostic for grounding it, an operating rhythm for compounding it, and safety checks for deploying it without losing sleep. It's taught in the room, on your work, and handed over when we leave.</p>
     <span class="mono-note">Built for cautious, regulated teams · Nothing deploys on enthusiasm alone</span>
   </div>
 </section>
 
 <!-- WHAT YOU KEEP -->
-<section class="sec" style="position: relative; z-index: 1;">
+<section class="sec keep-sec">
   <div class="wrap">
     <div class="outcomes-head rv">
-      <span class="eyebrow" style="font-size: 20px">What you keep</span>
+      <span class="eyebrow">What you keep</span>
       <h2 class="h2">Everything is built<br><em>to be left behind.</em></h2>
     </div>
     <div class="keep">
@@ -150,12 +138,12 @@
         <h3>A working AI setup</h3>
         <p>Each person builds a setup around their own job during the session and walks out using it. Day one value, not a someday plan.</p>
       </div>
-      <div class="keep-item rv" style="--d:.1s">
+      <div class="keep-item rv d1">
         <span class="ki">On your desk</span>
         <h3>The method on paper</h3>
         <p>The thinking as printed reference pieces your team actually keeps: the playbook, the rhythm, and the safety checks at a glance.</p>
       </div>
-      <div class="keep-item rv" style="--d:.2s">
+      <div class="keep-item rv d3">
         <span class="ki">In your team</span>
         <h3>A shared language</h3>
         <p>Leaders and frontline speaking the same way about what AI is, where it fits, and what's safe. The foundation everything else stands on.</p>
@@ -165,11 +153,11 @@
 </section>
 
 <!-- FIRST STEP -->
-<section class="sec" style="padding-top: 0;">
+<section class="sec sec-tight first-step-sec">
   <div class="wrap">
     <div class="first-step rv">
       <div>
-        <span class="eyebrow" style="font-size: 20px">The first step is free</span>
+        <span class="eyebrow">The first step is free</span>
         <h3 class="h3">A 20-minute call and a team diagnostic.</h3>
         <p>Before you spend anything, a short conversation and a nine-minute team survey plot your organization on the Growth Map: where you stand, and what's worth doing first. You see the picture, you keep the read. And with federal funding now flowing toward SME adoption, ask about programs like BDC's LIFT.</p>
       </div>
@@ -183,11 +171,11 @@
 
 <!-- CTA -->
 <section class="sec dark" id="contact">
-  <div class="enso-wm enso" style="right: -180px; top: -140px;" data-spin="0.012" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
+  <div class="enso-wm enso wm-tr" data-spin="0.012" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
   <div class="wrap cta-grid">
     <div class="cta-left rv">
       <img src="Hunter_profile_photo.jpg" alt="Hunter Christensen" class="avatar">
-      <span class="eyebrow" style="font-size: 20px">Start a conversation</span>
+      <span class="eyebrow">Start a conversation</span>
       <h2 class="h2">No pitch deck.<br>No pressure.<br><em>Just a conversation.</em></h2>
       <p class="lede">Where you are, what you've tried, and whether the free diagnostic makes sense as a next step. You'll hear back from Hunter personally.</p>
       <div class="cta-meta">
@@ -196,7 +184,7 @@
       </div>
       <span class="serif-note">Two sentences about your business is plenty.</span>
     </div>
-    <div class="expect rv" style="--d:.15s">
+    <div class="expect rv d2">
       <h3>What to expect <span class="time">20 min · No slides</span></h3>
       <ul>
         <li>A few questions about your business and where AI has or hasn't worked so far</li>
@@ -212,6 +200,7 @@
 
 <!-- FOOTER -->
 <footer class="foot">
+  <div class="foot-enso enso" aria-hidden="true"><img src="nelvo-enso-textured.webp" alt=""></div>
   <div class="wrap">
     <p class="foot-slogan">Shared understanding. <em>Real adoption.</em></p>
     <div class="foot-grid">

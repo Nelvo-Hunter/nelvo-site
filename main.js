@@ -1,4 +1,4 @@
-/* NELVO v5 · "The Big Read" */
+/* NELVO v7 · "The Big Read, Choreographed" */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -76,7 +76,7 @@
       io.unobserve(e.target);
     }
   }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  document.querySelectorAll('.rv, .rv-clip').forEach(el => io.observe(el));
 
   /* home hero: recolor terra letters to navy where they overlap the ensō brush */
   const eo_targets = [...document.querySelectorAll('.hero .h1 em, .hero .eyebrow, .hero .lede-lead em')];
@@ -151,6 +151,11 @@
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('resize', schedule, { passive: true });
     addEventListener('load', recolor);
+    /* letters get their final positions only after the masked-line entrance settles */
+    document.querySelectorAll('.hero .hl-in').forEach(el =>
+      el.addEventListener('animationend', recolor)
+    );
+    document.querySelector('.hero-enso')?.addEventListener('animationend', recolor);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolor);
   }
 })();
