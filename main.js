@@ -76,7 +76,7 @@
       io.unobserve(e.target);
     }
   }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-  document.querySelectorAll('.rv, .rv-clip').forEach(el => io.observe(el));
+  document.querySelectorAll('.rv, .rv-clip, .rv-fade').forEach(el => io.observe(el));
 
   /* home hero: recolor terra letters to navy where they overlap the ensō brush */
   const eo_targets = [...document.querySelectorAll('.hero .h1 em, .hero .eyebrow, .hero .lede-lead em')];

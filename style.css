@@ -129,9 +129,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
   .rv-clip { opacity: 1; transform: none; }
   .rv-clip img { clip-path: inset(0 100% 0 0); transition: clip-path 1.1s var(--ease); transition-delay: var(--d, 0s); }
   .rv-clip.in img { clip-path: inset(0 0 0 0); }
+  /* smooth fade-in variant (no wipe): fade the child image only */
+  .rv-fade { opacity: 1; transform: none; }
+  .rv-fade img { opacity: 0; transition: opacity 1.1s var(--ease); transition-delay: var(--d, 0s); }
+  .rv-fade.in img { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .rv, .rv-clip, .rv-clip img { opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important; }
+  .rv, .rv-clip, .rv-clip img, .rv-fade, .rv-fade img { opacity: 1 !important; transform: none !important; transition: none !important; clip-path: none !important; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
   [data-spin] { transform: none !important; }
@@ -739,6 +743,8 @@ body.sessions .keep-sec, body.sessions .first-step-sec { position: relative; z-i
   .outcome-body { max-width: none; }
   .outcome .arr { display: none; }
   .room-grid, .diag-grid, .belief-grid, .fund-grid, .cta-grid, .ahero, .first-step { grid-template-columns: 1fr; }
+  .ahero .portrait { order: 2; }
+  .ahero > div:not(.portrait) { order: 1; }
   .room-grid { margin-bottom: clamp(2rem, 6vw, 3rem); }
   .belief-grid { padding-left: var(--gut); padding-right: var(--gut); gap: 2.6rem; }
   .belief-fig { min-height: 300px; margin: 0 calc(-1 * var(--gut)); }
