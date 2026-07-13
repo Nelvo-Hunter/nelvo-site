@@ -207,7 +207,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 
 /* ── HERO ── */
 .hero { min-height: 100svh; display: flex; align-items: center; position: relative; overflow: hidden; padding: clamp(8rem, 16vh, 11rem) 0 clamp(4rem, 8vh, 6rem); }
-.hero-enso { position: absolute; right: clamp(-26vw, -340px, -120px); top: 50%; transform: translateY(-50%); width: clamp(420px, 56vw, 880px); height: clamp(420px, 56vw, 880px); opacity: 0.9; z-index: 0; }
+.hero-enso { position: absolute; right: clamp(-27vw, -510px, -120px); top: 50%; transform: translateY(-50%); width: clamp(420px, 56vw, 880px); height: clamp(420px, 56vw, 880px); opacity: 0.9; z-index: 0; }
 .hero .wrap { position: relative; z-index: 1; min-width: 0; width: 100%; }
 .hero .h1 { max-width: none; white-space: nowrap; font-size: clamp(2.1rem, 5.5vw, 5.1rem); margin-bottom: 2.2rem; }
 /* masked line entrance */
