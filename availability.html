@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pick a Time | Nelvo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI for working professionals: let Hunter know which evenings work for you.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="./mini-logo-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1E3538;
+    --ink-2: #2A474B;
+    --terra: #B4602C;
+    --bg: #FAF8F5;
+    --cream: #F0EBE1;
+    --card: #FFFFFF;
+    --rule: rgba(30, 53, 56, 0.14);
+    --rule-soft: rgba(30, 53, 56, 0.07);
+    --muted: #4a5a5d;
+    --light: #7a8a8d;
+    --yes: #2F6B55;
+    --yes-bg: rgba(47, 107, 85, 0.1);
+    --maybe: #B4602C;
+    --maybe-bg: rgba(180, 96, 44, 0.1);
+    --h: 'Libre Baskerville', Georgia, serif;
+    --s: 'Outfit', sans-serif;
+    --m: 'IBM Plex Mono', monospace;
+    --ease: cubic-bezier(.22, .61, .2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--s);
+    color: var(--teal);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100svh;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  .page-enso {
+    position: fixed;
+    right: -9rem;
+    top: 6rem;
+    width: 34rem;
+    height: 34rem;
+    background: url('./nelvo-enso.svg') no-repeat center / contain;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── chrome ── */
+  .chrome {
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .chrome-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-logo img { height: 36px; width: auto; }
+  .chrome-label {
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 4.5rem) 1.5rem 6rem;
+  }
+
+  /* ── intro ── */
+  .eyebrow {
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .eyebrow::before { content: ""; width: 30px; height: 2px; background: var(--terra); flex: none; }
+  h1 {
+    font-family: var(--h);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5.5vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    margin: 1rem 0 1.25rem;
+    max-width: 18ch;
+  }
+  h1 em { color: var(--terra); font-style: italic; font-weight: 400; }
+  .lede { font-size: 1.1rem; color: var(--ink-2); max-width: 60ch; margin-bottom: 0.9rem; }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    margin: 1.6rem 0 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--m);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .facts b { color: var(--teal); font-weight: 500; }
+
+  /* ── sections ── */
+  .section { margin-top: clamp(2.75rem, 6vw, 3.75rem); }
+  h2 {
+    font-family: var(--h);
+    font-weight: 700;
+    font-size: 1.45rem;
+    letter-spacing: -0.015em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+  h2 .n { font-style: italic; font-weight: 400; color: var(--terra); font-size: 1.15rem; }
+  .sub { color: var(--muted); margin-bottom: 1.4rem; max-width: 60ch; }
+
+  /* ── fields ── */
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
+  label.field { display: block; }
+  label.field span {
+    display: block;
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  label.field span i { font-style: normal; color: var(--light); }
+  input[type=text], input[type=email], textarea {
+    font-family: var(--s);
+    width: 100%;
+    font: inherit;
+    font-size: 1.05rem;
+    color: var(--teal);
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.8rem 0.95rem;
+    transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  textarea { min-height: 6.5rem; resize: vertical; }
+  ::placeholder { color: var(--light); opacity: 0.8; }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--terra);
+    box-shadow: 0 0 0 3px rgba(180, 96, 44, 0.14);
+  }
+  .field.full { grid-column: 1 / -1; }
+
+  /* ── windows ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.4rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .legend span::before {
+    content: "";
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 2px;
+    margin-right: 0.45rem;
+    vertical-align: 0.02em;
+  }
+  .legend .l-yes::before { background: var(--yes); }
+  .legend .l-maybe::before { background: var(--maybe); }
+  .legend .l-no::before { background: transparent; border: 1.5px solid var(--light); }
+
+  .slots { list-style: none; border-top: 1px solid var(--rule); }
+  .slot {
+    display: grid;
+    grid-template-columns: 4.2rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.95rem 0.5rem 0.95rem 0.25rem;
+    border-bottom: 1px solid var(--rule);
+    transition: background .25s var(--ease);
+  }
+  .slot[data-v="yes"] { background: var(--yes-bg); }
+  .slot[data-v="maybe"] { background: var(--maybe-bg); }
+  .date-block { text-align: center; line-height: 1.1; }
+  .date-block .dow {
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terra);
+  }
+  .date-block .day { font-family: var(--h); font-weight: 700; font-size: 1.7rem; }
+  .slot-text .when { font-weight: 600; font-size: 1.05rem; }
+  .slot-text .time { font-family: var(--m); font-size: 0.875rem; color: var(--muted); }
+  .slot-text .local { font-family: var(--m); font-size: 0.875rem; color: var(--light); }
+
+  .choice {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card);
+    padding: 3px;
+  }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice label {
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: background .2s var(--ease), color .2s var(--ease);
+    user-select: none;
+  }
+  .choice label:hover { color: var(--teal); }
+  .choice input:focus-visible + label { outline: 2px solid var(--terra); outline-offset: 1px; }
+  .choice input[value=yes]:checked + label { background: var(--yes); color: #fff; }
+  .choice input[value=maybe]:checked + label { background: var(--maybe); color: #fff; }
+  .choice input[value=no]:checked + label { background: var(--teal); color: var(--bg); }
+
+  .none-work {
+    margin-top: 1.1rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ── submit ── */
+  .actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+  .btn {
+    font-family: var(--m);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1rem 1.75rem;
+    border-radius: 4px;
+    border: 1.5px solid var(--teal);
+    background: var(--teal);
+    color: var(--bg);
+    cursor: pointer;
+    transition: background .2s var(--ease), border-color .2s var(--ease);
+  }
+  .btn:hover { background: var(--terra); border-color: var(--terra); }
+  .btn[disabled] { opacity: 0.5; cursor: default; background: var(--teal); border-color: var(--teal); }
+  .tally { font-family: var(--m); font-size: 0.875rem; color: var(--muted); }
+  .error { color: #9b2c1f; font-size: 0.95rem; width: 100%; display: none; }
+  .error.show { display: block; }
+
+  /* ── done ── */
+  .done { display: none; text-align: left; padding-top: 1rem; }
+  .done.show { display: block; animation: rise .7s var(--ease) both; }
+  .done img { width: clamp(140px, 30vw, 200px); height: auto; opacity: 0.9; margin-bottom: 1.5rem; }
+  .done p { font-size: 1.1rem; color: var(--ink-2); max-width: 55ch; margin-bottom: 0.8rem; }
+  .signoff { font-family: var(--h); font-style: italic; color: var(--terra); font-size: 1.15rem; }
+
+  .reveal { animation: rise .8s var(--ease) both; }
+  .reveal.d2 { animation-delay: .08s; }
+  .reveal.d3 { animation-delay: .16s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 2.5rem;
+    border-top: 1px solid var(--rule-soft);
+    font-size: 0.9rem;
+    color: var(--light);
+  }
+
+  @media (max-width: 640px) {
+    .fields { grid-template-columns: 1fr; }
+    .slot { grid-template-columns: 3.4rem 1fr; row-gap: 0.7rem; }
+    .choice { grid-column: 1 / -1; justify-self: stretch; display: flex; }
+    .choice label { flex: 1; text-align: center; padding: 0.55rem 0.4rem; }
+    .date-block .day { font-size: 1.45rem; }
+    .page-enso { width: 22rem; height: 22rem; right: -8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-enso" aria-hidden="true"></div>
+
+<header class="chrome">
+  <div class="chrome-inner">
+    <a href="https://nelvo.ca" class="site-logo"><img src="./logo-dark.png" alt="Nelvo"></a>
+    <span class="chrome-label">Pick a time</span>
+  </div>
+</header>
+
+<main>
+  <div id="form-view">
+    <span class="eyebrow reveal">AI Night</span>
+    <h1 class="reveal d2">AI for working professionals, <em>up to speed</em> fast.</h1>
+    <div class="reveal d3">
+      <p class="lede">I'm getting a small group together for a relaxed evening on video to get comfortable with AI and put it to work on your own files.</p>
+      <p class="lede">I'll be using Claude on the night, but what you learn applies just as well to ChatGPT and the other major AI tools.</p>
+      <p class="lede">Tick every evening that could work and I'll pick the one that suits the most people.</p>
+      <div class="facts">
+        <span><b>2 hours</b> on video</span>
+        <span>Starts <b>7:00 PM Eastern</b></span>
+        <span><b>6 to 8</b> people</span>
+      </div>
+    </div>
+
+    <form id="avail-form" novalidate>
+      <section class="section">
+        <h2><span class="n">1.</span> Who you are</h2>
+        <p class="sub">So I know who said what and where to send the invite.</p>
+        <div class="fields">
+          <label class="field"><span>Name</span><input type="text" id="name" autocomplete="name" required></label>
+          <label class="field"><span>Email <i>(for the calendar invite)</i></span><input type="email" id="email" autocomplete="email"></label>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2><span class="n">2.</span> Which evenings work?</h2>
+        <p class="sub">Each option runs 7:00 to 9:00 PM Eastern.</p>
+        <div class="legend">
+          <span class="l-yes">Works</span>
+          <span class="l-maybe">If need be</span>
+          <span class="l-no">Can't</span>
+        </div>
+        <ul class="slots" id="slots"></ul>
+        <p class="none-work">None of these work? Leave them all at "Can't" and tell me what would in the last box below.</p>
+      </section>
+
+      <section class="section">
+        <h2><span class="n">3.</span> What you want to learn</h2>
+        <p class="sub">Optional. Anything specific you're hoping to understand or walk away knowing how to do.</p>
+        <label class="field full"><textarea id="knowledge" aria-label="What you want to learn" placeholder="e.g. which AI tool to use, what's safe to share with it, how to get it working on my documents"></textarea></label>
+      </section>
+
+      <section class="section">
+        <h2><span class="n">4.</span> Your use cases</h2>
+        <p class="sub">One or two things you'd genuinely like to use AI for. We'll build the evening around real examples like these.</p>
+        <div class="fields">
+          <label class="field full"><span>Use case 1</span><input type="text" id="usecase1" placeholder="e.g. planning meals around what's already in the fridge"></label>
+          <label class="field full"><span>Use case 2 <i>(optional)</i></span><input type="text" id="usecase2" placeholder="e.g. sorting out household paperwork and bills"></label>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2><span class="n">5.</span> Anything else</h2>
+        <p class="sub">Optional. A better night that isn't listed, questions, or anything I should know.</p>
+        <label class="field full"><textarea id="note" aria-label="Anything else"></textarea></label>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn" id="submit">Send my availability</button>
+        <span class="tally" id="tally"></span>
+        <p class="error" id="error"></p>
+      </div>
+    </form>
+  </div>
+
+  <div class="done" id="done">
+    <img src="./nelvo-enso.svg" alt="" aria-hidden="true">
+    <span class="eyebrow">Got it</span>
+    <h1>Thank you, <em id="done-name">friend.</em></h1>
+    <p>Your availability is in. Once everyone has answered I'll pick the evening that works for the most people and send a calendar invite, plus a short setup guide to do beforehand.</p>
+    <p>Need to change something? Just fill the page in again; I'll use your latest answer.</p>
+    <p class="signoff">Hunter</p>
+  </div>
+</main>
+
+<footer>Nelvo · Toronto</footer>
+
+<script>
+  // ── The windows on offer. Edit this list to reuse the page for another event.
+  // Start times are 7:00 PM America/Toronto (EDT, UTC-4, all before Nov 1).
+  const EVENT = 'AI Night: AI for Working Professionals';
+  const DURATION_MIN = 120;
+  const WINDOWS = [
+    '2026-10-06T19:00:00-04:00',
+    '2026-10-08T19:00:00-04:00',
+    '2026-10-14T19:00:00-04:00',
+    '2026-10-15T19:00:00-04:00',
+    '2026-10-18T19:00:00-04:00',
+    '2026-10-20T19:00:00-04:00',
+    '2026-10-21T19:00:00-04:00',
+    '2026-10-25T19:00:00-04:00',
+    '2026-10-28T19:00:00-04:00',
+    '2026-10-29T19:00:00-04:00',
+  ];
+
+  const HOME_TZ = 'America/Toronto';
+  const viewerTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const fmt = (d, opts, tz) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...opts }).format(d);
+  const timeRange = (s, e, tz) =>
+    fmt(s, { hour: 'numeric', minute: '2-digit' }, tz) + ' to ' + fmt(e, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }, tz);
+
+  const slotsEl = document.getElementById('slots');
+  const slots = WINDOWS.map((iso, i) => {
+    const start = new Date(iso);
+    const end = new Date(start.getTime() + DURATION_MIN * 60000);
+    const id = 'w' + (i + 1);
+    const label = fmt(start, { weekday: 'long', month: 'long', day: 'numeric' }, HOME_TZ) + ', ' + timeRange(start, end, HOME_TZ);
+    const localDiffers = fmt(start, { hour: 'numeric', day: 'numeric' }, viewerTZ) !== fmt(start, { hour: 'numeric', day: 'numeric' }, HOME_TZ);
+
+    const li = document.createElement('li');
+    li.className = 'slot';
+    li.dataset.v = 'no';
+    li.innerHTML = `
+      <div class="date-block">
+        <div class="dow">${fmt(start, { weekday: 'short' }, HOME_TZ)}</div>
+        <div class="day">${fmt(start, { day: 'numeric' }, HOME_TZ)}</div>
+      </div>
+      <div class="slot-text">
+        <div class="when">${fmt(start, { weekday: 'long', month: 'long', day: 'numeric' }, HOME_TZ)}</div>
+        <div class="time">${timeRange(start, end, HOME_TZ)}</div>
+        ${localDiffers ? `<div class="local">Your time: ${fmt(start, { weekday: 'short', month: 'short', day: 'numeric' }, viewerTZ)}, ${timeRange(start, end, viewerTZ)}</div>` : ''}
+      </div>
+      <div class="choice" role="radiogroup" aria-label="${label}">
+        ${[['yes', 'Works'], ['maybe', 'If need be'], ['no', "Can't"]].map(([v, t]) => `
+          <input type="radio" name="${id}" id="${id}-${v}" value="${v}" ${v === 'no' ? 'checked' : ''}>
+          <label for="${id}-${v}">${t}</label>`).join('')}
+      </div>`;
+    li.addEventListener('change', e => { li.dataset.v = e.target.value; updateTally(); });
+    slotsEl.appendChild(li);
+    return { id, start: start.toISOString(), label, el: li };
+  });
+
+  const tallyEl = document.getElementById('tally');
+  function updateTally() {
+    const yes = slots.filter(s => s.el.dataset.v === 'yes').length;
+    const maybe = slots.filter(s => s.el.dataset.v === 'maybe').length;
+    tallyEl.textContent = yes + maybe === 0 ? '' : `${yes} works · ${maybe} if need be`;
+  }
+
+  const form = document.getElementById('avail-form');
+  const errEl = document.getElementById('error');
+  const btn = document.getElementById('submit');
+  const showError = msg => { errEl.textContent = msg; errEl.classList.add('show'); };
+
+  if (new URLSearchParams(location.search).get('preview') === 'done') showDone('Hunter');
+
+  function showDone(name) {
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('done-name').textContent = name.split(' ')[0] + '.';
+    document.getElementById('done').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errEl.classList.remove('show');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const note = document.getElementById('note').value.trim();
+    const knowledge = document.getElementById('knowledge').value.trim();
+    const useCases = ['usecase1', 'usecase2'].map(id => document.getElementById(id).value.trim()).filter(Boolean);
+    if (!name) { showError('Please add your name so I know who this is.'); document.getElementById('name').focus(); return; }
+    if (email && !/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) { showError('That email address looks off. Leave it blank or double-check it.'); return; }
+    const anyPicked = slots.some(s => s.el.dataset.v !== 'no');
+    if (!anyPicked && !note) { showError('Pick at least one evening, or tell me in the last box what would work instead.'); return; }
+    if (!useCases.length) { showError('Please add at least one use case, even a rough one.'); document.getElementById('usecase1').focus(); return; }
+
+    const payload = {
+      event: EVENT,
+      respondent: { name, email },
+      windows: slots.map(s => ({ id: s.id, start: s.start, label: s.label, answer: s.el.dataset.v })),
+      knowledge,
+      useCases,
+      note,
+      timezone: viewerTZ,
+      submittedAt: new Date().toISOString(),
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const resp = await fetch('/api/availability-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) throw new Error('Server error ' + resp.status);
+      showDone(name);
+    } catch (err) {
+      console.error(err);
+      showError("Something went wrong sending that. Please try again, or just reply to my email with the evenings that work.");
+      btn.disabled = false;
+      btn.textContent = 'Send my availability';
+    }
+  });
+</script>
+</body>
+</html>

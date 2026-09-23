@@ -8,6 +8,7 @@
  *   POST /api/growth-map-submit   — introduction survey (scored, named)
  *   POST /api/feedback-submit     — post-session feedback (ANONYMOUS, no PII)
  *   POST /api/testimonial-submit  — post-session testimonial (named, opt-in)
+ *   POST /api/availability-submit — event availability poll (named, availability.html)
  *
  * Required environment variable (Cloudflare → Workers & Pages → Settings → Variables and Secrets):
  *   RESEND_API_KEY  — the Resend API key (re_...)
@@ -41,6 +42,14 @@ export default {
     if (url.pathname === '/api/testimonial-submit') {
       if (request.method === 'POST') {
         return handleTestimonialSubmit(request, env);
+      }
+      return new Response('Method Not Allowed', { status: 405 });
+    }
+
+    // ─── /api/availability-submit (event scheduling) ────
+    if (url.pathname === '/api/availability-submit') {
+      if (request.method === 'POST') {
+        return handleAvailabilitySubmit(request, env);
       }
       return new Response('Method Not Allowed', { status: 405 });
     }
@@ -571,6 +580,114 @@ function buildProfileSection(profile) {
     </table>
     ${longBlocksHtml}
   `;
+}
+
+// ─────────────────────────────────────────────────────────
+// Availability submission handler (named, Doodle-style poll)
+//
+// The page (availability.html) carries its own list of windows, so
+// the handler takes the labels from the payload and escapes them.
+// Answers are 'yes' | 'maybe' | 'no' per window.
+// ─────────────────────────────────────────────────────────
+
+async function handleAvailabilitySubmit(request, env) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch (err) {
+    return jsonError('Invalid JSON payload', 400);
+  }
+
+  const { event, respondent, windows, knowledge, useCases, note, timezone, submittedAt } = payload || {};
+  if (!respondent || typeof respondent.name !== 'string' || !respondent.name.trim()) {
+    return jsonError('Missing respondent name', 400);
+  }
+  if (!Array.isArray(windows) || windows.length === 0 || windows.length > 40) {
+    return jsonError('Invalid windows', 400);
+  }
+  const ANSWERS = { yes: 'Works', maybe: 'If need be', no: "Can't" };
+  for (const w of windows) {
+    if (!w || typeof w.label !== 'string' || !(w.answer in ANSWERS)) {
+      return jsonError('Invalid window answer', 400);
+    }
+  }
+
+  const name = respondent.name.trim().slice(0, 120);
+  const email = String(respondent.email || '').trim().slice(0, 200);
+  const noteText = String(note || '').trim().slice(0, 4000);
+  const knowledgeText = String(knowledge || '').trim().slice(0, 4000);
+  const useCaseList = (Array.isArray(useCases) ? useCases : [])
+    .map(u => String(u || '').trim().slice(0, 1000))
+    .filter(Boolean)
+    .slice(0, 5);
+  const yes = windows.filter(w => w.answer === 'yes').length;
+  const maybe = windows.filter(w => w.answer === 'maybe').length;
+
+  const colour = { yes: '#2F6B55', maybe: '#B4602C', no: '#7a8a8d' };
+  const rows = windows.map(w => `
+      <tr>
+        <td style="padding:8px 12px;border-bottom:1px solid #DFD9CD;">${esc(w.label)}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid #DFD9CD;color:${colour[w.answer]};font-weight:${w.answer === 'no' ? 400 : 600};">${ANSWERS[w.answer]}</td>
+      </tr>`).join('');
+
+  const html = `
+<div style="font-family:Helvetica,Arial,sans-serif;color:#1E3538;max-width:640px;">
+  <p style="font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#B4602C;margin:0 0 4px;">Availability response</p>
+  <h2 style="margin:0 0 4px;">${esc(name)}</h2>
+  <p style="margin:0 0 16px;color:#46565a;">${email ? esc(email) + ' · ' : ''}${esc(String(event || 'Event'))}</p>
+  <p style="margin:0 0 12px;"><strong>${yes}</strong> works · <strong>${maybe}</strong> if need be · ${windows.length - yes - maybe} can't</p>
+  <table style="border-collapse:collapse;width:100%;font-size:14px;">${rows}
+  </table>
+  ${knowledgeText ? `<p style="margin:20px 0 4px;font-weight:600;">What they want to learn</p><p style="margin:0;white-space:pre-wrap;">${esc(knowledgeText)}</p>` : ''}
+  ${useCaseList.length ? `<p style="margin:20px 0 4px;font-weight:600;">Use cases</p><ol style="margin:0;padding-left:20px;">${useCaseList.map(u => `<li>${esc(u)}</li>`).join('')}</ol>` : ''}
+  ${noteText ? `<p style="margin:20px 0 4px;font-weight:600;">Anything else</p><p style="margin:0;white-space:pre-wrap;">${esc(noteText)}</p>` : ''}
+  <p style="margin:24px 0 0;font-size:12px;color:#7a8a8d;">Respondent time zone: ${esc(String(timezone || 'unknown'))} · submitted ${esc(String(submittedAt || new Date().toISOString()))}</p>
+</div>
+  `.trim();
+
+  if (!env.RESEND_API_KEY) {
+    return jsonError('Server not configured: missing RESEND_API_KEY', 500);
+  }
+
+  const emailBody = {
+    from: env.FROM_EMAIL || 'Nelvo Forms <forms@nelvo.ca>',
+    to: env.NOTIFY_EMAIL || 'hunter@nelvo.ca',
+    subject: `Availability: ${name} (${yes} works, ${maybe} maybe)`,
+    html,
+  };
+  if (/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email)) {
+    emailBody.reply_to = email;
+  }
+
+  try {
+    const send = () => fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(emailBody),
+    });
+
+    let resendResp = await send();
+    if (!resendResp.ok && emailBody.reply_to) {
+      console.error('Resend rejected with reply_to, retrying without:', await resendResp.text());
+      delete emailBody.reply_to;
+      resendResp = await send();
+    }
+    if (!resendResp.ok) {
+      console.error('Resend error:', await resendResp.text());
+      return jsonError('Email send failed', 502);
+    }
+  } catch (err) {
+    console.error('Network error calling Resend:', err);
+    return jsonError('Network error', 502);
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
 
 // ─────────────────────────────────────────────────────────
