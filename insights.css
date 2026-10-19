@@ -6,38 +6,36 @@
 /* ── Index: editorial list ── */
 .notes-intro { max-width: 880px; }
 .notes-list { border-top: 1px solid var(--rule); margin-top: clamp(2.4rem, 5vw, 4rem); }
+/* row: date + read time | tag, title, dek | arrow button (card 5, Oct 19 2026) */
 .note-row {
-  display: grid; grid-template-columns: minmax(180px, 230px) 1fr;
-  gap: clamp(1.8rem, 4vw, 4.5rem); align-items: baseline;
-  padding: clamp(2rem, 3.4vw, 2.8rem) 3.2rem clamp(2rem, 3.4vw, 2.8rem) 0.6rem;
+  display: grid; grid-template-columns: 220px minmax(0, 1fr) 64px;
+  column-gap: clamp(1.8rem, 4vw, 3.5rem); align-items: center;
+  padding: clamp(2rem, 3.4vw, 2.8rem) 0.5rem;
   position: relative; transition: background var(--dur-1);
 }
 .note-row::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--rule); }
 .note-row:hover { background: rgba(240,235,225,0.55); }
-.note-row .nr-date {
+.note-row .nr-meta { align-self: start; padding-top: 0.6rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.note-row :is(.nr-date, .nr-read, .nr-tag) {
   font-family: var(--mono); font-size: 0.875rem; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint);
+  letter-spacing: 0.14em; text-transform: uppercase;
 }
-.note-row .nr-body { max-width: 62ch; transition: padding-left var(--dur-1) var(--ease); }
-.note-row:hover .nr-body { padding-left: 4px; }
+.note-row .nr-date { color: var(--ink); }
+.note-row .nr-read { color: var(--muted); }
+.note-row .nr-tag { display: block; margin-bottom: 0.9rem; color: var(--terra); }
+.note-row .nr-body { max-width: 62ch; }
 .note-row h2 {
-  font-size: clamp(1.5rem, 2.3vw, 2rem); line-height: 1.2;
-  margin-bottom: 0.65rem; transition: color .2s;
+  font-size: clamp(1.7rem, 2.8vw, 2.5rem); font-weight: 400; line-height: 1.2; letter-spacing: -0.01em;
+  margin-bottom: 0.9rem; transition: color .2s;
 }
 .note-row:hover h2 { color: var(--terra); }
-.note-row p { font-size: 1.08rem; font-weight: 300; color: var(--muted); line-height: 1.65; max-width: 58ch; }
-.note-row .nr-read {
-  display: block; margin-top: 0.9rem;
-  font-family: var(--mono); font-size: 0.875rem; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint);
-}
+.note-row p { font-size: 1.2rem; font-weight: 300; color: var(--muted); line-height: 1.6; max-width: 58ch; }
 .note-row .arr {
-  position: absolute; right: 0.8rem; top: 50%;
-  transform: translateY(-50%) translateX(-10px);
-  font-family: var(--mono); font-size: 1.3rem; color: var(--terra);
-  opacity: 0; transition: opacity .25s, transform .25s var(--ease);
+  display: flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border: 1.5px solid var(--terra); border-radius: 50%;
+  color: var(--terra); transition: background .25s, color .25s;
 }
-.note-row:hover .arr { opacity: 1; transform: translateY(-50%); }
+.note-row:hover .arr { background: var(--terra); color: var(--paper); }
 .note-row a.cover { position: absolute; inset: 0; }
 .notes-foot-note { margin-top: clamp(2.4rem, 4vw, 3.4rem); }
 
@@ -96,7 +94,9 @@
 .note-back { margin-top: clamp(2.2rem, 4vw, 3rem); }
 
 @media (max-width: 700px) {
-  .note-row { grid-template-columns: 1fr; gap: 0.7rem; padding-right: 2.4rem; }
+  .note-row { grid-template-columns: 1fr; row-gap: 1rem; }
+  .note-row .nr-meta { flex-direction: row; gap: 1.2rem; padding-top: 0; }
+  .note-row .arr { width: 48px; height: 48px; }
   .note-end { flex-direction: column; align-items: flex-start; }
 }
 
