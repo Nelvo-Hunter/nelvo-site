@@ -38,16 +38,19 @@
   /* mobile menu */
   const burger = document.querySelector('.burger');
   if (burger) {
-    burger.addEventListener('click', () => {
-      const open = document.body.classList.toggle('menu-open');
+    /* the bars turn into an X while the menu is open; the X, the Escape key or a link closes it, and the page stays where it was */
+    const setMenu = open => {
+      document.body.classList.toggle('menu-open', open);
       burger.setAttribute('aria-expanded', open);
-    });
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    };
+    burger.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
     document.querySelectorAll('.menu-overlay a').forEach(a =>
-      a.addEventListener('click', () => {
-        document.body.classList.remove('menu-open');
-        burger.setAttribute('aria-expanded', 'false');
-      })
+      a.addEventListener('click', () => setMenu(false))
     );
+    addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.body.classList.contains('menu-open')) { setMenu(false); burger.focus(); }
+    });
   }
 
   /* counters */

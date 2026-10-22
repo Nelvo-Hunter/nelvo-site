@@ -777,3 +777,700 @@ body.sessions .keep-sec, body.sessions .first-step-sec { position: relative; z-i
   .jump .jv { font-size: clamp(2.6rem, 13vw, 3.8rem); }
   .gdot { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   NELVO v8 · "TWO WAYS IN" (Oct 16, 2026)
+   Implementation-first repositioning. Everything above is v7 and
+   still governs; the rules below extend or override it.
+   Brief of record: website/v8-direction.md
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Hero: two-sentence headline, wrapped not clipped ── */
+.hero .h1 { white-space: normal; max-width: none; font-size: clamp(2.15rem, 4.9vw, 4.55rem); margin-bottom: 2.4rem; line-height: 1.08; }
+.hero .hl + .hl { margin-top: 0.22em; }
+.hero .hl { display: block; }
+.hero .lede-lead { max-width: 54ch; font-size: clamp(1.25rem, 1.65vw, 1.5rem); color: var(--ink-2); }
+.hero-ctas .btn-ghost { font-size: 1.12rem; }
+.hero-note { color: var(--faint); }
+.hero-note a { color: var(--ink); border-bottom: 1px solid var(--rule); transition: color .2s, border-color .2s; }
+.hero-note a:hover { color: var(--terra); border-color: var(--terra); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .hl:nth-child(1) .hl-in { animation-delay: .14s; }
+  .hero .hl:nth-child(2) .hl-in { animation-delay: .28s; }
+}
+@media (max-width: 640px) {
+  .hero .h1 { white-space: normal; max-width: none; font-size: clamp(1.9rem, 8vw, 2.7rem); }
+  .hero .h1 em { display: inline; }
+  .hero .hb { display: none; }
+}
+
+/* ── Belief, v8: tighter, no third-party quote ── */
+.belief-body p:last-child { margin-bottom: 0; }
+.belief-kicker { margin-top: 2rem; font-family: var(--display); font-style: italic; font-size: 1.18rem; color: var(--terra); }
+
+/* ── The triangle: three things, always ── */
+.tri-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.6rem, 6vw, 6rem); align-items: center; }
+.tri-copy .h2 { margin-bottom: 1.5rem; }
+.tri-copy .lede { margin-bottom: 2.2rem; }
+.tri-list { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.tri-item { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.tri-item .n { font-family: var(--display); font-style: italic; font-size: 1.6rem; color: var(--terra); line-height: 1; }
+.tri-item h3 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin-bottom: 0.35rem; letter-spacing: -0.015em; }
+.tri-item p { font-size: 1.08rem; font-weight: 300; color: var(--muted); line-height: 1.6; max-width: 46ch; }
+.tri-note { margin-top: 1.8rem; font-family: var(--display); font-style: italic; font-size: 1.12rem; color: var(--ink-2); max-width: 46ch; line-height: 1.6; }
+.tri-fig { position: relative; aspect-ratio: 1 / 0.94; max-width: 560px; margin: 0 auto; width: 100%; }
+.tri-fig svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tri-fig .edge { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; opacity: 0.55; }
+.tri-fig .enso { position: absolute; left: 50%; top: 56%; width: 46%; height: 46%; transform: translate(-50%, -50%); opacity: 0.92; }
+.tri-fig .vtx { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; transform: translate(-50%, -50%); }
+.tri-fig .vtx .w { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem, 2vw, 1.7rem); letter-spacing: -0.02em; color: var(--ink); background: var(--paper); padding: 0.1em 0.45em; }
+.sec-surface .tri-fig .vtx .w { background: var(--surface); }
+.tri-fig .vtx .k { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra); }
+.tri-fig .vtx.top { left: 50%; top: 6%; }
+.tri-fig .vtx.bl { left: 12%; top: 93%; }
+.tri-fig .vtx.br { left: 88%; top: 93%; }
+.tri-fig .result { position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%); font-family: var(--display); font-style: italic; font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--ink); white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .tri-fig.rv { opacity: 1; transform: none; }
+  .tri-fig.rv .edge { stroke-dasharray: 1600; stroke-dashoffset: 1600; transition: stroke-dashoffset 1.6s var(--ease) .1s; }
+  .tri-fig.rv.in .edge { stroke-dashoffset: 0; }
+  .tri-fig.rv .vtx { opacity: 0; transform: translate(-50%, -40%); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+  .tri-fig.rv.in .vtx { opacity: 1; transform: translate(-50%, -50%); }
+  .tri-fig.rv.in .vtx.top { transition-delay: .5s; }
+  .tri-fig.rv.in .vtx.bl { transition-delay: .9s; }
+  .tri-fig.rv.in .vtx.br { transition-delay: 1.3s; }
+  .tri-fig.rv .enso, .tri-fig.rv .result { opacity: 0; transition: opacity .9s var(--ease) 1.6s; }
+  .tri-fig.rv.in .enso { opacity: 0.92; }
+  .tri-fig.rv.in .result { opacity: 1; }
+}
+
+/* ── Two ways in ── */
+.ways-head { max-width: 880px; margin-bottom: clamp(2.4rem, 4.5vw, 3.6rem); }
+.ways-head .h2 { margin-bottom: 1.2rem; }
+.ways { display: grid; grid-template-columns: 1.12fr 1fr; gap: clamp(1.2rem, 2.4vw, 2rem); align-items: stretch; }
+.way { position: relative; border-radius: 24px; padding: clamp(2rem, 3.4vw, 3rem); display: flex; flex-direction: column; border: 1px solid var(--rule); background: var(--surface); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.way:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -34px rgba(30,53,56,0.32); }
+.way.lead { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.way-tag { font-family: var(--mono); font-size: 1rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra); display: inline-flex; align-items: center; gap: 0.8rem; margin-bottom: 1.6rem; }
+.way-tag::before { content: ''; width: 30px; height: 2px; background: var(--terra); opacity: 0.75; }
+.way.lead .way-tag { color: var(--terra-lt); }
+.way.lead .way-tag::before { background: var(--terra-lt); }
+.way h3 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); margin-bottom: 1.1rem; }
+.way.lead h3 { color: var(--surface); }
+.way > p { font-size: 1.14rem; font-weight: 400; color: var(--muted); line-height: 1.65; max-width: 44ch; }
+.way.lead > p { color: var(--cream-78); }
+.way .pay { margin: 1.5rem 0 0; padding: 1.2rem 0 0; border-top: 1px solid var(--rule); font-family: var(--display); font-style: italic; font-size: 1.22rem; line-height: 1.5; color: var(--ink); max-width: 40ch; }
+.way.lead .pay { border-top-color: var(--rule-dk); color: var(--surface); }
+.way .pay em { font-style: normal; color: var(--terra); }
+.way.lead .pay em { color: var(--terra-lt); }
+.way .way-meta { margin-top: auto; padding-top: 1.6rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); line-height: 1.9; }
+.way.lead .way-meta { color: var(--cream-60); }
+.way .btn-ghost { margin-top: 1.2rem; align-self: flex-start; }
+.way.lead .btn-ghost { color: var(--surface); border-color: var(--cream-60); }
+.way.lead:hover .btn-ghost { color: var(--terra-lt); border-color: var(--terra-lt); }
+.way:hover .btn-ghost { color: var(--terra); border-color: var(--terra); }
+.way a.cover { position: absolute; inset: 0; border-radius: inherit; }
+.ways-either { margin-top: clamp(2rem, 3.6vw, 2.8rem); text-align: center; font-family: var(--display); font-style: italic; font-size: clamp(1.25rem, 2vw, 1.6rem); color: var(--ink-2); }
+.ways-either em { font-style: italic; color: var(--terra); }
+@media (prefers-reduced-motion: no-preference) {
+  .ways.rv { opacity: 1; transform: none; }
+  .ways.rv .way { opacity: 0; transform: translateY(26px); transition: opacity .85s var(--ease), transform .85s var(--ease); }
+  .ways.rv.in .way { opacity: 1; transform: none; }
+  .ways.rv.in .way:nth-child(2) { transition-delay: .16s; }
+}
+
+/* ── The kind of job we start with ── */
+.jobs-head { max-width: 880px; margin-bottom: clamp(2.2rem, 4vw, 3.2rem); }
+.jobs-head .h2 { margin-bottom: 1.2rem; }
+.jobs { border-top: 1px solid var(--rule); display: grid; grid-template-columns: 1fr 1fr; }
+.job { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; align-items: baseline; padding: clamp(1.4rem, 2.4vw, 1.9rem) 2rem clamp(1.4rem, 2.4vw, 1.9rem) 0.4rem; border-bottom: 1px solid var(--rule); position: relative; }
+.job:nth-child(even) { padding-left: 2rem; border-left: 1px solid var(--rule); }
+.job .n { font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(1.7rem, 2.6vw, 2.3rem); line-height: 1; color: var(--terra); }
+.job p { font-family: var(--display); font-weight: 400; font-size: clamp(1.18rem, 1.7vw, 1.42rem); line-height: 1.45; color: var(--ink); text-wrap: pretty; }
+.jobs-foot { margin-top: clamp(2rem, 3.6vw, 2.8rem); display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+.jobs-foot .serif-note { font-size: 1.2rem; color: var(--ink-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .jobs.rv { opacity: 1; transform: none; }
+  .jobs.rv .job { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .jobs.rv.in .job { opacity: 1; transform: none; }
+  .jobs.rv.in .job:nth-child(1) { transition-delay: .05s; }
+  .jobs.rv.in .job:nth-child(2) { transition-delay: .13s; }
+  .jobs.rv.in .job:nth-child(3) { transition-delay: .21s; }
+  .jobs.rv.in .job:nth-child(4) { transition-delay: .29s; }
+  .jobs.rv.in .job:nth-child(5) { transition-delay: .37s; }
+  .jobs.rv.in .job:nth-child(6) { transition-delay: .45s; }
+}
+
+/* ── Won't do, on the home page (five items; the fifth spans) ── */
+.nodo-5 .nodo-item:nth-child(5) { grid-column: 1 / -1; padding-left: 0.4rem; border-left: none; }
+.nodo-5 .nodo-item:nth-child(5) h4 { color: var(--terra); }
+
+/* ── Method, v8: shorter foot ── */
+.method-foot-p { margin-bottom: 0; }
+
+/* ── CTA, v8: funding as one line ── */
+.cta-fund { display: block; margin-top: 1.4rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-60); line-height: 1.8; }
+
+/* ── Subpage cross-door line ── */
+.other-door { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.4rem; font-family: var(--display); font-style: italic; font-size: 1.12rem; color: var(--muted); }
+.other-door a { color: var(--ink); border-bottom: 1px solid var(--rule); transition: color .2s, border-color .2s; }
+.other-door a:hover { color: var(--terra); border-color: var(--terra); }
+
+/* ── Pilot page ── */
+body.pilot { --sec: clamp(4rem, 8vw, 7rem); }
+.shape { border-top: 1px solid var(--rule); margin-top: clamp(2rem, 4vw, 3rem); }
+.shape-step { display: grid; grid-template-columns: minmax(200px, 260px) 1fr; gap: clamp(1.8rem, 4vw, 4.5rem); align-items: start; padding: clamp(2rem, 3.4vw, 2.8rem) 0 clamp(2rem, 3.4vw, 2.8rem) 0.4rem; border-bottom: 1px solid var(--rule); position: relative; }
+.shape-step.now { background: linear-gradient(to right, rgba(240,235,225,0.7), rgba(240,235,225,0)); padding-left: 1.2rem; margin-left: -1.2rem; }
+.shape-key { display: flex; align-items: baseline; gap: 1rem; }
+.shape-key .n { font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(2.1rem, 3.2vw, 2.9rem); line-height: 1; color: var(--terra); }
+.shape-key .w { font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 2.3vw, 2rem); line-height: 1.08; letter-spacing: -0.02em; color: var(--ink); }
+.shape-body h3 { font-family: var(--body); font-weight: 600; font-size: clamp(1.15rem, 1.5vw, 1.35rem); margin-bottom: 0.6rem; color: var(--ink); }
+.shape-body p { font-size: 1.1rem; font-weight: 300; color: var(--muted); line-height: 1.68; max-width: 56ch; }
+.shape-body .tag { display: inline-block; margin-top: 0.9rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--terra); }
+.shape-foot { margin-top: 1.8rem; font-family: var(--display); font-style: italic; font-size: 1.22rem; color: var(--ink-2); max-width: 56ch; line-height: 1.55; }
+@media (prefers-reduced-motion: no-preference) {
+  .shape.rv { opacity: 1; transform: none; }
+  .shape.rv .shape-step { opacity: 0; transform: translateY(16px); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+  .shape.rv.in .shape-step { opacity: 1; transform: none; }
+  .shape.rv.in .shape-step:nth-child(2) { transition-delay: .14s; }
+  .shape.rv.in .shape-step:nth-child(3) { transition-delay: .28s; }
+}
+/* weeks */
+.weeks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.6rem, 6vw, 6rem); align-items: start; }
+.weeks { display: grid; gap: 0; border-top: 1px solid var(--rule-dk); }
+.week { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1.2rem; padding: 1.3rem 0; border-bottom: 1px solid var(--rule-dk); align-items: baseline; }
+.week .wk { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra-lt); line-height: 1.6; }
+.week h3 { font-family: var(--body); font-weight: 600; font-size: 1.18rem; color: var(--surface); }
+.week p { font-size: 1.02rem; font-weight: 300; color: var(--cream-78); line-height: 1.6; margin-top: 0.3rem; max-width: 46ch; }
+.terms { background: var(--cream-08); border: 1px solid var(--rule-dk); border-left: 3px solid var(--terra-lt); border-radius: 18px; padding: clamp(1.8rem, 3vw, 2.6rem); }
+.terms .t-eyebrow { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra-lt); display: block; margin-bottom: 1.1rem; }
+.terms p { font-family: var(--display); font-style: italic; font-size: clamp(1.25rem, 1.9vw, 1.6rem); line-height: 1.5; color: var(--surface); }
+.terms p + p { margin-top: 1rem; }
+.terms .t-note { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule-dk); font-family: var(--body); font-style: normal; font-size: 1.02rem; font-weight: 300; color: var(--cream-78); line-height: 1.6; }
+@media (prefers-reduced-motion: no-preference) {
+  .weeks.rv { opacity: 1; transform: none; }
+  .weeks.rv .week { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .weeks.rv.in .week { opacity: 1; transform: none; }
+  .weeks.rv.in .week:nth-child(2) { transition-delay: .12s; }
+  .weeks.rv.in .week:nth-child(3) { transition-delay: .24s; }
+  .weeks.rv.in .week:nth-child(4) { transition-delay: .36s; }
+  .terms.rv { border-left-color: transparent; transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease), border-left-color .6s var(--ease) .5s; }
+  .terms.rv.in { border-left-color: var(--terra-lt); }
+}
+/* fit / not */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.6rem, 3vw, 2.6rem); margin-top: clamp(2rem, 4vw, 3rem); }
+.fit { border-top: 3px solid var(--terra); padding-top: 1.4rem; }
+.fit.no { border-top-color: var(--rule); }
+.fit .fk { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra); display: block; margin-bottom: 1rem; }
+.fit.no .fk { color: var(--faint); }
+.fit ul { display: grid; gap: 0.7rem; }
+.fit li { display: grid; grid-template-columns: 22px 1fr; gap: 0.7rem; font-size: 1.12rem; font-weight: 400; color: var(--ink-2); line-height: 1.55; }
+.fit li::before { content: '→'; font-family: var(--mono); color: var(--terra); }
+.fit.no li { color: var(--muted); }
+.fit.no li::before { content: '✕'; color: var(--faint); }
+.fit-note { margin-top: 2rem; font-family: var(--display); font-style: italic; font-size: 1.18rem; color: var(--ink-2); max-width: 56ch; line-height: 1.55; }
+
+/* ── Sessions page, v8: the light "what a session is like" block ── */
+.room-light .modes { border-top-color: var(--rule); }
+.room-light .mode { border-bottom-color: var(--rule); }
+.room-light .mode .n { color: var(--terra); }
+.room-light .mode p { color: var(--muted); }
+.room-light .mode.feature { background: var(--surface); border-color: var(--rule); border-left-color: var(--terra); box-shadow: none; }
+.room-light .mode.feature h3 { color: var(--ink); }
+.pilot-pointer { background: var(--ink); color: var(--surface); border-radius: 22px; padding: clamp(2rem, 3.4vw, 2.8rem); display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; margin-top: 1.6rem; }
+.pilot-pointer .pp-tag { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra-lt); display: block; margin-bottom: 0.7rem; }
+.pilot-pointer h3 { color: var(--surface); font-size: clamp(1.4rem, 2.1vw, 1.8rem); margin-bottom: 0.5rem; }
+.pilot-pointer p { color: var(--cream-78); font-weight: 300; font-size: 1.08rem; line-height: 1.6; max-width: 52ch; }
+
+/* ── Responsive, v8 ── */
+@media (max-width: 1080px) {
+  .tri-grid, .ways, .weeks-grid, .fit-grid, .pilot-pointer { grid-template-columns: 1fr; }
+  .tri-fig { max-width: 460px; }
+  .jobs { grid-template-columns: 1fr; }
+  .job:nth-child(even) { padding-left: 0.4rem; border-left: none; }
+  .shape-step { grid-template-columns: 1fr; row-gap: 0.8rem; }
+  .shape-step.now { padding-left: 0.4rem; margin-left: 0; background: none; }
+}
+@media (max-width: 640px) {
+  .tri-fig .vtx.bl { left: 22%; }
+  .tri-fig .vtx.br { left: 78%; }
+  .tri-fig .vtx .w { font-size: 1.05rem; padding: 0.1em 0.3em; }
+  .tri-fig .enso { width: 40%; height: 40%; }
+  .nodo-5 .nodo-item:nth-child(5) { padding-left: 0; }
+  .week { grid-template-columns: 1fr; row-gap: 0.3rem; }
+}
+
+/* ── Photos, v8: every existing photo in use ── */
+.band-room img { object-position: center 30%; }
+.band-room blockquote { max-width: 14ch; }
+.room-banner-light { margin: clamp(2.5rem, 5vw, 4rem) auto 0; max-width: var(--wrap); padding: 0 var(--gut); aspect-ratio: auto; }
+.room-banner-light img { aspect-ratio: 2.05; border-radius: 22px; object-position: 50% 20%; }
+.room-banner-light::before { display: none; }
+@media (max-width: 1080px) { .room-banner-light img { aspect-ratio: 1.5; } }
+
+/* ── Where we draw the line, v8 (Oct 20, 2026): two columns, the turn as the headline, the five noes as a stacked list ── */
+.line-sec { border-top: 1px solid var(--rule); }
+.line-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.6rem, 6vw, 6rem); align-items: center; }
+.line-copy .h2 { max-width: 14ch; }
+.line-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.line-list li { padding: clamp(0.9rem, 1.4vw, 1.2rem) 0; border-bottom: 1px solid var(--rule); font-family: var(--display); font-size: clamp(1.5rem, 2.3vw, 2.1rem); line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); display: flex; align-items: baseline; gap: 1rem; }
+.line-list li::before { content: ''; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--terra); opacity: 0.85; transform: translateY(-0.1em); }
+@media (max-width: 900px) {
+  .line-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .line-copy .h2 { max-width: none; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   v8 AUDIT "AFTER" OVERRIDES (Oct 20, 2026). Appended after style.css.
+   Same palette, same fonts. System-level changes proposed by the audit.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. Scale: home h1 largest, h2 one clear step down, body at 400 */
+:root { --sec: clamp(4.5rem, 8vw, 7.5rem); }
+.h2 { font-size: clamp(2rem, 3.3vw, 2.95rem); }
+.h3 { font-size: clamp(1.5rem, 2.1vw, 1.75rem); }
+.hero .h1 { font-size: clamp(2.25rem, 5.3vw, 4.8rem); }
+.phero .h1 { font-size: clamp(2.4rem, 4.6vw, 4.15rem); }
+.lede { max-width: 32em; }
+.belief-body p, .tri-item p, .shape-body p, .week p, .story p, .terms .t-note, .pilot-pointer p,
+.foot ul a, .fact .fk, .mode p, .first-step p { font-weight: 400; }
+.belief-body p, .tri-item p, .shape-body p, .story p { color: var(--ink-2); line-height: 1.6; }
+.story p { font-size: 1.15rem; line-height: 1.7; max-width: 62ch; }
+
+/* 2. The terracotta italic turn: one per screen, not per heading */
+h2 em, h3 em, .dark h2 em, .dark h3 em { color: inherit; }
+.turn em { color: var(--terra); }
+.dark .turn em { color: var(--terra-lt); }
+.foot-slogan { font-size: clamp(1.9rem, 3vw, 2.6rem); max-width: none; margin-bottom: 2.4rem; }
+
+/* 3. Plex Mono: eyebrows and data only, at one label size */
+.eyebrow { font-size: 0.95rem; letter-spacing: 0.14em; gap: 0.7rem; margin-bottom: 1.2rem; color: var(--terra-2); align-items: flex-start; }
+.eyebrow { line-height: 1.7; }
+.eyebrow::before { width: 24px; margin-top: calc(0.85em - 1px); } /* centres the 2px dash on the first line of the label at line-height 1.7 */
+.dark .eyebrow { color: var(--surface); }
+.s-tag, .way-tag { font-size: 0.9rem; letter-spacing: 0.14em; }
+.mono-note, .cta-fund, .spot-meta {
+  font-family: var(--body); font-weight: 500; font-size: 1rem; letter-spacing: 0; text-transform: none; line-height: 1.5;
+}
+.mono-note { color: var(--muted); }
+.dark .mono-note, .photo-band .mono-note { color: var(--cream-78); }
+.cta-fund { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 1.05rem; color: var(--cream-78); }
+.cta-meta .mono-note { display: none; }
+.proof .who .t, .spot-lead-who .t, .spot-voice .who .t {
+  font-family: var(--body); font-weight: 400; font-size: 0.95rem; letter-spacing: 0; text-transform: none; color: var(--muted);
+}
+.s-card summary, .shape-body details summary { font-family: var(--body); font-weight: 500; font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--ink); }
+.foot h4 { font-family: var(--body); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em; text-transform: none; color: var(--surface); }
+.shape-body .tag { font-family: var(--body); font-weight: 500; font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--terra-2); }
+.serif-note { color: var(--muted); }
+.hero-note { color: var(--muted); }
+.hero-note a, .other-door a { border-bottom-color: currentColor; }
+
+/* 4. Numerals: one style, italic 400, "1." */
+.job .n, .shape-key .n { font-weight: 400; }
+
+/* 5. Contrast within the palette: small terracotta to terra-2, faint to muted, labels on ink to cream */
+.tri-fig .vtx .k, .fit .fk, .keep-item .ki, .spot-eyebrow, .belief-kicker, .way .pay em { color: var(--terra-2); }
+.way-meta, .fit.no .fk, .proof-context, .s-meta, .spot-stat .lbl { color: var(--muted); }
+.week .wk, .pilot-pointer .pp-tag, .way.lead .way-tag, .s-card.flagship .s-tag, .terms .t-eyebrow, .expect h3 .time, .way.lead .pay em { color: var(--surface); }
+.way.lead .pay em { font-style: normal; }
+.expect h3 .time { border-color: var(--rule-dk); }
+.dark :focus-visible, .foot :focus-visible, .way.lead :focus-visible { outline-color: var(--terra-lt); }
+.fit li::before, .expect li::before, .s-card details li::before, .shape-body details li::before { color: var(--muted); }
+.expect li::before { color: var(--cream-60); }
+
+/* 6. Decoration: two radii, no shadows, no lifts, one button shape */
+.way, .s-card, .pilot-pointer, .first-step, .ahero .portrait, .expect, .terms, .facts, .spotlight, .mode.feature { border-radius: 12px; box-shadow: none; }
+.way:hover, .s-card:hover { transform: none; box-shadow: none; border-color: var(--terra); }
+.btn, .btn-ink, .btn-nav, .btn-nav:hover, .btn-nav:active { box-shadow: none; transform: none; }
+.expect { backdrop-filter: none; -webkit-backdrop-filter: none; }
+.home .nav:not(.scrolled) .btn-nav { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.home .nav:not(.scrolled) .btn-nav:hover { background: var(--ink); color: #fff; }
+
+/* 7. Nav: the wordmark and links step back behind the headline */
+.home .nav-logo img { height: 48px; }
+.nav-links a:not(.btn-nav), .btn-nav { font-size: 1.05rem; }
+.btn-nav { padding: 0.65rem 1.3rem; }
+
+/* 8. Ensō: two on home (hero, triangle), one on each subpage (hero) */
+.enso-wm, .foot-enso, .enso-stage { display: none; }
+.hero-enso { transform: none; translate: 0 -50%; }
+@media (max-width: 1080px) { .hero-enso { translate: none; } }
+
+/* 9. Triangle: ensō seated in the incircle, labels clear of the lines */
+.tri-grid { align-items: start; }
+.tri-fig { position: sticky; top: 120px; }
+.tri-fig .enso { top: 65%; width: 38%; height: 40%; }
+.tri-fig .result { top: 65%; white-space: normal; width: 5.4em; line-height: 1.15; text-align: center; font-size: clamp(0.95rem, 1.2vw, 1.1rem); }
+.tri-fig .vtx .k { display: none; }
+
+/* 10. Photography: one treatment, a hard edge, a scrim that holds the caption */
+.belief-fig img { filter: saturate(0.78) sepia(0.06); -webkit-mask-image: none; mask-image: none; border-radius: 0 12px 12px 0; object-position: 62% 40%; }
+.photo-band img, .room-banner-light img, .ahero .portrait img { filter: saturate(0.78) sepia(0.06); }
+.photo-band .scrim { background: linear-gradient(to right, rgba(30,53,56,0.84) 0%, rgba(30,53,56,0.66) 55%, rgba(30,53,56,0.28) 100%); }
+.photo-band .mono-note { max-width: 34ch; color: var(--surface); }
+.photo-band img { object-position: 65% 60%; }
+.room-banner-light img { object-position: 50% 6%; }
+.room-banner-light { max-width: var(--wrap); padding: 0 var(--gut); }
+
+/* 11. Pacing: sections that continue a thought sit closer; proof and line sections breathe less */
+.sec-join { padding-top: calc(var(--sec) * 0.5); }
+.proof, .line-sec { --sec: clamp(3.5rem, 6vw, 5.5rem); }
+
+/* 12. Two ways in: meta folded into the tag, the pay line in one voice */
+.way .way-meta { display: none; }
+.way-tag { margin-bottom: 1.4rem; }
+.way .pay { font-size: 1.18rem; }
+
+/* 13. Proof as a ruled row in the jobs-table language */
+.proof { text-align: left; }
+.proof .qmark { display: none; }
+.proof-row { display: grid; grid-template-columns: minmax(180px, 0.28fr) 1fr; gap: clamp(2rem, 4vw, 4rem); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(2rem, 3.4vw, 2.8rem) 0; align-items: start; }
+.proof-row .pk { display: flex; flex-direction: column; gap: 0.5rem; }
+.proof-row .pk .lbl { font-family: var(--body); font-weight: 500; font-size: 0.95rem; color: var(--muted); }
+.proof-row .pk .score { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(2.6rem, 4.2vw, 3.6rem); line-height: 1; color: var(--terra); }
+.proof-row .pk .score .u { font-size: 0.5em; color: var(--terra-2); }
+.proof-row .pk .sub { font-family: var(--body); font-size: 1rem; color: var(--ink-2); }
+.proof-row blockquote { font-family: var(--display); font-style: italic; font-size: clamp(1.35rem, 2vw, 1.65rem); line-height: 1.5; color: var(--ink); max-width: 56ch; margin: 0 0 1.4rem; }
+.proof-row .who .n { font-weight: 600; font-size: 1.05rem; display: inline; }
+.proof-row .who .t { display: inline; margin: 0; }
+.proof-row .who .t::before { content: ' · '; }
+.proof-row .proof-context { margin-top: 0.4rem; font-family: var(--body); letter-spacing: 0; font-size: 0.95rem; }
+.proof-row .more { margin-top: 1.4rem; }
+
+/* 14. The line section: the list no louder than the jobs */
+.line-list li { font-size: clamp(1.2rem, 1.6vw, 1.45rem); padding: 0.85rem 0; }
+.line-list li::before { width: 6px; height: 6px; opacity: 0.6; }
+
+/* 15. Contact and footer: one ink slab, the card aligned to the eyebrow */
+.cta-grid { align-items: start; }
+.expect { margin-top: calc(80px + 1.2rem); }
+.foot { background: var(--ink); border-top: 1px solid var(--rule-dk); padding-top: clamp(3rem, 5vw, 4.5rem); }
+.foot-grid { grid-template-columns: 1.6fr 1fr 1fr; }
+.foot-slogan { font-style: italic; color: var(--surface); }
+.foot-slogan em { color: var(--terra-lt); }
+
+/* 16. Pilot page: the shape on one grid, the terms in view, what you hold each week */
+@media (min-width: 1081px) { .shape-step { grid-template-columns: minmax(240px, 300px) 1fr; } .shape-step.now { padding-left: 1.6rem; margin-left: -1.2rem; } }
+@media (max-width: 1080px) { .shape-step { grid-template-columns: 1fr; row-gap: 0.8rem; } .shape-step.now { padding-left: 0.4rem; margin-left: 0; } }
+.shape-key .w { text-wrap: balance; }
+.weeks-grid .h2 { margin-bottom: 2rem; }
+.terms { position: sticky; top: 110px; }
+.week .hold { display: block; margin-top: 0.7rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.06em; color: var(--surface); }
+.week .hold::before { content: 'Yours after this week · '; color: var(--cream-60); }
+.pilot-terms { display: block; margin-top: 1.2rem; font-size: 1.2rem; color: var(--ink); }
+.other-door { display: block; }
+
+/* 17. Sessions page: rows instead of tiles, reusing the pilot's shape rows */
+.shape-body details { margin-top: 1rem; }
+.shape-body details summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.55rem; }
+.shape-body details summary::-webkit-details-marker { display: none; }
+.shape-body details summary::after { content: '+'; font-size: 1rem; }
+.shape-body details[open] summary::after { content: '−'; }
+.shape-body details ul { margin-top: 0.8rem; display: grid; gap: 0.5rem; }
+.shape-body details li { display: grid; grid-template-columns: 18px 1fr; gap: 0.55rem; font-size: 1.05rem; color: var(--ink-2); line-height: 1.55; }
+.shape-body details li::before { content: '→'; font-family: var(--mono); font-size: 0.82rem; }
+.shape-body .s-meta { margin-top: 1.1rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.08em; color: var(--muted); }
+.shape-key .ses { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 1.1rem; color: var(--terra-2); display: block; margin-bottom: 0.4rem; }
+.shape-key.stack { display: block; }
+.method-plain { text-align: center; }
+.method-plain .h2 { margin: 0 auto 1.4rem; max-width: 20ch; }
+.method-plain .lede { margin: 0 auto 1.6rem; color: var(--cream-78); }
+.method-plain .mono-note { color: var(--cream-60); }
+.sessions-ask { margin-top: clamp(2rem, 3.6vw, 2.8rem); display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+.sessions-ask .serif-note { font-size: 1.2rem; color: var(--ink-2); }
+.pointer-line { margin-top: 1.6rem; font-family: var(--display); font-style: italic; font-size: 1.15rem; color: var(--muted); }
+.pointer-line a { color: var(--ink); border-bottom: 1px solid currentColor; }
+.room-light.sec-surface { border-top: 1px solid var(--rule); }
+
+/* 18. About: one line of credentials, the spotlight on the grid */
+.facts, .creds { display: none; }
+.creds-line { margin-top: 1.4rem; font-size: 1.1rem; color: var(--ink-2); }
+.creds-line a { color: var(--ink); border-bottom: 1px solid currentColor; }
+.spotlight { margin-left: 0; max-width: none; }
+.doors-line { margin-top: 1.4rem; text-align: center; font-family: var(--display); font-style: italic; font-size: 1.15rem; color: var(--muted); }
+.doors-line a { color: var(--ink); border-bottom: 1px solid currentColor; }
+
+/* 19. Phone */
+@media (max-width: 640px) {
+  .eyebrow { font-size: 0.875rem; letter-spacing: 0.1em; }
+  .home .nav-logo img { height: 40px; }
+  .job { grid-template-columns: 2.1rem 1fr; padding-right: 0; }
+  .proof-row { grid-template-columns: 1fr; gap: 1.4rem; }
+  .photo-band .scrim { background: rgba(30,53,56,0.66); }
+}
+/* 20. Belief without a photo (Hunter, Oct 20): headline over, kicker as a pull line */
+.belief-one .h2 { max-width: 22ch; margin-bottom: 2rem; }
+.belief-one .belief-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.6rem, 6vw, 6rem); align-items: start; }
+.belief-one .belief-body p { max-width: 50ch; }
+.belief-one .belief-kicker { margin-top: 0; max-width: 18ch; font-size: 1.5rem; line-height: 1.35; }
+@media (max-width: 760px) { .belief-one .belief-cols { grid-template-columns: 1fr; gap: 1.4rem; } }
+
+/* 21. Belief with the vertical Toronto photo, left (Hunter, Oct 20; v7's column concept). Replaces 20. */
+.belief-v7 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(2.2rem, 4.5vw, 5rem); align-items: stretch; }
+.belief-v7.left { padding-right: max(var(--gut), calc((100vw - var(--wrap)) / 2)); padding-left: 0; }
+.belief-v7 .belief-copy { align-self: center; max-width: 640px; justify-self: end; }
+.belief-v7 .h2 { max-width: 16ch; }
+.belief-photo { position: relative; min-height: 600px; overflow: hidden; }
+.belief-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; filter: saturate(0.78) sepia(0.06); }
+.belief-photo::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to left, var(--paper) 0%, var(--paper) 3%, rgba(250,248,245,0) 24%); }
+@media (max-width: 900px) {
+  .belief-v7.left { display: flex; flex-direction: column; padding: 0 var(--gut); gap: 2rem; }
+  .belief-photo { min-height: 320px; margin: 0 calc(-1 * var(--gut)); }
+  .belief-photo::before { display: none; }
+  .belief-v7 .belief-copy { max-width: none; }
+}
+
+/* 22. Hero takes the Toronto column, left; the hero ensō moves down to the belief block (Hunter, Oct 21). Replaces 21 on the home page. */
+.hero-tor { display: grid; grid-template-columns: minmax(320px, 33%) minmax(0, 1fr); padding: 0; align-items: stretch; }
+.hero-tor .hero-photo { position: relative; overflow: hidden; z-index: 0; }
+.hero-tor .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; filter: saturate(0.78) sepia(0.06); display: block; }
+.hero-tor .hero-photo::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to left, var(--paper) 0%, var(--paper) 2%, rgba(250,248,245,0) 22%), linear-gradient(to bottom, var(--paper) 0%, rgba(250,248,245,0.75) 60px, rgba(250,248,245,0) 190px); }
+.hero-tor .wrap { align-self: center; max-width: none; margin: 0; padding: clamp(8rem, 16vh, 11rem) var(--gut) clamp(4rem, 8vh, 6rem) clamp(2rem, 4vw, 4.5rem); }
+.hero-tor .h1 { font-size: clamp(2.2rem, 4.3vw, 4rem); max-width: none; }
+.home .nav-logo { transform: none !important; } /* the logo-shift script aligned the wordmark with hero text that now starts mid-page; delete the script when porting */
+.belief-enso { position: relative; overflow: hidden; }
+.belief-enso-mark { position: absolute; right: clamp(-27vw, -510px, -120px); top: 50%; translate: 0 -50%; width: clamp(420px, 56vw, 880px); height: clamp(420px, 56vw, 880px); opacity: 0.9; z-index: 0; }
+.belief-enso .wrap { position: relative; z-index: 1; }
+.belief-enso .belief-copy { max-width: 640px; }
+.belief-enso .h2 { max-width: 17ch; margin-bottom: 2rem; }
+.belief-enso .belief-body p { max-width: 50ch; }
+.belief-enso .belief-kicker { margin-top: 1.8rem; font-size: 1.5rem; line-height: 1.35; max-width: 24ch; }
+@media (max-width: 1080px) {
+  .hero-tor { grid-template-columns: minmax(260px, 36%) minmax(0, 1fr); }
+  .hero-tor .h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); }
+}
+@media (max-width: 900px) {
+  /* phone and small tablet: text first, the city as a short band after the ask */
+  .hero-tor { display: flex; flex-direction: column; min-height: 0; }
+  .hero-tor .wrap { order: 1; padding: 7.5rem var(--gut) 0; }
+  .hero-tor .hero-photo { order: 2; height: 300px; margin-top: 2.6rem; }
+  .hero-tor .hero-photo img { object-position: 50% 46%; }
+  .hero-tor .hero-photo::before { background: linear-gradient(to bottom, var(--paper) 0%, rgba(250,248,245,0) 38%); }
+  .belief-enso-mark { right: -46vw; top: -4vw; translate: none; width: 72vw; height: 72vw; opacity: 0.45; }
+  .belief-enso .belief-copy { max-width: none; }
+}
+
+/* 23. Triangle figure: ensō enlarged to balance the triangle (Hunter, Oct 21, from canvas board 3b version 5). Ensō behind the lines, labels unboxed and clear of the corners. */
+.tri-fig svg { z-index: 1; }
+.tri-fig .enso { z-index: 0; top: 64%; width: 76%; height: 80.8%; opacity: 0.78; }
+.tri-fig.rv.in .enso { opacity: 0.78; }
+.tri-fig .vtx, .tri-fig .result { z-index: 2; }
+.tri-fig .result { top: 64%; font-size: clamp(1.15rem, 1.5vw, 1.4rem); width: 5.6em; }
+.tri-fig .edge { opacity: 0.7; }
+.sec-surface .tri-fig .vtx .w, .tri-fig .vtx .w { background: transparent; padding: 0; }
+.tri-fig .vtx.top { top: 12%; transform: translate(-50%, calc(-100% - 30px)); }
+.tri-fig .vtx.bl, .tri-fig .vtx.br { top: 86%; transform: translate(-50%, 34px); }
+.tri-fig.rv .vtx { transform: translate(-50%, -40%); }
+.tri-fig.rv.in .vtx.top { transform: translate(-50%, calc(-100% - 30px)); }
+.tri-fig.rv.in .vtx.bl, .tri-fig.rv.in .vtx.br { transform: translate(-50%, 34px); }
+@media (max-width: 900px) {
+  .tri-fig .vtx.top { transform: translate(-50%, calc(-100% - 18px)); }
+  .tri-fig .vtx.bl, .tri-fig .vtx.br { transform: translate(-50%, 30px); }
+  .tri-fig.rv.in .vtx.top { transform: translate(-50%, calc(-100% - 18px)); }
+  .tri-fig.rv.in .vtx.bl, .tri-fig.rv.in .vtx.br { transform: translate(-50%, 30px); }
+  .tri-fig .enso { width: 68%; height: 72.3%; }
+  .tri-fig .vtx.bl { left: 20%; } .tri-fig .vtx.br { left: 76%; }
+}
+
+/* 24. Triangle figure on the left at desktop (Hunter, Oct 21): the belief block's ensō sits right, so the page zigzags. CSS order only; markup and the phone stack unchanged. */
+@media (min-width: 1081px) { .tri-grid .tri-fig { order: -1; } }
+@media (max-width: 1080px) { .tri-grid .tri-fig { position: relative; top: auto; } }
+
+/* 25. Way-card tag: the dash centres on the first line when the tag wraps (Hunter, Oct 21; same fix as the eyebrows in block 3) */
+.way-tag { align-items: flex-start; line-height: 1.7; }
+.way-tag::before { flex: none; margin-top: calc(0.85em - 1px); }
+
+/* 26. Triangle labels stay inside the figure at every width (Hunter, Oct 21: the labels ran into the copy on narrow windows). Bottom labels anchor inward from their corners; label size follows the viewport. */
+.tri-fig .vtx .w { font-size: clamp(1.05rem, 1.55vw, 1.6rem); }
+.tri-fig .vtx.bl { transform: translate(-26%, 56px); }
+.tri-fig .vtx.br { transform: translate(-74%, 56px); }
+.tri-fig.rv.in .vtx.bl { transform: translate(-26%, 56px); }
+.tri-fig.rv.in .vtx.br { transform: translate(-74%, 56px); }
+@media (max-width: 900px) {
+  .tri-fig .vtx .w { font-size: 1.05rem; }
+  .tri-fig .vtx.bl, .tri-fig.rv.in .vtx.bl { transform: translate(-40%, 42px); }
+  .tri-fig .vtx.br, .tri-fig.rv.in .vtx.br { transform: translate(-60%, 42px); }
+}
+
+/* 27. The six example jobs move from the home page to the pilot page (Hunter, Oct 21: the home section was noise). They sit under the fit grid in the jobs-table language. */
+.jobs-carry { margin-top: clamp(2.4rem, 4vw, 3.4rem); }
+.jobs-carry .jk { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra-2); display: block; margin-bottom: 1rem; }
+.jobs-carry .job p { font-size: clamp(1.08rem, 1.4vw, 1.25rem); }
+.jobs-carry + .fit-note { margin-top: clamp(1.8rem, 3vw, 2.4rem); }
+
+/* 28. Proof band: less air above and below a one-row section (Hunter, Oct 21) */
+.proof { padding: clamp(2.6rem, 5vw, 4rem) 0; }
+
+/* 29. Pilot shape: step numerals in a fixed, centred column so the three titles start on one line (Hunter, Oct 21) */
+.shape-key .n { flex: 0 0 2.4rem; text-align: center; }
+
+/* 30. Door-page heroes: three levels, not three greys (Hunter, Oct 21). The terms line takes the accent and a step up; the other-door line steps back. */
+.pilot-terms { color: var(--terra-2); font-size: 1.3rem; }
+.other-door { color: var(--faint); font-size: 1.05rem; }
+.other-door a { color: var(--ink-2); }
+
+/* 31. Pilot: the shape section sits on the surface band so the hero ends and a new beat begins (Hunter, Oct 21); the current-step highlight turns to paper on the band */
+.shape-sec .shape-step.now { background: linear-gradient(to right, rgba(250,248,245,0.95), rgba(250,248,245,0)); }
+
+/* 32. Pilot shape band: less headroom above the eyebrow (Hunter, Oct 21; the current design stays) */
+.shape-sec { padding-top: calc(var(--sec) * 0.55); }
+
+/* 33. Pilot shape: steps 2 and 3 carry an optional tag, quieter than step 1's "Start here" so the first step stays the product (Hunter, Oct 22) */
+.shape-body .tag.later { color: var(--muted); }
+
+/* 34. Triangle bottom labels centred on their corners, as Strategy is on the apex (Hunter, Oct 22: symmetry). Replaces block 26's inward anchoring and the phone positions in blocks 22 and 23. On small phones the figure narrows a little so "Implementation" stays on screen. */
+.tri-fig .vtx.bl, .tri-fig.rv.in .vtx.bl { left: 12%; transform: translate(-50%, 56px); }
+.tri-fig .vtx.br, .tri-fig.rv.in .vtx.br { left: 88%; transform: translate(-50%, 56px); }
+@media (max-width: 900px) {
+  .tri-fig .vtx.bl, .tri-fig.rv.in .vtx.bl, .tri-fig .vtx.br, .tri-fig.rv.in .vtx.br { transform: translate(-50%, 42px); }
+}
+@media (max-width: 480px) {
+  .tri-fig { width: min(100%, 76vw); }
+  .tri-fig .vtx .w { font-size: 0.95rem; }
+}
+
+/* 35. Triangle: the ensō sits above the outline (Hunter, Oct 22: layer order only, no position or size change). Supersedes the stacking in block 23; "real adoption" and the labels stay on top. */
+.tri-fig svg { z-index: 1; }
+.tri-fig .enso { z-index: 2; }
+.tri-fig .vtx, .tri-fig .result { z-index: 3; }
+
+/* 36. Triangle made equilateral (Hunter, Oct 22). Same base, same margins above the apex and below the base; the figure is shorter, so the labels, the ensō and "real adoption" move to the new corners and centre. The ensō keeps its size. The outline no longer stretches with its box. */
+.tri-fig { aspect-ratio: 100 / 85.82; }
+.tri-fig .vtx.top { top: 13.98%; }
+.tri-fig .vtx.bl, .tri-fig .vtx.br { top: 90.68%; }
+.tri-fig .enso { top: 63.9%; height: 88.56%; }
+.tri-fig .result { top: 63.9%; }
+@media (max-width: 900px) { .tri-fig .enso { height: 79.24%; } }
+
+/* 37. Triangle height split between the original and the equilateral (Hunter, Oct 22: "split the difference" on block 36). Height 69.91 against the same 76 base, in a 100 by 89.91 viewBox; the same margins, and the labels, ensō and "real adoption" follow the corners and centre in the same proportions. Supersedes block 36's values. */
+.tri-fig { aspect-ratio: 100 / 89.91; }
+.tri-fig .vtx.top { top: 13.35%; }
+.tri-fig .vtx.bl, .tri-fig .vtx.br { top: 91.1%; }
+.tri-fig .enso { top: 63.95%; height: 84.53%; }
+.tri-fig .result { top: 63.95%; }
+@media (max-width: 900px) { .tri-fig .enso { height: 75.63%; } }
+
+/* 38. Triangle labels about 30% closer to their corners (Hunter, Oct 22). Desktop gaps 30px above the apex and 56px below the base become 21 and 39; at 900px and under, 18 and 42 become 13 and 29. Supersedes the offsets in blocks 23 and 34; centring unchanged. */
+.tri-fig .vtx.top, .tri-fig.rv.in .vtx.top { transform: translate(-50%, calc(-100% - 21px)); }
+.tri-fig .vtx.bl, .tri-fig.rv.in .vtx.bl, .tri-fig .vtx.br, .tri-fig.rv.in .vtx.br { transform: translate(-50%, 39px); }
+@media (max-width: 900px) {
+  .tri-fig .vtx.top, .tri-fig.rv.in .vtx.top { transform: translate(-50%, calc(-100% - 13px)); }
+  .tri-fig .vtx.bl, .tri-fig.rv.in .vtx.bl, .tri-fig .vtx.br, .tri-fig.rv.in .vtx.br { transform: translate(-50%, 29px); }
+}
+
+/* 39. Hero photo dissolves into the page instead of ending on a hard line, for a softer hand-off into the belief section: the bottom blurs progressively and fades to paper (Hunter, Oct 22). The hero buttons get equal weight: "Bring a team" becomes a filled orange button, the same orange as the nav's "Start a conversation", beside the ink "Bring a job". */
+.hero-tor .hero-photo::before { z-index: 2;
+  background: linear-gradient(to left, var(--paper) 0%, var(--paper) 2%, rgba(250,248,245,0) 22%), linear-gradient(to bottom, var(--paper) 0%, rgba(250,248,245,0.75) 60px, rgba(250,248,245,0) 190px), linear-gradient(to top, var(--paper) 0%, rgba(250,248,245,0.82) 70px, rgba(250,248,245,0) 280px); }
+.hero-tor .hero-photo::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 360px; z-index: 1; pointer-events: none;
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 100%); mask-image: linear-gradient(to top, #000 30%, transparent 100%); }
+.hero-ctas { gap: 1rem 1.1rem; }
+.hero-ctas .btn { min-width: 12.75rem; justify-content: center; }
+@media (max-width: 900px) {
+  .hero-tor .hero-photo::before { background: linear-gradient(to bottom, var(--paper) 0%, rgba(250,248,245,0) 38%), linear-gradient(to top, var(--paper) 0%, rgba(250,248,245,0.8) 40px, rgba(250,248,245,0) 150px); }
+  .hero-tor .hero-photo::after { height: 170px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+}
+
+/* 40. Sessions, "What a session is like": item 4 drops the raised card and sits in the list like the first three; only its title turns orange so it still stands out (Hunter, Oct 22). terra-2, the site's orange for text on light bands (4.9:1 on the surface). Block-level .mode.feature rules are now unused on this page. */
+.mode.mode-key h3 { color: var(--terra-2); }
+@media (prefers-reduced-motion: no-preference) { .modes.rv.in .mode:nth-child(4) { transition-delay: .41s; } }
+
+/* 41. About portrait shows at its true colour (Hunter, Oct 22: the photo looked muted and sickly). Block 10's photo grade (saturate 0.78, sepia 0.06) drained the skin tones; it stays on the city and room photos, where it unifies the palette, but no longer touches the portrait. The CTA avatar was never graded. */
+.ahero .portrait img { filter: none; }
+
+/* 42. About, after the testimonials: the two doors become the home hero's button pair, centred under the kicker (Hunter, Oct 22: the text links didn't stand out; "maybe buttons?"). Same labels, colours and equal width as the hero, so the ask reads the same on both pages. The .doors-line rules are now unused. */
+.doors-ctas { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem 1.1rem; margin-top: 1.8rem; }
+.doors-ctas .btn { min-width: 12.75rem; justify-content: center; }
+
+/* 43. About: the story hands off to the proof without a dead stretch of paper (Hunter, Oct 22: the blank space felt empty; wanted a smoother transition). The gap shrinks by about a third, and the testimonials sit on the surface band, which fades in from paper instead of starting on a hard edge. The spotlight card turns paper so it still lifts off the band. */
+.story-sec { padding-bottom: calc(var(--sec) * 0.45); }
+#testimonials { background: linear-gradient(to bottom, var(--paper) 0, var(--surface) clamp(140px, 14vw, 220px)); padding-top: calc(var(--sec) * 0.8); }
+#testimonials .spotlight { background: var(--paper); }
+
+/* 44. About hero on phones and tablets: the intro paragraph comes before the photo, and the credentials line (MBA, Rotman · ... · LinkedIn) sits under the photo (Hunter, Oct 22). Desktop unchanged. Before this the credentials line had no order and rose to the top of the stack. */
+@media (max-width: 1080px) {
+  .ahero .lede { order: 3; }
+  .ahero .portrait { order: 4; }
+  .ahero .creds-line { order: 5; }
+}
+
+/* 45. Triangle drawn as three brush strokes with open corners (Hunter, Oct 22: the closed triangle around the ensō read like a known symbol; picked canvas 3d, version 2). The outline is now three tapered, slightly bowed strokes that stop about 15px short of each corner at desktop, in ink, drawn above the ensō. Source: triangle-variants/variants.json, f2-open-3. They fade in where the old outline used to draw itself; the .edge rules are now unused. */
+.tri-fig svg { z-index: 2; }
+.tri-fig .enso { z-index: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .tri-fig.rv .strokes { opacity: 0; transition: opacity 1.1s var(--ease) .15s; }
+  .tri-fig.rv.in .strokes { opacity: 0.8; }
+}
+
+/* 46. Triangle draws itself in (Hunter, Oct 22: each brushstroke appears as if drawn live, then the ensō starts small and grows in with a turn; smooth, clean). On reveal, the three strokes draw one after another (Strategy to Training, Training to Implementation, Implementation back to Strategy), each word settles in as its stroke reaches it, the ensō scales up from 55% with a slow quarter-turn while the last stroke finishes, and "real adoption" lands last. About 3.4s in all. Each stroke is revealed along its centreline by a mask (the .draw paths). The ensō is centred with the translate property so it turns about its own middle. Reduced motion: the finished figure, no animation. Supersedes the reveal timings in blocks 23 and 45. */
+.tri-fig .enso { transform: none; translate: -50% -50%; }
+@media (prefers-reduced-motion: no-preference) {
+  .tri-fig.rv .strokes, .tri-fig.rv.in .strokes { opacity: 0.8; transition: none; }
+  .tri-fig.rv .draw { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+  .tri-fig.rv.in .draw { stroke-dashoffset: 0; transition: stroke-dashoffset .85s cubic-bezier(.5, 0, .2, 1); }
+  .tri-fig.rv.in .draw.k1 { transition-delay: .15s; }
+  .tri-fig.rv.in .draw.k2 { transition-delay: .85s; }
+  .tri-fig.rv.in .draw.k3 { transition-delay: 1.55s; }
+  .tri-fig.rv .vtx { opacity: 0; translate: 0 10px; transition: opacity .7s var(--ease), translate .9s cubic-bezier(.16, 1, .3, 1); }
+  .tri-fig.rv .vtx.top { translate: 0 8px; }
+  .tri-fig.rv.in .vtx { opacity: 1; translate: 0 0; }
+  .tri-fig.rv.in .vtx.top { transition-delay: .1s; }
+  .tri-fig.rv.in .vtx.bl { transition-delay: .85s; }
+  .tri-fig.rv.in .vtx.br { transition-delay: 1.55s; }
+  .tri-fig.rv .enso { opacity: 0; scale: .55; rotate: -90deg; transition: opacity 1.5s ease 1.25s, scale 2.2s cubic-bezier(.16, 1, .3, 1) 1.25s, rotate 2.2s cubic-bezier(.16, 1, .3, 1) 1.25s; }
+  .tri-fig.rv.in .enso { opacity: 0.78; scale: 1; rotate: 0deg; }
+  .tri-fig.rv .result { opacity: 0; translate: 0 6px; transition: opacity .9s var(--ease) 2.3s, translate 1s cubic-bezier(.16, 1, .3, 1) 2.3s; }
+  .tri-fig.rv.in .result { opacity: 1; translate: 0 0; }
+}
+
+/* 47. The two doors as one segmented pill (Hunter, Oct 22: picked canvas 1d, option 4; each half turns orange on hover). An orange "Bring a team" read as if it answered the orange "hard one." in the headline, so at rest both halves are ink on paper, equal. Hovering or focusing a half fills it terracotta, and the divider hides beside it. Used in the home hero and at the end of About; supersedes the button pair from blocks 39 and 42. On small phones the halves share the width. */
+.seg { display: inline-flex; gap: 0; padding: 5px; border: 1.5px solid var(--ink); border-radius: 999px; }
+.seg a { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .8rem; min-width: 12rem; padding: 1rem 1.6rem; border-radius: 999px; font-weight: 500; font-size: 1.08rem; color: var(--ink); transition: background .25s var(--ease), color .25s var(--ease); }
+.seg a + a::before { content: ''; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1.5px; background: rgba(30, 53, 56, .4); transition: opacity .2s; }
+.seg a:hover, .seg a:focus-visible { background: var(--terra); color: #fff; }
+.seg a:focus-visible { outline: 2px solid var(--terra); outline-offset: 3px; }
+.seg a:hover::before, .seg a:hover + a::before, .seg a:focus-visible::before, .seg a:focus-visible + a::before { opacity: 0; }
+.seg a .arr { transition: transform var(--dur-1) var(--ease) .06s; }
+.seg a:hover .arr { transform: translateX(4px); }
+@media (max-width: 480px) {
+  .seg { display: flex; width: 100%; }
+  .seg a { flex: 1; min-width: 0; padding: .95rem .9rem; gap: .5rem; font-size: 1rem; }
+}
+
+/* 48. Sessions method band: the lede runs wider with balanced lines, so it closes on a full line instead of "we leave." alone (Hunter, Oct 22); the "Built for cautious, regulated teams" line is cut, so the lede ends the band. Desktop: four even lines of 68 to 77 characters. */
+.method-plain .lede { max-width: 64ch; text-wrap: balance; margin-bottom: 0; }
+
+/* 49. Home "Two ways in": the two cards match (Hunter, Oct 22: the left card was wider and left too much space at the bottom). Equal columns, and on desktop the cards share their rows (subgrid), so the tags, headings, body, pay lines and links start level in both and both cards end together. The tags break only at their dots ("Your seats" no longer splits); on phones they wrap freely. Phones and tablets stack as before. */
+@media (min-width: 1081px) {
+  .ways { grid-template-columns: 1fr 1fr; row-gap: 0; grid-template-rows: repeat(5, auto); }
+  .way { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
+  .way .btn-ghost { align-self: end; justify-self: start; }
+}
+.way-tag .nw { white-space: nowrap; }
+@media (max-width: 480px) { .way-tag .nw { white-space: normal; } }
+
+/* 50. Highlighted first row: the top rule starts where the box starts (Hunter, Oct 22, on Sessions). On desktop the highlighted step sits 1.2rem left of the column, but the list's top rule began at the column edge, so the line stopped short of the box. When the highlighted step is first, it draws the top rule itself. Applies on Sessions and the pilot's shape list alike. */
+@media (min-width: 1081px) {
+  .shape:has(> .shape-step.now:first-child) { border-top-color: transparent; }
+  .shape > .shape-step.now:first-child { border-top: 1px solid var(--rule); margin-top: -1px; }
+}
+
+/* 51. Hero photo on phones and small tablets: taller, framed lower (Hunter, Oct 22: a bit taller, show more of the bottom that was cut off). The band goes from 300px to 380px and the focus moves from 46% to 62% down the image, so the towers' lower floors show; the soft bottom edge from block 39 is shortened on phones (fade 150px to 110px, blur 170px to 120px) so it hides less. */
+@media (max-width: 900px) {
+  .hero-tor .hero-photo { height: 380px; }
+  .hero-tor .hero-photo img { object-position: 50% 62%; }
+  .hero-tor .hero-photo::before { background: linear-gradient(to bottom, var(--paper) 0%, rgba(250,248,245,0) 30%), linear-gradient(to top, var(--paper) 0%, rgba(250,248,245,0.75) 30px, rgba(250,248,245,0) 110px); }
+  .hero-tor .hero-photo::after { height: 120px; }
+}
+
+/* 52. Phone menu: smaller type so every link sits on one line (Hunter, Oct 22: "Start a conversation" took two lines). Links go from 9vw (35px at 390) to 7vw (27px at 390, 26px at 360), which fits "Start a conversation" down to a 320px screen; the list tightens a touch to suit. The fifth and sixth links get their stagger delays (only four were set, so About and Start a conversation appeared first). All pages share the menu. */
+.menu-overlay a { font-size: clamp(1.6rem, 7vw, 2.6rem); padding: 0.5rem 0; }
+.menu-open .menu-overlay a:nth-child(5) { transition-delay: .36s; }
+.menu-open .menu-overlay a:nth-child(6) { transition-delay: .43s; }
+
+/* 53. Phone menu: the X shows and closes it (Hunter, Oct 22). The bars already turned into an X when open, but the overlay (z 92) sat above the whole nav bar (z 90), so the X was hidden and there was no visible way out. While the menu is open the bar rides above the overlay with its paper background cleared and the dark logo hidden, so only the cream X shows, top right. The proposal's main.js adds a "Close menu" label and the Escape key; closing leaves the page where it was. */
+.menu-open .nav, .menu-open .nav.scrolled, body.post-page.menu-open .nav.scrolled { z-index: 93; background: transparent; box-shadow: none; border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.menu-open .nav .nav-logo { opacity: 0; pointer-events: none; }
