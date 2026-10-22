@@ -124,3 +124,9 @@ body.post-page .nav.scrolled { background: rgba(240,235,225,0.88); }
 .note-author .na-meta { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); margin-top: 0.2rem; }
 .note-end { background: var(--surface); }
 body.post-page .phero-enso { opacity: 0.3; }
+
+/* ── Phone reading (Hunter, Oct 22 2026): body text was a fixed 20px inside a padded card, about 31 characters a line at 390px. On phones the text drops to 17px and the card widens to sit 12px from the screen edges (it sat at the 22px gutter), so a line holds about 40 characters; the card stays. Scoped through .note-sheet so it also beats the article's own list styles. ── */
+@media (max-width: 600px) {
+  .note-sheet .note-prose p, .note-sheet .note-prose ul li, .note-sheet .note-prose ol li { font-size: 1.0625rem; line-height: 1.65; }
+  .note-sheet { margin-inline: calc(0.75rem - var(--gut)); padding-left: 1.35rem; padding-right: 1.35rem; }
+}

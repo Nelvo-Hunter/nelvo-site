@@ -1474,3 +1474,6 @@ h2 em, h3 em, .dark h2 em, .dark h3 em { color: inherit; }
 /* 53. Phone menu: the X shows and closes it (Hunter, Oct 22). The bars already turned into an X when open, but the overlay (z 92) sat above the whole nav bar (z 90), so the X was hidden and there was no visible way out. While the menu is open the bar rides above the overlay with its paper background cleared and the dark logo hidden, so only the cream X shows, top right. The proposal's main.js adds a "Close menu" label and the Escape key; closing leaves the page where it was. */
 .menu-open .nav, .menu-open .nav.scrolled, body.post-page.menu-open .nav.scrolled { z-index: 93; background: transparent; box-shadow: none; border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .menu-open .nav .nav-logo { opacity: 0; pointer-events: none; }
+
+/* 54. Pilot shape: the step headings ("A narrow, fixed-price pilot with a gate you control" and the two below) read cramped (Hunter, Oct 22, after launch). As small sans headings they inherited the big serif headline settings, 1.06 line height and -0.022em tracking, so letters squeezed and the two-line phone version nearly touched. Normal leading and tracking for these only. */
+.shape-body h3 { line-height: 1.35; letter-spacing: -0.005em; }
