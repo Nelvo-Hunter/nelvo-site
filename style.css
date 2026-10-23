@@ -107,10 +107,6 @@ h1 em { color: var(--terra); }
 /* ── Ensō (textured webp; main.js turns [data-spin] marks with the scroll) ── */
 .enso { pointer-events: none; user-select: none; }
 .enso img { width: 100%; height: 100%; object-fit: contain; }
-/* watermarks: retired from view (two ensō on home, one per subpage); the markup remains */
-.enso-wm { display: none; position: absolute; width: clamp(380px, 44vw, 640px); height: clamp(380px, 44vw, 640px); opacity: 0.07; filter: grayscale(1) brightness(3); }
-.wm-tr { right: -180px; top: -140px; }
-.wm-bl { left: clamp(-200px, -13vw, -160px); bottom: -180px; }
 
 /* skip link: hidden until a keyboard user tabs to it */
 .skip { position: absolute; left: 1rem; top: -4rem; z-index: 200; padding: 0.7rem 1.2rem; border-radius: 999px; background: var(--ink); color: var(--surface); font-weight: 500; font-size: 1rem; }
@@ -124,7 +120,6 @@ h1 em { color: var(--terra); }
 .home .nav-inner { height: 124px; }
 .home .nav.scrolled .nav-inner { height: 72px; }
 .nav-logo img { height: 30px; transition: height .6s var(--ease); }
-.home .nav-logo { transition: transform .6s var(--ease); }
 .home .nav-logo img { height: 48px; }
 .home .nav.scrolled .nav-logo img { height: 30px; }
 .nav-links { display: flex; align-items: center; gap: 2.6rem; }
@@ -336,7 +331,6 @@ h1 em { color: var(--terra); }
 .tri-fig .enso { position: absolute; left: 50%; top: 63.95%; z-index: 1; width: 76%; height: 84.53%; translate: -50% -50%; opacity: 0.78; }
 .tri-fig .vtx { position: absolute; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
 .tri-fig .vtx .w { font-family: var(--display); font-weight: 700; font-size: clamp(1.05rem, 1.55vw, 1.6rem); letter-spacing: -0.02em; color: var(--ink); }
-.tri-fig .vtx .k { display: none; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terra-2); }
 /* labels centred on their corners: the apex label sits 21px above, the base labels 39px below */
 .tri-fig .vtx.top { left: 50%; top: 13.35%; transform: translate(-50%, calc(-100% - 21px)); }
 .tri-fig .vtx.bl, .tri-fig .vtx.br { top: 91.1%; transform: translate(-50%, 39px); }
@@ -412,9 +406,6 @@ h1 em { color: var(--terra); }
 .way.lead .pay { border-top-color: var(--rule-dk); color: var(--surface); }
 .way .pay em { font-style: normal; color: var(--terra-2); }
 .way.lead .pay em { color: var(--surface); }
-/* the meta line is folded into the tag; hidden */
-.way .way-meta { display: none; margin-top: auto; padding-top: 1.6rem; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); line-height: 1.9; }
-.way.lead .way-meta { color: var(--cream-60); }
 .way .btn-ghost { margin-top: 1.2rem; align-self: flex-start; }
 .way.lead .btn-ghost { color: var(--surface); border-color: var(--cream-60); }
 .way.lead:hover .btn-ghost { color: var(--terra-lt); border-color: var(--terra-lt); }
@@ -422,6 +413,8 @@ h1 em { color: var(--terra); }
 .way a.cover { position: absolute; inset: 0; border-radius: inherit; }
 .ways-either { margin-top: clamp(2rem, 3.6vw, 2.8rem); text-align: center; font-family: var(--display); font-style: italic; font-size: clamp(1.25rem, 2vw, 1.6rem); color: var(--ink-2); }
 .ways-either em { font-style: italic; color: var(--terra); }
+/* under 1200px the line drops below 24px, so the accent takes the small-text shade */
+@media (max-width: 1199px) { .ways-either em { color: var(--terra-2); } }
 /* desktop: equal columns, and the two cards share their rows (subgrid) so tags, headings, body, pay lines and links start level */
 @media (min-width: 1081px) {
   .ways { grid-template-columns: 1fr 1fr; row-gap: 0; grid-template-rows: repeat(5, auto); }
@@ -442,7 +435,7 @@ h1 em { color: var(--terra); }
 }
 
 /* ── Proof: one ruled row ── */
-.proof { --sec: clamp(3.5rem, 6vw, 5.5rem); padding: clamp(2.6rem, 5vw, 4rem) 0; text-align: left; }
+.proof { padding: clamp(2.6rem, 5vw, 4rem) 0; text-align: left; }
 .proof-row { display: grid; grid-template-columns: minmax(180px, 0.28fr) 1fr; gap: clamp(2rem, 4vw, 4rem); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: clamp(2rem, 3.4vw, 2.8rem) 0; align-items: start; }
 .proof-row .pk { display: flex; flex-direction: column; gap: 0.5rem; }
 .proof-row .pk .lbl { font-family: var(--body); font-weight: 500; font-size: 0.95rem; color: var(--muted); }
@@ -543,7 +536,6 @@ h1 em { color: var(--terra); }
 .cta-left .h2 { margin-bottom: 1.4rem; }
 .cta-left .lede { margin-bottom: 2.6rem; max-width: 44ch; }
 .cta-meta { display: flex; align-items: center; gap: 1.8rem; flex-wrap: wrap; }
-.cta-meta .mono-note { display: none; }
 .cta-left .serif-note { display: block; margin-top: 1.5rem; }
 /* the card's top aligns with the eyebrow beside it */
 .expect { margin-top: calc(80px + 1.2rem); background: var(--cream-08); border: 1px solid var(--rule-dk); border-radius: 12px; padding: clamp(2rem, 3.4vw, 2.8rem); }
@@ -557,6 +549,7 @@ h1 em { color: var(--terra); }
 .cta-fund { display: block; margin-top: 1.4rem; font-family: var(--display); font-style: italic; font-size: 1.05rem; line-height: 1.5; color: var(--cream-78); }
 @media (max-width: 1080px) {
   .cta-grid { grid-template-columns: 1fr; }
+  .expect { margin-top: 0; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .cta-left.rv .avatar { opacity: 0; transform: scale(.7); transition: opacity .7s var(--ease) .1s, transform .7s var(--ease) .1s; }
@@ -571,7 +564,6 @@ h1 em { color: var(--terra); }
 
 /* ── Footer: one ink slab with the contact section ── */
 .foot { background: var(--ink); color: var(--surface); border-top: 1px solid var(--rule-dk); padding: clamp(3rem, 5vw, 4.5rem) 0 2.6rem; position: relative; overflow: hidden; }
-.foot-enso { display: none; position: absolute; right: clamp(-220px, -14vw, -140px); bottom: -220px; width: clamp(400px, 42vw, 600px); height: clamp(400px, 42vw, 600px); opacity: 0.06; filter: grayscale(1) brightness(3); }
 .foot .wrap { position: relative; z-index: 1; }
 .foot-slogan { font-family: var(--display); font-weight: 400; font-style: italic; font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--surface); margin-bottom: 2.4rem; line-height: 1.18; text-wrap: balance; }
 .foot-slogan em { color: var(--terra-lt); font-weight: 400; }
@@ -585,6 +577,11 @@ h1 em { color: var(--terra); }
 .foot-base { border-top: 1px solid var(--rule-dk); padding-top: 1.7rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-60); }
 @media (max-width: 1080px) {
   .foot-grid { gap: 2rem; }
+}
+/* phones: the logo on its own row, the two link lists side by side */
+@media (max-width: 640px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-brand { grid-column: 1 / -1; }
 }
 
 /* ═════════ PAGES ═════════ */
@@ -648,10 +645,8 @@ body.sessions .path-sec { padding-top: clamp(2rem, 4vw, 3rem); position: relativ
 body.sessions .keep-sec, body.sessions .first-step-sec { position: relative; z-index: 1; }
 /* the room photo, inset on the light band */
 .room-banner { position: relative; z-index: 1; width: 100%; overflow: hidden; }
-.room-banner::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, var(--ink) 0%, rgba(30,53,56,0.55) 14%, rgba(30,53,56,0) 38%); }
 .room-banner img { width: 100%; height: 100%; object-fit: cover; }
 .room-banner-light { max-width: var(--wrap); margin: clamp(2.5rem, 5vw, 4rem) auto 0; padding: 0 var(--gut); }
-.room-banner-light::before { display: none; }
 .room-banner-light img { aspect-ratio: 2.05; border-radius: 12px; object-position: 50% 6%; filter: saturate(0.78) sepia(0.06); }
 /* scroll-driven parallax: progressive enhancement only */
 @supports (animation-timeline: view()) {
@@ -747,6 +742,7 @@ body.sessions .keep-sec, body.sessions .first-step-sec { position: relative; z-i
 .spot-stat { text-align: right; flex: none; }
 .spot-stat .v { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem, 4vw, 3.2rem); line-height: 1; letter-spacing: -0.02em; color: var(--ink); }
 .spot-stat .v .u { font-style: italic; font-weight: 400; color: var(--terra); font-size: 0.5em; }
+@media (max-width: 1199px) { .spot-stat .v .u { color: var(--terra-2); } }
 .spot-stat .lbl { font-family: var(--mono); font-size: 0.875rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 0.55rem; max-width: 15ch; margin-left: auto; line-height: 1.45; }
 .spot-lead { font-family: var(--display); font-style: italic; font-size: clamp(1.35rem, 2.3vw, 1.9rem); line-height: 1.5; color: var(--ink); }
 .spot-lead-who { margin-top: 1.3rem; }
