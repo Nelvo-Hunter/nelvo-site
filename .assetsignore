@@ -1,0 +1,6 @@
+# Not site assets: the Worker's own code and config, and repo metadata (Oct 23, 2026).
+.git
+.assetsignore
+worker.js
+wrangler.jsonc
+README.md
