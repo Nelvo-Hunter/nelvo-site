@@ -18,10 +18,11 @@
 <link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <nav class="nav">
   <div class="nav-inner">
@@ -30,7 +31,7 @@
       <a href="pilot.html">Pilot</a>
       <a href="sessions.html">Sessions</a>
       <a href="insights.html">Insights</a>
-      <a href="about.html" class="active">About</a>
+      <a href="about.html" class="active" aria-current="page">About</a>
       <a href="#contact" class="btn-nav">Start a conversation</a>
     </div>
     <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -41,12 +42,12 @@
   <a href="pilot.html">Pilot</a>
   <a href="sessions.html">Sessions</a>
   <a href="insights.html">Insights</a>
-  <a href="about.html">About</a>
+  <a href="about.html" aria-current="page">About</a>
   <a href="#contact">Start a conversation</a>
   <span class="mono-note">hunter@nelvo.ca · Toronto</span>
 </div>
 
-<main>
+<main id="main">
 
 <!-- PAGE HERO -->
 <header class="phero phero-tight">
@@ -123,8 +124,8 @@
     <p class="t-kicker rv">If a firm built on caution can get excited about AI, yours can.</p>
     <div class="doors-ctas rv">
       <div class="seg">
-        <a href="pilot.html">Bring a job <span class="arr">→</span></a>
-        <a href="sessions.html">Bring a team <span class="arr">→</span></a>
+        <a href="pilot.html">Bring a job <span class="arr" aria-hidden="true">→</span></a>
+        <a href="sessions.html">Bring a team <span class="arr" aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
@@ -140,7 +141,7 @@
       <h2 class="h2">No pitch deck.<br>No pressure.<br><em>Just a conversation.</em></h2>
       <p class="lede">Twenty minutes, wherever you're starting from. We talk through where AI sits in your organization right now, what's giving you pause, and what a sensible first step might look like. No preparation, no commitment.</p>
       <div class="cta-meta">
-        <a href="mailto:hunter@nelvo.ca?subject=Starting%20a%20conversation" class="btn">hunter@nelvo.ca <span class="arr">→</span></a>
+        <a href="mailto:hunter@nelvo.ca?subject=Starting%20a%20conversation" class="btn">hunter@nelvo.ca <span class="arr" aria-hidden="true">→</span></a>
         <span class="mono-note">Serving Canadian organizations</span>
       </div>
       <span class="serif-note">Two sentences about your business is plenty.</span>

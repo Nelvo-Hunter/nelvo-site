@@ -18,16 +18,17 @@
 <link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="pilot">
+<a class="skip" href="#main">Skip to content</a>
 
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="logo-dark.png" alt="Nelvo"></a>
     <div class="nav-links">
-      <a href="pilot.html" class="active">Pilot</a>
+      <a href="pilot.html" class="active" aria-current="page">Pilot</a>
       <a href="sessions.html">Sessions</a>
       <a href="insights.html">Insights</a>
       <a href="about.html">About</a>
@@ -38,7 +39,7 @@
 </nav>
 <div class="menu-overlay">
   <a href="index.html">Home</a>
-  <a href="pilot.html">Pilot</a>
+  <a href="pilot.html" aria-current="page">Pilot</a>
   <a href="sessions.html">Sessions</a>
   <a href="insights.html">Insights</a>
   <a href="about.html">About</a>
@@ -46,7 +47,7 @@
   <span class="mono-note">hunter@nelvo.ca · Toronto</span>
 </div>
 
-<main>
+<main id="main">
 
 <!-- PAGE HERO -->
 <header class="phero">
@@ -196,7 +197,7 @@
       <h2 class="h2">Bring the job.<br><em>Twenty minutes.</em></h2>
       <p class="lede">Tell us the job that eats the week, or tell us you're not sure where to start. We'll tell you whether there's a good first pilot in it, what the test would be, and what it would cost.</p>
       <div class="cta-meta">
-        <a href="mailto:hunter@nelvo.ca?subject=A%20job%20in%20mind" class="btn">hunter@nelvo.ca <span class="arr">→</span></a>
+        <a href="mailto:hunter@nelvo.ca?subject=A%20job%20in%20mind" class="btn">hunter@nelvo.ca <span class="arr" aria-hidden="true">→</span></a>
         <span class="mono-note">Serving Canadian organizations</span>
       </div>
       <span class="serif-note">Two sentences about the job is plenty. So is "I don't know yet."</span>

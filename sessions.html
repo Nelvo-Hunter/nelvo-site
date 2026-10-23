@@ -18,17 +18,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="mini-logo-32x32.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="sessions">
+<a class="skip" href="#main">Skip to content</a>
 
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><img src="logo-dark.png" alt="Nelvo"></a>
     <div class="nav-links">
       <a href="pilot.html">Pilot</a>
-      <a href="sessions.html" class="active">Sessions</a>
+      <a href="sessions.html" class="active" aria-current="page">Sessions</a>
       <a href="insights.html">Insights</a>
       <a href="about.html">About</a>
       <a href="#contact" class="btn-nav">Start a conversation</a>
@@ -39,14 +40,14 @@
 <div class="menu-overlay">
   <a href="index.html">Home</a>
   <a href="pilot.html">Pilot</a>
-  <a href="sessions.html">Sessions</a>
+  <a href="sessions.html" aria-current="page">Sessions</a>
   <a href="insights.html">Insights</a>
   <a href="about.html">About</a>
   <a href="#contact">Start a conversation</a>
   <span class="mono-note">hunter@nelvo.ca · Toronto</span>
 </div>
 
-<main>
+<main id="main">
 
 <!-- PAGE HERO -->
 <header class="phero">
@@ -114,7 +115,7 @@
       </div>
     </div>
     <div class="sessions-ask rv">
-      <a href="#contact" class="btn">Start a conversation <span class="arr">→</span></a>
+      <a href="#contact" class="btn">Start a conversation <span class="arr" aria-hidden="true">→</span></a>
       <span class="serif-note">Tell us who's in the room and what your goals are. We'll tell you which session fits first.</span>
     </div>
     <p class="pointer-line rv">Ready to put one workflow through? That's the pilot: fixed price, and you pay when the test proves it. <a href="pilot.html">See the pilot →</a></p>
@@ -131,28 +132,28 @@
     </div>
     <div class="modes rv">
       <div class="mode">
-        <span class="n">1</span>
+        <span class="n">1.</span>
         <div>
           <h3>Taught live, in plain language</h3>
           <p>Short interactive blocks built for conversation, not a webinar. Real questions aimed at your business, and room to push back.</p>
         </div>
       </div>
       <div class="mode">
-        <span class="n">2</span>
+        <span class="n">2.</span>
         <div>
           <h3>Demonstrated on real work</h3>
           <p>No canned videos. AI runs live in front of the room, on tasks that look like yours. Watching it happen is what changes minds.</p>
         </div>
       </div>
       <div class="mode">
-        <span class="n">3</span>
+        <span class="n">3.</span>
         <div>
           <h3>Hands-on, laptops open</h3>
           <p>You practice on your own work with help in the room. People go from watching AI to using it well before the session ends.</p>
         </div>
       </div>
       <div class="mode mode-key">
-        <span class="n">4</span>
+        <span class="n">4.</span>
         <div>
           <h3>You walk out with it running</h3>
           <p>Every session ends with something built. Each person keeps a working setup they use the next morning, not a binder for a shelf.</p>
@@ -210,7 +211,7 @@
         <p>Once we've talked, your team takes a short survey and the answers plot your organization on the Growth Map: how engaged your leadership is, how capable your frontline is, and where the fastest wins are hiding. It decides which session comes first and what gets the time in the room. You see the picture, you keep the read.</p>
       </div>
       <div class="fs-right">
-        <a href="#contact" class="btn">Start a conversation <span class="arr">→</span></a>
+        <a href="#contact" class="btn">Start a conversation <span class="arr" aria-hidden="true">→</span></a>
         <span class="mono-note">No commitment · A clear read either way</span>
       </div>
     </div>
@@ -227,7 +228,7 @@
       <h2 class="h2 turn">No pitch deck.<br>No pressure.<br><em>Just a conversation.</em></h2>
       <p class="lede">Who's in the room, what they've tried, and which session fits first.</p>
       <div class="cta-meta">
-        <a href="mailto:hunter@nelvo.ca?subject=A%20team%20in%20mind" class="btn">hunter@nelvo.ca <span class="arr">→</span></a>
+        <a href="mailto:hunter@nelvo.ca?subject=A%20team%20in%20mind" class="btn">hunter@nelvo.ca <span class="arr" aria-hidden="true">→</span></a>
         <span class="mono-note">Serving Canadian organizations</span>
       </div>
       <span class="serif-note">Two sentences about your team is plenty.</span>
