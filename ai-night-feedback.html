@@ -641,6 +641,12 @@
     transition: border-color 0.18s ease;
   }
   .comment textarea:focus { outline: none; border-color: var(--terra); }
+  /* optional name on the send step (Hunter, Nov 9, 2026) */
+  .name-field { margin: 1.4rem 0 0.4rem; max-width: 420px; }
+  .name-field label { display: block; font-size: 1rem; font-weight: 500; color: var(--teal); margin-bottom: 0.45rem; }
+  .name-field label span { display: block; font-weight: 400; font-size: 0.95rem; color: var(--muted); }
+  .name-field input { width: 100%; min-height: 48px; padding: 0.7rem 0.9rem; border: 1px solid var(--rule); border-radius: 8px; background: #FFFDF9; font-family: var(--s); font-size: 1rem; color: var(--teal); transition: border-color 0.18s ease; }
+  .name-field input:focus { outline: none; border-color: var(--terra); }
   @media (min-width: 720px) {
     .checks, .comment { padding-left: calc(var(--rail) + var(--rail-gap)); }
   }
@@ -675,7 +681,7 @@
         <div class="anim">
           <p>Thanks for coming, or for watching the recording. I’m still working out what’s most useful, so your honest read will shape the next one.</p>
           <p>Say what you really think, including what didn’t work.</p>
-          <div class="privacy-note">This is completely anonymous. No name, no email, and no time recorded with your answers, so there is no way to connect them back to you.</div>
+          <div class="privacy-note">This is anonymous unless you choose to add your name at the very end. No email and no time are recorded with your answers, so without a name there is no way to connect them back to you.</div>
           <p class="timing">About 2 minutes, mostly tapping</p>
         </div>
         <div class="step-foot anim"><button type="button" class="btn" data-next>Begin <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button></div>
@@ -782,7 +788,8 @@
     <section class="step" data-part="All set" id="step-send">
       <span class="mono-eyebrow anim" style="margin-bottom:1.1rem;">All set</span>
       <h2 class="anim" style="font-size:2rem; margin-bottom:1.1rem;">That’s everything.</h2>
-      <p class="anim" style="font-size:1.08rem; color:var(--muted); max-width:54ch; margin-bottom:0.4rem;">You can go back to review any answer, or send it in. Your answers travel with no name attached.</p>
+      <p class="anim" style="font-size:1.08rem; color:var(--muted); max-width:54ch; margin-bottom:0.4rem;">You can go back to review any answer, or send it in. Your answers travel with no name attached unless you add one below.</p>
+      <div class="name-field anim"><label for="your-name">Add your name? <span>Optional. Leave it blank to stay anonymous.</span></label><input type="text" id="your-name" name="your-name" maxlength="80" autocomplete="name"></div>
       <div class="step-error" role="alert"></div>
       <div class="step-foot anim">
         <button type="button" class="back-btn" data-back>&larr; Back</button>
@@ -871,11 +878,14 @@
       missed: data.getAll('missed'),
       trust: data.getAll('trust'),
       next: data.get('next'),
+      // Optional; blank stays anonymous.
+      name: text('your-name'),
       comments: { seen: text('c-seen'), value: text('c-value'), pace: text('c-pace'), clarity: text('c-clarity'), useful: text('c-useful'), missed: text('c-missed'), trust: text('c-trust'), next: text('c-next') },
       // Date only, no time, so a response cannot be connected to anyone.
       submittedDate: new Date().toISOString().slice(0, 10),
     };
     const btn = document.getElementById('btn-submit');
+    if (btn.disabled) return;  // already sending
     const label = btn.innerHTML;
     btn.disabled = true;
     btn.textContent = 'Sending...';
@@ -894,6 +904,9 @@
       showError(sendStep, 'Something went wrong sending your feedback. Please try again, or email Hunter at hunter@nelvo.ca.');
     }
   });
+
+  const nameBox = document.getElementById('your-name'), sendBtn = document.getElementById('btn-submit'), sendHTML = sendBtn.innerHTML;
+  nameBox.addEventListener('input', () => { sendBtn.innerHTML = sendHTML.replace('Submit anonymously', nameBox.value.trim() ? 'Submit with my name' : 'Submit anonymously'); });
 
   setChrome(0);
   const n = parseInt(new URLSearchParams(location.search).get('step'), 10);

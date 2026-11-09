@@ -730,6 +730,8 @@ async function handleAiNightFeedbackSubmit(request, env) {
     : new Date().toISOString().slice(0, 10);
   const c = p.comments || {};
   const session = text(p.session).slice(0, 120) || 'AI Night';
+  // Optional name (Nov 9, 2026): blank stays anonymous. Control characters out, so it is safe in a subject line.
+  const name = text(p.name).replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, 80);
 
   const label = (s) => `<div style="font-family:monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;color:#9A5125;margin:18px 0 6px;">${esc(s)}</div>`;
   const note = (v) => {
@@ -748,10 +750,10 @@ async function handleAiNightFeedbackSubmit(request, env) {
   const html = `
 <div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1E3538;">
   <div style="border-bottom:3px solid #B4602C;padding-bottom:12px;margin-bottom:16px;">
-    <div style="font-family:monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:#9A5125;">Anonymous feedback</div>
+    <div style="font-family:monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:#9A5125;">${name ? 'Feedback with a name' : 'Anonymous feedback'}</div>
     <h1 style="font-family:Georgia,serif;font-size:24px;margin:6px 0 0;">${esc(session)}</h1>
   </div>
-  <div style="background:#F0EBE1;border-radius:8px;padding:10px 16px;font-size:13px;color:#46565A;">No name, email or submission time was collected. Received ${esc(dateOnly)}.</div>
+  <div style="background:#F0EBE1;border-radius:8px;padding:10px 16px;font-size:13px;color:#46565A;">${name ? `Name given: <strong style="color:#1E3538;">${esc(name)}</strong>. No email or submission time was collected.` : 'No name, email or submission time was collected.'} Received ${esc(dateOnly)}.</div>
   ${label('How they saw it')}${answer(p.seen === 'Live' ? 'Live' : 'The recording')}${note(c.seen)}
   ${label('Overall value')}${answer(`${p.value} / 5`)}${note(c.value)}
   ${label('Pace')}${answer(p.pace)}${note(c.pace)}
@@ -781,7 +783,7 @@ async function handleAiNightFeedbackSubmit(request, env) {
       body: JSON.stringify({
         from,
         to,
-        subject: `AI Night feedback: ${p.value}/5 (anonymous)`,
+        subject: `AI Night feedback: ${p.value}/5 (${name ? `from ${name}` : 'anonymous'})`,
         html,
       }),
     });
