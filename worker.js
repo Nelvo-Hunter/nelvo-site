@@ -54,6 +54,14 @@ export default {
       return new Response('Method Not Allowed', { status: 405 });
     }
 
+    // ─── /api/ai-night-feedback-submit (anonymous) ──────
+    if (url.pathname === '/api/ai-night-feedback-submit') {
+      if (request.method === 'POST') {
+        return handleAiNightFeedbackSubmit(request, env);
+      }
+      return new Response('Method Not Allowed', { status: 405 });
+    }
+
     // ─── Fall through to static assets ──────────────────
     return env.ASSETS.fetch(request);
   },
@@ -693,6 +701,106 @@ async function handleAvailabilitySubmit(request, env) {
 // ─────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────
+// AI Night feedback handler (ANONYMOUS)
+// No name, no email, no reply_to, and date only with no clock time.
+// ─────────────────────────────────────────────────────────
+
+async function handleAiNightFeedbackSubmit(request, env) {
+  let p;
+  try {
+    p = await request.json();
+  } catch (err) {
+    return jsonError('Invalid JSON payload', 400);
+  }
+  p = p || {};
+
+  const rating = (v) => Number.isInteger(v) && v >= 1 && v <= 5;
+  if (!['Live', 'Recording'].includes(p.seen)) return jsonError('Invalid: seen', 400);
+  if (!['Too slow', 'About right', 'Too fast'].includes(p.pace)) return jsonError('Invalid: pace', 400);
+  if (!rating(p.value)) return jsonError('Invalid: value', 400);
+  if (!rating(p.clarity)) return jsonError('Invalid: clarity', 400);
+
+  // Caps keep a stray or abusive submission from producing a giant email.
+  const text = (v) => (typeof v === 'string' ? v.trim().slice(0, 4000) : '');
+  const list = (v) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string').slice(0, 30).map((x) => x.slice(0, 80)) : []);
+  const dateOnly = (typeof p.submittedDate === 'string' && p.submittedDate.trim())
+    ? p.submittedDate.trim().slice(0, 10)
+    : new Date().toISOString().slice(0, 10);
+  const c = p.comments || {};
+  const session = text(p.session).slice(0, 120) || 'AI Night';
+
+  const label = (s) => `<div style="font-family:monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;color:#9A5125;margin:18px 0 6px;">${esc(s)}</div>`;
+  const note = (v) => {
+    const t = text(v);
+    return t ? `<div style="font-family:Georgia,serif;font-size:14px;color:#1E3538;line-height:1.55;background:#FAF8F5;padding:10px 14px;border-left:3px solid #B4602C;margin-top:6px;white-space:pre-wrap;">${esc(t)}</div>` : '';
+  };
+  const answer = (v) => `<div style="font-size:15px;color:#1E3538;">${esc(v)}</div>`;
+  const ticks = (v) => {
+    const items = list(v);
+    return items.length
+      ? `<ul style="margin:0;padding-left:20px;font-size:15px;color:#1E3538;line-height:1.5;">${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`
+      : '<em style="color:#46565A;">(none ticked)</em>';
+  };
+  const next = text(p.next);
+
+  const html = `
+<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1E3538;">
+  <div style="border-bottom:3px solid #B4602C;padding-bottom:12px;margin-bottom:16px;">
+    <div style="font-family:monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:#9A5125;">Anonymous feedback</div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;margin:6px 0 0;">${esc(session)}</h1>
+  </div>
+  <div style="background:#F0EBE1;border-radius:8px;padding:10px 16px;font-size:13px;color:#46565A;">No name, email or submission time was collected. Received ${esc(dateOnly)}.</div>
+  ${label('How they saw it')}${answer(p.seen === 'Live' ? 'Live' : 'The recording')}${note(c.seen)}
+  ${label('Overall value')}${answer(`${p.value} / 5`)}${note(c.value)}
+  ${label('Pace')}${answer(p.pace)}${note(c.pace)}
+  ${label('Clarity on next step')}${answer(`${p.clarity} / 5`)}${note(c.clarity)}
+  ${label('Most useful')}${ticks(p.useful)}${note(c.useful)}
+  ${label('Lost them or did not help')}${ticks(p.missed)}${note(c.missed)}
+  ${label('Needed before trusting it')}${ticks(p.trust)}${note(c.trust)}
+  ${label('Next session')}${answer(next || '(skipped)')}${note(c.next)}
+</div>
+  `.trim();
+
+  const to = env.NOTIFY_EMAIL || 'hunter@nelvo.ca';
+  const from = env.FROM_EMAIL || 'Nelvo Forms <forms@nelvo.ca>';
+
+  if (!env.RESEND_API_KEY) {
+    return jsonError('Server not configured: missing RESEND_API_KEY', 500);
+  }
+
+  try {
+    // NOTE: no reply_to here, on purpose. The submission is anonymous.
+    const resendResp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        subject: `AI Night feedback: ${p.value}/5 (anonymous)`,
+        html,
+      }),
+    });
+
+    if (!resendResp.ok) {
+      const detail = await resendResp.text();
+      console.error('Resend error (AI Night feedback):', detail);
+      return jsonError('Email send failed', 502);
+    }
+  } catch (err) {
+    console.error('Network error calling Resend (AI Night feedback):', err);
+    return jsonError('Network error', 502);
+  }
+
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
 
 function esc(s) {
   return String(s)
